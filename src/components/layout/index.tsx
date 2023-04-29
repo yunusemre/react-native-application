@@ -7,12 +7,12 @@ import UiHeader from '../ui/header';
 
 const Layout = ({
   style,
-  isHeader,
+  isHeader = false,
   openBarcode,
   backgroundColor = AppColors.primary,
   children,
 }: {
-  isHeader: boolean;
+  isHeader?: boolean;
   backgroundColor?: any;
   style?: any;
   children: ReactNode;

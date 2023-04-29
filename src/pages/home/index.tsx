@@ -31,6 +31,7 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   const isOnline = () => {
+    console.log(moyListOffline);
     if (!!moyListOffline && moyListOffline?.length === 0) return;
     syncData(moyListOffline);
   };

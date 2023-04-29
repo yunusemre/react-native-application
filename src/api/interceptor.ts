@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { Env } from './env';
 
-axios.defaults.baseURL = 'http://192.168.2.108:3001';
+axios.defaults.baseURL = Env.API_URL;
 const axiosInterceptor = (store: any) => {
   const state = store.getState();
   console.log('moyListOffline', state.app);
