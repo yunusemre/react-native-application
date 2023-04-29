@@ -1,0 +1,16 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.organizeImports": true
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "prettier.printWidth": 100,
+  "typescript.format.insertSpaceAfterConstructor": true,
+  "eslint.quiet": true,
+  "eslint.format.enable": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.eol": "\n",
+  "eslint.validate": ["javascript", "typescript"],
+  "deepscan.enable": true
+}
