@@ -39,7 +39,7 @@ export default () => ({
       eas: {
         projectId: '29621779-a89d-48b1-b745-68a4337142bb',
       },
-      API_URL: 'http://192.168.2.108:3001',
+      API_URL: process.env.API_URL ?? 'http://192.168.2.108:3001',
     },
     owner: 'yunusemretatar',
   },

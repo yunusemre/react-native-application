@@ -7,19 +7,27 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "API_URL": "https://prod.example.com"
+        "API_URL": "http://192.168.2.108:3001"
       }
     },
     "preview": {
       "env": {
-        "API_URL": "https://preview.example.com"
+        "API_URL": "http://192.168.2.108:3001"
       },
       "android": {
         "buildType": "apk"
       },
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "env": {
+        "API_URL": "http://192.168.2.108:3002"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": "internal"
+    }
   },
   "submit": {
     "production": {}
