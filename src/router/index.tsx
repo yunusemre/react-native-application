@@ -1,8 +1,8 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
-import { useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useCallback, useEffect } from 'react';
+import { PermissionsAndroid, StyleSheet, View } from 'react-native';
 import BarcodeScreen from '../pages/barcode-reader';
 import HomeScreen from '../pages/home';
 import LoginScreen from '../pages/login';
@@ -18,9 +18,25 @@ const navTheme = {
     background: 'transparent',
   },
 };
+
+const requestCameraPermission = async () => {
+  try {
+    await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+    await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+    await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION);
+    await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CALL_PHONE);
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
 const Router = () => {
   const onLayoutRootView = useCallback(async () => {
     await SplashScreen.hideAsync();
+  }, []);
+
+  useEffect(() => {
+    requestCameraPermission();
   }, []);
 
   return (
