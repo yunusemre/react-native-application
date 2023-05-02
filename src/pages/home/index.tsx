@@ -17,39 +17,37 @@ const HomeScreen = ({ navigation }: any) => {
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState([]);
 
-  const getProducts = () => {
-    if (isConnected) {
-      setRefresh(true);
-      axios
-        .get('/barcode')
-        .then((res: any) => {
-          setData(res.data);
-          setRefresh(false);
-        })
-        .catch((err) => setRefresh(false));
-    }
+  const getProducts = async () => {
+    if (!isConnected) return;
+    await axios
+      .get('/barcode')
+      .then((res: any) => {
+        setData(res.data);
+        setRefresh(false);
+      })
+      .catch((err) => setRefresh(false));
   };
 
-  const isOnline = () => {
-    console.log(moyListOffline);
-    if (!!moyListOffline && moyListOffline?.length === 0) return;
-    syncData(moyListOffline);
+  const isOnline = async () => {
+    if (!isConnected && !!moyListOffline && moyListOffline?.length === 0) return;
+    await syncData(moyListOffline);
   };
 
   const syncData = async (offlineData: any) => {
+    setRefresh(true);
     for (const data of offlineData) {
-      console.log('home data', data);
       try {
         await axios.post('/barcode', data);
         dispatch(removeMoyListsOffline(data));
       } catch (error) {
+        setRefresh(false);
         console.error(error);
       }
     }
+    setRefresh(false);
   };
 
   useEffect(() => {
-    getProducts();
     const unsubscribe = navigation.addListener('focus', () => getProducts());
     return unsubscribe;
   }, [navigation, isConnected]);
@@ -59,9 +57,9 @@ const HomeScreen = ({ navigation }: any) => {
       <Box height={windowSize.height - 130}>
         <FlatList
           refreshing={refresh}
-          onRefresh={() => {
-            isOnline();
-            getProducts();
+          onRefresh={async () => {
+            await isOnline();
+            await getProducts();
           }}
           data={data}
           renderItem={({ item }: any) => <UiCard {...item} />}

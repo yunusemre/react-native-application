@@ -4,7 +4,6 @@ import AppColors from '../../../config/colors';
 
 const UiHeader = () => {
   const navigation: any = useNavigation();
-
   return (
     <Appbar style={{ backgroundColor: AppColors.primary, height: 50 }}>
       <Appbar.Action color="white" icon="menu" onPress={() => navigation.toggleDrawer()} />

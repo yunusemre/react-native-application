@@ -2,6 +2,8 @@
   "name": "kolaygelsin-android-app",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
+  "license": "MIT",
+  "private": true,
   "scripts": {
     "start": "expo start --android -c",
     "android": "expo start --android",

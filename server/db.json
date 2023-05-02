@@ -3,11 +3,5 @@
     "username": "emretatar",
     "password": "q1w2e3"
   },
-  "barcode": [
-    {
-      "barcode": "9789752127685",
-      "id": "07de3f9f-fad5-419a-b39b-d217b84706bd",
-      "date": 1683020113132
-    }
-  ]
+  "barcode": []
 }
