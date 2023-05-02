@@ -24,27 +24,8 @@ const appSlice = createSlice({
     setMoyLists: (state, { payload }) => {
       state.moyList = payload;
     },
-    setMoyListsOffline: (state, { payload }) => {
-      const list = [...state.moyListOffline, payload];
-      console.log('list', list);
-      state.moyListOffline = list;
-    },
-    resetMoyListOffline: (state) => {
-      state.moyListOffline = [];
-    },
-    removeMoyListsOffline: (state, { payload }) => {
-      const filter = state.moyListOffline.filter((data: any) => data.id !== payload.id);
-      console.log(filter);
-      state.moyListOffline = filter;
-    },
   },
 });
 
-export const {
-  check,
-  setMoyLists,
-  setMoyListsOffline,
-  removeMoyListsOffline,
-  resetMoyListOffline,
-} = appSlice.actions;
+export const { check, setMoyLists } = appSlice.actions;
 export default appSlice.reducer;

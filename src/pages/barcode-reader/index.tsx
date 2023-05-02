@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import Text from '../../components/ui/text';
 import uuid from '../../config/uuid';
-import { setMoyListsOffline } from '../../store/features/app-slice';
+import { setMoyListsOffline } from '../../store/features/offline-slice';
 import { useAppDispatch } from '../../store/hooks';
 
 export default function BarcodeScreen({ navigation }: any) {

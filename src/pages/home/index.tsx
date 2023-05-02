@@ -6,8 +6,8 @@ import Layout from '../../components/layout';
 import Box from '../../components/ui/box';
 import UiCard from '../../components/ui/card';
 import UiEmpy from '../../components/ui/empty';
-import { removeMoyListsOffline } from '../../store/features/app-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { removeMoyListsOffline } from '../../store/features/offline-slice';
 
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();

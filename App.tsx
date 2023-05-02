@@ -16,8 +16,8 @@ import AppTypography from './src/config/typography';
 import Router from './src/router';
 import { store } from './src/store/configure-store';
 
-axiosInterceptor(store);
 Bugsnag.start();
+axiosInterceptor(store);
 export default function App() {
   const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
   const fontConfig = {
@@ -38,11 +38,18 @@ export default function App() {
     },
   };
 
+  const networkOptions = {
+    pingOnlyIfOffline: true,
+    pingTimeout: 1000,
+    pingInterval: 5000,
+    shouldPing: true,
+  };
+
   return (
     <ErrorBoundary FallbackComponent={ErrorView}>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <NetworkProvider>
+          <NetworkProvider {...networkOptions}>
             <PaperProvider theme={themes}>
               <SafeAreaView style={[styles.safeArea]}>
                 <KeyboardAvoidingView
