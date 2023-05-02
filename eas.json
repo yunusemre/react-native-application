@@ -21,7 +21,7 @@
     },
     "production": {
       "env": {
-        "API_URL": "http://192.168.2.108:3002"
+        "API_URL": "http://192.168.2.108:3001"
       },
       "android": {
         "buildType": "apk"
