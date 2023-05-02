@@ -2,9 +2,10 @@ import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import Text from '../../components/ui/text';
+import AppColors from '../../config/colors';
 import uuid from '../../config/uuid';
 import { setMoyListsOffline } from '../../store/features/offline-slice';
 import { useAppDispatch } from '../../store/hooks';
@@ -42,7 +43,7 @@ export default function BarcodeScreen({ navigation }: any) {
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <ActivityIndicator size="small" color={AppColors.primary} />;
   }
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
