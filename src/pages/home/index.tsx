@@ -48,6 +48,7 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   useEffect(() => {
+    getProducts();
     const unsubscribe = navigation.addListener('focus', () => getProducts());
     return unsubscribe;
   }, [navigation, isConnected]);
