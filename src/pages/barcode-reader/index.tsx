@@ -2,7 +2,7 @@ import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import Text from '../../components/ui/text';
 import uuid from '../../config/uuid';
@@ -56,7 +56,6 @@ export default function BarcodeScreen({ navigation }: any) {
           style={[StyleSheet.absoluteFillObject, styles.container]}
         />
       ) : null}
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
     </View>
   );
 }
