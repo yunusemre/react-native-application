@@ -3,6 +3,7 @@ export default () => ({
     name: 'Kolay Gelsin',
     slug: 'kolaygelsin-android-app',
     version: '1.0.0',
+    runtimeVersion: 'appVersion',
     orientation: 'portrait',
     platforms: ['android'],
     icon: './assets/ic_launcher.png',
@@ -11,24 +12,40 @@ export default () => ({
       image: './assets/splash.png',
       resizeMode: 'cover',
       backgroundColor: '#ffffff',
+      // hdpi: '',
+      // xhdpi: '',
+      // xxhdpi: '',
+      // xxxhdpi: ''
     },
     assetBundlePatterns: ['**/*'],
-    updates: {
-      fallbackToCacheTimeout: 0,
-    },
     android: {
       adaptiveIcon: {
         foregroundImage: './assets/ic_launcher-1.png',
         backgroundColor: '#ffffff',
       },
-      package: 'com.yunusemretatar.kolaygelsinandroidapp',
+      package: 'com.cargo.ekol.ekolcargo',
+      permissions: [
+        'ACCESS_COARSE_LOCATION',
+        'ACCESS_FINE_LOCATION',
+        'ACCESS_BACKGROUND_LOCATION',
+        'CAMERA',
+        'VIBRATE',
+        'READ_CONTACTS',
+        'CALL_PHONE',
+      ],
     },
     plugins: [
       [
-        "expo-location",
+        'expo-location',
         {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
-        }
+          locationAlwaysAndWhenInUsePermission: 'Allow $(PRODUCT_NAME) to use your location.',
+        },
+      ],
+      [
+        'expo-barcode-scanner',
+        {
+          locationAlwaysAndWhenInUsePermission: 'Allow $(PRODUCT_NAME) to use your location.',
+        },
       ],
     ],
     extra: {
@@ -38,8 +55,8 @@ export default () => ({
       eas: {
         projectId: '29621779-a89d-48b1-b745-68a4337142bb',
       },
-      API_URL: 'http://192.168.2.108:3001',
+      API_URL: 'https://apitest.klyglsn.com/api/request',
     },
-    owner: 'yunusemretatar',
+    owner: 'ekolkargo',
   },
 });
