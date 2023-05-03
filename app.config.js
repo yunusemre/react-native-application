@@ -18,12 +18,19 @@ export default () => ({
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: './assets/ic_launcher.png',
+        foregroundImage: './assets/ic_launcher-1.png',
         backgroundColor: '#ffffff',
       },
       package: 'com.yunusemretatar.kolaygelsinandroidapp',
     },
-    plugins: [],
+    plugins: [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ],
+    ],
     extra: {
       bugsnag: {
         apiKey: 'b33e9246b2a6275aedb9d27efeff3f6f',

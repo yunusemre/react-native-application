@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 3.10.2"
+    "version": ">= 3.10.2",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -20,6 +21,7 @@
       "distribution": "internal"
     },
     "production": {
+      "autoIncrement": true,
       "env": {
         "API_URL": "http://192.168.2.108:3001"
       },

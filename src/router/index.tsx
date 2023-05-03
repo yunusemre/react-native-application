@@ -2,7 +2,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect } from 'react';
-import { PermissionsAndroid, StyleSheet, View } from 'react-native';
+import { PermissionsAndroid, StyleSheet } from 'react-native';
+import Box from '../components/ui/box';
 import BarcodeScreen from '../pages/barcode-reader';
 import HomeScreen from '../pages/home';
 import LoginScreen from '../pages/login';
@@ -40,7 +41,7 @@ const Router = () => {
   }, []);
 
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
+    <Box flex={1} onLayout={onLayoutRootView}>
       <NavigationContainer theme={navTheme}>
         <Drawer.Navigator useLegacyImplementation initialRouteName="home">
           <Drawer.Screen
@@ -73,7 +74,7 @@ const Router = () => {
           />
         </Drawer.Navigator>
       </NavigationContainer>
-    </View>
+    </Box>
   );
 };
 
