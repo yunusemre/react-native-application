@@ -44,7 +44,7 @@ export default () => ({
       [
         'expo-barcode-scanner',
         {
-          locationAlwaysAndWhenInUsePermission: 'Allow $(PRODUCT_NAME) to use your location.',
+          cameraPermission: 'Allow $(PRODUCT_NAME) to access camera.',
         },
       ],
     ],
@@ -57,6 +57,6 @@ export default () => ({
       },
       API_URL: 'https://apitest.klyglsn.com/api/request',
     },
-    owner: 'ekolkargo',
+    owner: 'yunusemretatar',
   },
 });

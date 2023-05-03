@@ -9,7 +9,10 @@ const axiosInterceptor = (store: any) => {
     return config;
   };
   const responseSuccess = (response: any) => response;
-  const responseError = (error: any) => Promise.reject(error.message);
+  const responseError = (error: any) => {
+    console.log(error);
+    return Promise.reject(error.message);
+  };
 
   axios.interceptors.request.use(requestSuccess);
   axios.interceptors.response.use(responseSuccess, responseError);

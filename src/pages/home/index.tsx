@@ -1,13 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, FlatList } from 'react-native';
+import { Dimensions, FlatList, Linking } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
+import { Button } from 'react-native-paper';
 import Layout from '../../components/layout';
 import Box from '../../components/ui/box';
 import UiCard from '../../components/ui/card';
 import UiEmpy from '../../components/ui/empty';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { removeMoyListsOffline } from '../../store/features/offline-slice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
@@ -56,6 +57,7 @@ const HomeScreen = ({ navigation }: any) => {
   return (
     <Layout isHeader openBarcode={() => navigation.navigate('barcode')}>
       <Box height={windowSize.height - 130}>
+        <Button onPress={() => Linking.openURL(`tel:05535088898`)}>Call</Button>
         <FlatList
           refreshing={refresh}
           onRefresh={async () => {

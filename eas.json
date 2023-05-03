@@ -22,9 +22,6 @@
       "extends": "profile",
       "env": {
         "API_URL": "https://apitest.klyglsn.com/api/request"
-      },
-      "android": {
-        "buildType": "apk"
       }
     },
     "preprod": {

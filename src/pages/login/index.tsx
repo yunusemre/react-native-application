@@ -63,6 +63,7 @@ const LoginScreen = ({ navigation }: any) => {
           rules={{ require: true }}
         />
         <UITextInput
+          secureTextEntry
           error={!!errors?.password?.message}
           control={control}
           label="Password"
@@ -70,7 +71,6 @@ const LoginScreen = ({ navigation }: any) => {
           testID="password"
           placeholder="Enter password"
           mode="outlined"
-          secureTextEntry
           rules={{ require: true }}
         />
         <Button style={styles.submitButton} mode="contained" onPress={handleSubmit(onSubmit)}>
