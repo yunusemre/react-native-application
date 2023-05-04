@@ -36,23 +36,17 @@ const MappingScreen = ({ navigation }: any) => {
         latitude: loc.coords.latitude,
         longitude: loc.coords.longitude,
       });
-      setUpdateLocation(true);
+      setTimeout(() => setUpdateLocation(true), 0);
     })();
   }, []);
 
   return (
-    <Box>
-      {!updateLocation && (
-        <Box justifyContent="center" alignItems="center" flex={1}>
-          <ActivityIndicator size="large" color={AppColors.primary} />
-        </Box>
-      )}
-      {updateLocation && (
+    <Box flex={1} justifyContent="center" alignItems="center">
+      {updateLocation === true ? (
         <MapView
           initialRegion={location}
           showsUserLocation={true}
           followsUserLocation={true}
-          maxZoomLevel={20}
           onRegionChange={(region: any) => setRegion(region)}
           style={{ width: '100%', height: '100%' }}
           customMapStyle={mapJson}
@@ -67,6 +61,10 @@ const MappingScreen = ({ navigation }: any) => {
             }}
           />
         </MapView>
+      ) : (
+        <Box justifyContent="center" alignItems="center" flex={1}>
+          <ActivityIndicator size="large" color={AppColors.primary} />
+        </Box>
       )}
     </Box>
   );
