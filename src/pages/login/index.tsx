@@ -9,8 +9,7 @@ import * as yup from 'yup';
 import Box from '../../components/ui/box';
 import Text from '../../components/ui/text';
 import UITextInput from '../../components/ui/textInput';
-import AppColors from '../../config/colors';
-import AppTypography from '../../config/typography';
+import theme from '../../config';
 
 const LoginScreen = ({ navigation }: any) => {
   const [visible, setVisible] = React.useState(false);
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
   loginShortText: {
     fontSize: 12,
     marginBottom: 15,
-    color: AppColors.textColor,
+    color: theme.colors.textColor,
   },
   loginForm: {
     width: '100%',
@@ -111,11 +110,11 @@ const styles = StyleSheet.create({
   fields: {
     width: '100%',
     marginBottom: 10,
-    color: AppColors.default,
+    color: theme.colors.default,
   },
   submitButton: {
     width: '100%',
-    borderRadius: AppTypography.roundness,
+    borderRadius: theme.radius.normal,
   },
   appVersion: {
     marginTop: 40,

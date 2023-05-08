@@ -10,9 +10,7 @@ import { ThemeProvider } from 'styled-components';
 import axiosInterceptor from './src/api/interceptor';
 import Box from './src/components/ui/box';
 import Text from './src/components/ui/text';
-import AppColors from './src/config/colors';
-import theme from './src/config/theme';
-import AppTypography from './src/config/typography';
+import theme from './src/config';
 import Router from './src/router';
 import { store } from './src/store/configure-store';
 
@@ -26,15 +24,15 @@ export default function App() {
 
   const themes = {
     ...DefaultTheme,
-    roundness: AppTypography.roundness,
+    roundness: theme.radius.normal,
     fonts: configureFonts({ config: fontConfig }),
     colors: {
       ...DefaultTheme.colors,
-      outline: AppColors.borderColor,
+      outline: theme.colors.borderColor,
       onBackground: 'white',
-      primary: AppColors.primary,
-      secondary: AppColors.default,
-      tertiary: AppColors.textColor,
+      primary: theme.colors.primary,
+      secondary: theme.colors.default,
+      tertiary: theme.colors.textColor,
     },
   };
 
