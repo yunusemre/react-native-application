@@ -14,7 +14,6 @@ const offlineSlice = createSlice({
   reducers: {
     setMoyListsOffline: (state, { payload }) => {
       const list = [...state.moyListOffline, payload];
-      console.log('list', list);
       state.moyListOffline = list;
     },
     resetMoyListOffline: (state) => {
@@ -27,5 +26,6 @@ const offlineSlice = createSlice({
   },
 });
 
-export const { setMoyListsOffline, removeMoyListsOffline, resetMoyListOffline } = offlineSlice.actions;
+export const { setMoyListsOffline, removeMoyListsOffline, resetMoyListOffline } =
+  offlineSlice.actions;
 export default offlineSlice.reducer;

@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
-  const { moyListOffline } = useAppSelector((state) => state.app);
+  const { moyListOffline } = useAppSelector((state) => state.offline);
   const isConnected = useIsConnected();
   const windowSize: any = Dimensions.get('screen');
   const [refresh, setRefresh] = useState(false);
@@ -28,7 +28,8 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   const isOnline = async () => {
-    if (!!moyListOffline && moyListOffline?.length === 0) return;
+    if (moyListOffline?.length === 0) return;
+    console.log('isOnline', );
     await syncData(moyListOffline);
   };
 
