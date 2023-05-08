@@ -29,7 +29,6 @@ const HomeScreen = ({ navigation }: any) => {
 
   const isOnline = async () => {
     if (moyListOffline?.length === 0) return;
-    console.log('isOnline', );
     await syncData(moyListOffline);
   };
 
