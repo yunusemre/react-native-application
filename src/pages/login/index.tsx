@@ -1,10 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
+import Constants from 'expo-constants';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, StyleSheet, View } from 'react-native';
-import { Button, Snackbar, Text } from 'react-native-paper';
+import { Button, Snackbar } from 'react-native-paper';
 import * as yup from 'yup';
+import Box from '../../components/ui/box';
+import Text from '../../components/ui/text';
 import UITextInput from '../../components/ui/textInput';
 import AppColors from '../../config/colors';
 import AppTypography from '../../config/typography';
@@ -77,6 +80,9 @@ const LoginScreen = ({ navigation }: any) => {
           Gönder
         </Button>
       </View>
+      <Box mt={20} textAlign="center" as={Text}>
+        {Constants.manifest?.version}
+      </Box>
       <Snackbar visible={visible} onDismiss={() => setVisible(false)}>
         Kullanıcı adı veya şifreniz hatalıdır. Tekrar deneyiniz.
       </Snackbar>
