@@ -1,71 +1,61 @@
 import * as Location from 'expo-location';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Box from '../../components/ui/box';
-import AppColors from '../../config/colors';
+import { Locations } from './map-model';
 import mapJson from './map-style.json';
 
-interface Locations {
-  latitude: number;
-  longitude: number;
-  latitudeDelta?: number;
-  longitudeDelta?: number;
-}
-
-const MappingScreen = ({ navigation }: any) => {
-  const [, setRegion] = useState(null);
-  const [updateLocation, setUpdateLocation] = useState(false);
+const MappingScreen = () => {
   const [location, setLocation] = useState<Locations>({
     latitude: 40.9738116,
     longitude: 29.2536725,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.00921,
+    latitudeDelta: 0.003,
+    longitudeDelta: 0.003,
   });
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        return;
-      }
-
-      let loc: any = await Location.getCurrentPositionAsync({});
-      setLocation({
-        ...location,
-        latitude: loc.coords.latitude,
-        longitude: loc.coords.longitude,
-      });
-      setTimeout(() => setUpdateLocation(true), 0);
+      try {
+        const location: any = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.High,
+        });
+        let cor: any = {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        };
+        setLocation({
+          ...location,
+          ...cor,
+        });
+      } catch (error) {}
     })();
-  }, []);
+  }, [location]);
 
   return (
     <Box flex={1} justifyContent="center" alignItems="center">
-      {updateLocation === true ? (
-        <MapView
-          initialRegion={location}
-          showsUserLocation={true}
-          followsUserLocation={true}
-          onRegionChange={(region: any) => setRegion(region)}
-          style={{ width: '100%', height: '100%' }}
-          customMapStyle={mapJson}
-          provider={PROVIDER_GOOGLE}
-        >
-          <Marker
-            testID="marker"
-            draggable
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}
-          />
-        </MapView>
-      ) : (
-        <Box justifyContent="center" alignItems="center" flex={1}>
-          <ActivityIndicator size="large" color={AppColors.primary} />
-        </Box>
-      )}
+      <MapView
+        ref={(mapRef) => mapRef?.fitToElements(true)}
+        initialRegion={location}
+        style={{ width: '100%', height: '100%' }}
+        customMapStyle={mapJson}
+        showsUserLocation={true}
+        showsMyLocationButton={true}
+        followsUserLocation={true}
+        showsCompass={true}
+        scrollEnabled={true}
+        zoomEnabled={true}
+        pitchEnabled={true}
+        provider={PROVIDER_GOOGLE}
+      >
+        <Marker
+          testID="marker"
+          draggable
+          coordinate={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+          }}
+        />
+      </MapView>
     </Box>
   );
 };

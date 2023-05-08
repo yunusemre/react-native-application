@@ -18,7 +18,6 @@ const HomeScreen = ({ navigation }: any) => {
   const [data, setData] = useState([]);
 
   const getProducts = async () => {
-    if (!isConnected) return;
     await axios
       .get('/barcode')
       .then((res: any) => {
@@ -29,7 +28,7 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   const isOnline = async () => {
-    if (!isConnected && !!moyListOffline && moyListOffline?.length === 0) return;
+    if (!!moyListOffline && moyListOffline?.length === 0) return;
     await syncData(moyListOffline);
   };
 
@@ -59,8 +58,10 @@ const HomeScreen = ({ navigation }: any) => {
         <FlatList
           refreshing={refresh}
           onRefresh={async () => {
-            await isOnline();
-            await getProducts();
+            if (isConnected) {
+              await isOnline();
+              await getProducts();
+            }
           }}
           data={data}
           renderItem={({ item }: any) => <UiCard {...item} />}

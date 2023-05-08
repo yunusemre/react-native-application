@@ -14,27 +14,27 @@
       "developmentClient": true,
       "extends": "profile",
       "env": {
-        "API_URL": "https://apitest.klyglsn.com/api/request"
+        "API_URL": "http://192.168.2.108:3001"
       }
     },
     "test": {
       "extends": "profile",
       "env": {
-        "API_URL": "https://apitest.klyglsn.com/api/request"
+        "API_URL": "https://192.168.2.108:3001"
       }
     },
     "preprod": {
       "extends": "profile",
       "autoIncrement": true,
       "env": {
-        "API_URL": "https://apibeta.klyglsn.com/api/request"
+        "API_URL": "https://192.168.2.108:3001"
       }
     },
     "production": {
       "extends": "profile",
       "autoIncrement": true,
       "env": {
-        "API_URL": "http://apiui.kolaygelsin.com/api/request"
+        "API_URL": "https://192.168.2.108:3001"
       }
     }
   },

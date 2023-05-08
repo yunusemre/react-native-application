@@ -3,7 +3,6 @@ export default () => ({
     name: 'Kolay Gelsin',
     slug: 'kolaygelsin-android-app',
     version: '1.0.0',
-    runtimeVersion: 'appVersion',
     orientation: 'portrait',
     platforms: ['android'],
     icon: './assets/ic_launcher.png',
@@ -33,6 +32,9 @@ export default () => ({
         'READ_CONTACTS',
         'CALL_PHONE',
       ],
+      config: {
+        googleMaps: { apiKey: 'AIzaSyBGMPNQUGGqclkGfN7bBHeZJyRKf1ciCMA' },
+      },
     },
     plugins: [
       [
