@@ -2,7 +2,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect } from 'react';
-import { PermissionsAndroid, StyleSheet } from 'react-native';
+import { PermissionsAndroid } from 'react-native';
 import Box from '../components/ui/box';
 import BarcodeScreen from '../pages/barcode-reader';
 import HomeScreen from '../pages/home';
@@ -48,6 +48,7 @@ const Router = () => {
             name="home"
             component={HomeScreen}
             options={{
+              unmountOnBlur: true,
               headerShown: false,
             }}
           />
@@ -69,6 +70,7 @@ const Router = () => {
             name="mapping"
             component={MappingScreen}
             options={{
+              unmountOnBlur: true,
               headerShown: false,
             }}
           />
@@ -77,9 +79,5 @@ const Router = () => {
     </Box>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-});
 
 export default Router;

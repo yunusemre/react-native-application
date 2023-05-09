@@ -1,5 +1,7 @@
+import axios from 'axios';
 import * as Location from 'expo-location';
 import React, { useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Box from '../../components/ui/box';
 import { Locations } from './map-model';
@@ -12,7 +14,6 @@ const MappingScreen = () => {
     latitudeDelta: 0.003,
     longitudeDelta: 0.003,
   });
-
   useEffect(() => {
     (async () => {
       try {
@@ -31,12 +32,19 @@ const MappingScreen = () => {
     })();
   }, [location]);
 
+  useEffect(() => {
+    const current = setInterval(() => {
+      axios.post('/coordinates', location);
+    }, 60 * 1000);
+    return () => clearInterval(current);
+  }, []);
+
   return (
     <Box flex={1} justifyContent="center" alignItems="center">
       <MapView
         ref={(mapRef) => mapRef?.fitToElements(true)}
         initialRegion={location}
-        style={{ width: '100%', height: '100%' }}
+        style={StyleSheet.absoluteFill}
         customMapStyle={mapJson}
         showsUserLocation={true}
         showsMyLocationButton={true}
