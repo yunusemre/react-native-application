@@ -1,7 +1,7 @@
 import { Controller } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { MD2Colors, TextInput } from 'react-native-paper';
-import AppColors from '../../../config/colors';
+import theme from '../../../config';
 
 const UITextInput = ({
   label,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   field: {
     fontSize: 14,
     width: '100%',
-    color: AppColors.default,
+    color: theme.colors.default,
     backgroundColor: 'white',
   },
   errorMessage: {
