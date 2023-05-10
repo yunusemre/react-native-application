@@ -8,6 +8,7 @@ import { Locations } from './map-model';
 import mapJson from './map-style.json';
 
 const MappingScreen = () => {
+  const timer = 60 * 60;
   const [location, setLocation] = useState<Locations>({
     latitude: 40.9738116,
     longitude: 29.2536725,
@@ -32,10 +33,12 @@ const MappingScreen = () => {
     })();
   }, [location]);
 
+  const setLocationCoordinates = async () => {
+    await axios.post('/coordinates', location);
+  };
+
   useEffect(() => {
-    const current = setInterval(() => {
-      axios.post('/coordinates', location);
-    }, 60 * 1000);
+    const current = setInterval(() => setLocationCoordinates(), timer * 1000);
     return () => clearInterval(current);
   }, []);
 

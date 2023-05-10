@@ -3,7 +3,91 @@
     "username": "emretatar",
     "password": "q1w2e3"
   },
-  "coordinates": [],
+  "coordinates": [
+    {
+      "latitude": 40.9738116,
+      "longitude": 29.2536725,
+      "latitudeDelta": 0.003,
+      "longitudeDelta": 0.003,
+      "id": 1
+    },
+    {
+      "latitude": 40.9738116,
+      "longitude": 29.2536725,
+      "latitudeDelta": 0.003,
+      "longitudeDelta": 0.003,
+      "id": 2
+    },
+    {
+      "latitude": 40.9738116,
+      "longitude": 29.2536725,
+      "latitudeDelta": 0.003,
+      "longitudeDelta": 0.003,
+      "id": 3
+    },
+    {
+      "latitude": 40.9738116,
+      "longitude": 29.2536725,
+      "latitudeDelta": 0.003,
+      "longitudeDelta": 0.003,
+      "id": 4
+    },
+    {
+      "latitude": 40.9738116,
+      "longitude": 29.2536725,
+      "latitudeDelta": 0.003,
+      "longitudeDelta": 0.003,
+      "id": 5
+    },
+    {
+      "timestamp": 1683713856946,
+      "mocked": false,
+      "coords": {
+        "altitude": 0,
+        "heading": 0,
+        "altitudeAccuracy": 0.5,
+        "latitude": 41.0814017,
+        "speed": 0,
+        "longitude": 28.9819767,
+        "accuracy": 413.02301025390625
+      },
+      "latitude": 41.0814017,
+      "longitude": 28.9819767,
+      "id": 6
+    },
+    {
+      "timestamp": 1683713883766,
+      "mocked": false,
+      "coords": {
+        "altitude": 0,
+        "heading": 0,
+        "altitudeAccuracy": 0.5,
+        "latitude": 41.0814017,
+        "speed": 0,
+        "longitude": 28.9819767,
+        "accuracy": 5
+      },
+      "latitude": 41.0814017,
+      "longitude": 28.9819767,
+      "id": 7
+    },
+    {
+      "timestamp": 1683713887775,
+      "mocked": false,
+      "coords": {
+        "altitude": 0,
+        "heading": 0,
+        "altitudeAccuracy": 0.5,
+        "latitude": 41.0814017,
+        "speed": 0,
+        "longitude": 28.9819767,
+        "accuracy": 5
+      },
+      "latitude": 41.0814017,
+      "longitude": 28.9819767,
+      "id": 8
+    }
+  ],
   "barcode": [
     {
       "barcode": "8690536010165",
