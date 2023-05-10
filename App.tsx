@@ -14,9 +14,9 @@ import theme from './src/config';
 import Router from './src/router';
 import { store } from './src/store/configure-store';
 
-Bugsnag.start();
-axiosInterceptor(store);
 export default function App() {
+  Bugsnag.start();
+  axiosInterceptor(store);
   const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
   const fontConfig = {
     fontFamily: 'sans-serif',

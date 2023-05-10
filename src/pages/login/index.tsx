@@ -3,7 +3,7 @@ import axios from 'axios';
 import Constants from 'expo-constants';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { Button, Snackbar } from 'react-native-paper';
 import * as yup from 'yup';
 import Box from '../../components/ui/box';
@@ -48,13 +48,13 @@ const LoginScreen = ({ navigation }: any) => {
   }, [navigation]);
 
   return (
-    <View style={styles.loginScreen}>
-      <View style={styles.loginForm}>
-        <Image source={require('../../../assets/logo.png')} style={{ marginBottom: 30 }} />
+    <Box flex={1} bg="white" justifyContent="center" pr={20} pl={20}>
+      <Box width="100%" justifyContent="center" alignItems="center">
+        <Box as={Image} source={require('../../../assets/logo.png')} mb={30} />
         <Text style={styles.loginBigTitle}>Giriş Ekranı</Text>
         <Text style={styles.loginShortText}>Lütfen giriş yapmak için boş alanları doldurunuz</Text>
-      </View>
-      <View style={styles.loginForm}>
+      </Box>
+      <Box width="100%" justifyContent="center" alignItems="center">
         <UITextInput
           error={!!errors?.username?.message}
           control={control}
@@ -78,33 +78,22 @@ const LoginScreen = ({ navigation }: any) => {
         <Button style={styles.submitButton} mode="contained" onPress={handleSubmit(onSubmit)}>
           Gönder
         </Button>
-      </View>
+      </Box>
       <Box mt={20} textAlign="center" as={Text}>
         {Constants.manifest?.version}
       </Box>
       <Snackbar visible={visible} onDismiss={() => setVisible(false)}>
         Kullanıcı adı veya şifreniz hatalıdır. Tekrar deneyiniz.
       </Snackbar>
-    </View>
+    </Box>
   );
 };
 
 const styles = StyleSheet.create({
-  loginScreen: {
-    flex: 1,
-    backgroundColor: 'white',
-    paddingHorizontal: 20,
-    justifyContent: 'center',
-  },
   loginShortText: {
     fontSize: 12,
     marginBottom: 15,
     color: theme.colors.textColor,
-  },
-  loginForm: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   loginBigTitle: { fontSize: 24, fontWeight: 'bold', marginTop: 20 },
   fields: {
@@ -115,10 +104,6 @@ const styles = StyleSheet.create({
   submitButton: {
     width: '100%',
     borderRadius: theme.radius.normal,
-  },
-  appVersion: {
-    marginTop: 40,
-    textAlign: 'center',
   },
 });
 export default LoginScreen;
