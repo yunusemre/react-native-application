@@ -13,6 +13,7 @@ import theme from '../../config';
 
 const LoginScreen = ({ navigation }: any) => {
   const [visible, setVisible] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(false);
   const schema = yup
     .object({
       username: yup.string().required(),
@@ -34,11 +35,19 @@ const LoginScreen = ({ navigation }: any) => {
   });
 
   const onSubmit = async (data: any) => {
-    const login = await axios.get('/login');
-    if (JSON.stringify(data) === JSON.stringify(login.data)) {
-      navigation.navigate('home');
-    } else {
-      setVisible(true);
+    try {
+      setIsLogin(true);
+      const login = await axios.get('/login');
+      setTimeout(() => {
+        if (JSON.stringify(data) === JSON.stringify(login.data)) {
+          navigation.navigate('home');
+        } else {
+          setVisible(true);
+        }
+        setIsLogin(false);
+      }, 2000);
+    } catch (error) {
+      setIsLogin(false);
     }
   };
 
@@ -75,7 +84,14 @@ const LoginScreen = ({ navigation }: any) => {
           mode="outlined"
           rules={{ require: true }}
         />
-        <Button style={styles.submitButton} mode="contained" onPress={handleSubmit(onSubmit)}>
+        <Button
+          disabled={isLogin}
+          icon="camera"
+          loading={isLogin}
+          style={styles.submitButton}
+          mode="contained"
+          onPress={handleSubmit(onSubmit)}
+        >
           Gönder
         </Button>
       </Box>
