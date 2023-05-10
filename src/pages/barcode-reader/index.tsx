@@ -36,14 +36,7 @@ export default function BarcodeScreen({ navigation }: any) {
   };
 
   return (
-    <Box
-      height={400}
-      bg="black"
-      flex={1}
-      justifyContent="flex-end"
-      alignItems="center"
-      width={'100%'}
-    >
+    <Box bg="black" flex={1} justifyContent="flex-end" alignItems="center" width={'100%'}>
       {isFocused ? (
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}

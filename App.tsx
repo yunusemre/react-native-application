@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 
 import Bugsnag from '@bugsnag/expo';
 import React from 'react';
-import { KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from 'react-native';
 import { NetworkProvider } from 'react-native-offline';
 import { DefaultTheme, Provider as PaperProvider, configureFonts } from 'react-native-paper';
 import { Provider } from 'react-redux';
@@ -50,10 +50,7 @@ export default function App() {
           <NetworkProvider {...networkOptions}>
             <PaperProvider theme={themes}>
               <SafeAreaView style={[styles.safeArea]}>
-                <KeyboardAvoidingView
-                  style={styles.keyboardView}
-                  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                >
+                <KeyboardAvoidingView style={styles.keyboardView}>
                   <Router />
                 </KeyboardAvoidingView>
               </SafeAreaView>
@@ -74,7 +71,6 @@ const ErrorView = () => (
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    marginTop: Platform.OS === 'android' ? 24 : 0,
   },
   keyboardView: {
     flex: 1,

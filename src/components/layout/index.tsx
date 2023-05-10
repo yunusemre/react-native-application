@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import { ReactNode } from 'react';
-import { View } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import theme from '../../config';
 import Box from '../ui/box';
@@ -20,12 +19,12 @@ const Layout = ({
 }) => {
   const isOnline = useIsConnected();
   return (
-    <View style={{ flex: 1 }}>
+    <Box flex={1}>
       <StatusBar backgroundColor={backgroundColor} />
       {isHeader && <UiHeader openBarcode={openBarcode} />}
       <Box>{children}</Box>
       {isOnline === null || isOnline === true ? null : <Offline />}
-    </View>
+    </Box>
   );
 };
 

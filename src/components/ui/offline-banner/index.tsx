@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { MD2Colors } from 'react-native-paper';
+import Box from '../box';
 import Text from '../text';
 
 const Offline = () => {
   return (
-    <View style={styles.bottomBar}>
+    <Box style={styles.bottomBar}>
       <Text style={styles.offlineText}>No connection</Text>
-    </View>
+    </Box>
   );
 };
 const styles = StyleSheet.create({
