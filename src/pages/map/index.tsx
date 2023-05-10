@@ -58,10 +58,14 @@ const MappingScreen = () => {
         <Marker
           testID="marker"
           draggable
+          style={{ width: 35, height: 35 }}
           coordinate={{
             latitude: location.latitude,
             longitude: location.longitude,
           }}
+          icon={require('../../../assets/pin.png')}
+          centerOffset={{ x: -28, y: -100 }}
+          anchor={{ x: 0.5, y: 1.5 }}
         />
       </MapView>
     </Box>

@@ -19,7 +19,7 @@ export default () => ({
     assetBundlePatterns: ['**/*'],
     android: {
       adaptiveIcon: {
-        foregroundImage: './assets/ic_launcher-1.png',
+        foregroundImage: './assets/ic_launcher.png',
         backgroundColor: '#ffffff',
       },
       package: 'com.cargo.ekol.ekolcargo',
