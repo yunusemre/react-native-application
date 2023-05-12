@@ -9,21 +9,32 @@ const UiHeader = () => {
     <Appbar
       style={{
         backgroundColor: theme.colors.primary,
-        height: 50,
+        height: 40,
         marginTop: Platform.OS === 'android' ? 24 : 0,
       }}
     >
-      <Appbar.Action color="white" icon="menu" onPress={() => navigation.toggleDrawer()} />
-      <Appbar.Content color="white" title="Kolaygelsin" titleStyle={{ fontSize: 18 }} />
       <Appbar.Action
-        icon="barcode"
-        size={30}
+        size={20}
+        color="white"
+        icon="menu"
+        onPress={() => navigation.toggleDrawer()}
+      />
+      <Appbar.Content
+        style={{ margin: 0 }}
+        color="white"
+        title="Kolaygelsin"
+        titleStyle={{ fontSize: 18 }}
+      />
+      <Appbar.Action
+        style={{ margin: 0 }}
+        icon="barcode-scan"
+        size={20}
         color="white"
         onPress={() => navigation.navigate('barcode')}
       />
       <Appbar.Action
-        icon="map"
-        size={30}
+        icon="map-marker"
+        size={20}
         color="white"
         onPress={() => navigation.navigate('mapping')}
       />
