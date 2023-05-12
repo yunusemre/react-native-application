@@ -12,7 +12,12 @@ const MoreButton = ({ data, show, openMenu, closeMenu, title, selected }: any) =
       }
     >
       {data.map((item: any) => (
-        <Menu.Item key={item.name} onPress={() => selected(item)} title={item.name} />
+        <Menu.Item
+          style={{ backgroundColor: 'white' }}
+          key={item.name}
+          onPress={() => selected(item)}
+          title={item.name}
+        />
       ))}
     </Menu>
   );

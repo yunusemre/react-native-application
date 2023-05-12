@@ -28,6 +28,7 @@ const UiCard = (props: any) => {
           <Text variant="labelSmall">Atandı</Text>
           <Box style={{ position: 'absolute', bottom: 0, right: 0 }}>
             <Menu
+              style={{ backgroundColor: 'white' }}
               visible={showMenu}
               onDismiss={() => setShowMenu(false)}
               anchor={
@@ -36,6 +37,7 @@ const UiCard = (props: any) => {
             >
               {mores.map((item: any) => (
                 <Menu.Item
+                  style={{ backgroundColor: 'white' }}
                   key={item.name}
                   onPress={() => {
                     setShowMenu(false);
