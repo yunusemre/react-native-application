@@ -8,7 +8,7 @@ const UiCard = (props: any) => {
   const [checked, setChecked] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   return (
-    <Box ml={8} mr={8} mt={8} p={2} borderRadius={8} bg={props.color ? 'danger' : 'borderColor'}>
+    <Box borderRadius={8} ml={8} mr={8} mt={8} pt={4} pb={4} bg="borderColor">
       <Box flexDirection="row" minHeight={60}>
         <Box width={'15%'} alignItems="center">
           <Checkbox
@@ -26,30 +26,26 @@ const UiCard = (props: any) => {
           <Text variant="labelSmall">Müşteri Takip No: -</Text>
           <Text variant="labelSmall">Parça Sayısı: 4</Text>
           <Text variant="labelSmall">Atandı</Text>
+          <Box style={{ position: 'absolute', bottom: 0, right: 0 }}>
+            <Menu
+              visible={showMenu}
+              onDismiss={() => setShowMenu(false)}
+              anchor={
+                <IconButton size={14} icon="dots-vertical" onPress={() => setShowMenu(!showMenu)} />
+              }
+            >
+              {mores.map((item: any) => (
+                <Menu.Item
+                  key={item.name}
+                  onPress={() => {
+                    setShowMenu(false);
+                  }}
+                  title={item.name}
+                />
+              ))}
+            </Menu>
+          </Box>
         </Box>
-        <Menu
-          visible={showMenu}
-          onDismiss={() => setShowMenu(false)}
-          anchor={
-            <IconButton
-              mode="outlined"
-              style={{ position: 'absolute', bottom: -5, right: -5 }}
-              icon="dots-vertical"
-              size={20}
-              onPress={() => setShowMenu(!showMenu)}
-            />
-          }
-        >
-          {mores.map((item: any) => (
-            <Menu.Item
-              key={item.name}
-              onPress={() => {
-                setShowMenu(false);
-              }}
-              title={item.name}
-            />
-          ))}
-        </Menu>
       </Box>
     </Box>
   );

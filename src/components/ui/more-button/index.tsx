@@ -1,17 +1,19 @@
-import { Button, Menu } from 'react-native-paper';
+import { Chip, Menu } from 'react-native-paper';
 
-const MoreButton = ({ showDropDown, setShowDropDown, closeMenu, title }: any) => {
+const MoreButton = ({ data, show, openMenu, closeMenu, title, selected }: any) => {
   return (
     <Menu
-      visible={showDropDown}
-      anchor={
-        <Button icon="dots-vertical" mode="outlined" onPress={() => setShowDropDown(true)}>
-          {title}
-        </Button>
-      }
+      visible={show}
       onDismiss={closeMenu}
+      anchor={
+        <Chip style={{ marginRight: 5 }} icon="dots-vertical" onPress={openMenu} mode="outlined">
+          {title}
+        </Chip>
+      }
     >
-      <Menu.Item title="option" />
+      {data.map((item: any) => (
+        <Menu.Item key={item.name} onPress={() => selected(item)} title={item.name} />
+      ))}
     </Menu>
   );
 };

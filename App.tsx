@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
 import { NetworkProvider } from 'react-native-offline';
 import { DefaultTheme, Provider as PaperProvider, configureFonts } from 'react-native-paper';
@@ -17,6 +17,10 @@ export default function App() {
   const fontConfig = {
     fontFamily: 'sans-serif',
   };
+
+  useEffect(() => {
+    console.log('init');
+  }, []);
 
   const themes = {
     ...DefaultTheme,

@@ -3,10 +3,13 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, FlatList } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
+import { Chip, ProgressBar, Searchbar, Text } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Layout from '../../components/layout';
 import Box from '../../components/ui/box';
 import UiCard from '../../components/ui/card';
 import UiEmpy from '../../components/ui/empty';
+import MoreButton from '../../components/ui/more-button';
 import { removeOfflineList } from '../../utils';
 import assignments from './assignment';
 
@@ -15,10 +18,10 @@ const HomeScreen = ({ navigation }: any) => {
   const windowSize: any = Dimensions.get('screen');
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState([]);
-  const [showMenu, setShowMenu] = useState(true);
+  const [showSearch, setShowSearch] = useState(false);
 
-  const firstSelectedItem: any = assignments[0];
-  const [selectedIssue, setSelectedIssue] = useState(firstSelectedItem);
+  const [show, setShow] = useState(false);
+  const [selectedVal, setSelectedVal] = useState(assignments[0]);
 
   const getProducts = async () => {
     await axios
@@ -59,35 +62,51 @@ const HomeScreen = ({ navigation }: any) => {
 
   return (
     <Layout isHeader openBarcode={() => navigation.navigate('barcode')}>
-      {/* <Box flexDirection="row" justifyContent="space-around" flexGap={10} m={8}>
-        <Menu
-          visible={showMenu}
-          onDismiss={() => setShowMenu(false)}
-          anchor={
-            <Button icon="dots-vertical" mode="outlined" onPress={() => setShowMenu(!showMenu)}>
-              {selectedIssue.name}
-            </Button>
-          }
-        >
-          {assignments.map((item: any) => (
-            <Menu.Item
-              key={item.name}
-              onPress={() => {
-                setSelectedIssue(item);
-                setShowMenu(false);
-              }}
-              title={item.name}
-            />
-          ))}
-        </Menu>
-        <Button icon="check" mode="outlined" onPress={() => console.log('Pressed')}>
+      <Box flexDirection="row" m={8}>
+        <MoreButton
+          selected={(val: any) => {
+            setSelectedVal(val);
+            setShow(false);
+          }}
+          title={selectedVal?.name}
+          data={assignments}
+          openMenu={() => setShow(true)}
+          show={show}
+          closeMenu={() => setShow(false)}
+        />
+
+        <Chip style={{ marginRight: 5 }} onPress={() => console.log('tatar')} mode="outlined">
           Gün Başlangıcı
-        </Button>
+        </Chip>
+        <Chip style={{ marginRight: 5 }} onPress={() => setShowSearch(!showSearch)} mode="outlined">
+          <Icon name="search" />
+        </Chip>
       </Box>
-      <Box mb={4} mr={8} ml={8} mt={8} pl={2} pr={2}>
+      {showSearch && (
+        <Box pl={8} pr={8}>
+          <Searchbar
+            placeholder="Search"
+            onChangeText={() => {}}
+            value={''}
+            inputStyle={{ marginTop: -8 }}
+            style={{
+              height: 40,
+            }}
+          />
+        </Box>
+      )}
+      <Box m={8}>
+        <Box flexDirection="row" justifyContent="space-between" mb={8}>
+          <Box as={Text} color="green" variant="labelMedium">
+            Tamamlanan: 10
+          </Box>
+          <Box as={Text} color="red" variant="labelMedium">
+            Tamamlanamayan: 10
+          </Box>
+        </Box>
         <ProgressBar progress={Math.random()} />
-      </Box> */}
-      <Box height={windowSize.height - 130}>
+      </Box>
+      <Box height={windowSize.height - 215}>
         <FlatList
           refreshing={refresh}
           onRefresh={async () => {
