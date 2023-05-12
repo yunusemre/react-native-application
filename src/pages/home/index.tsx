@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, FlatList } from 'react-native';
@@ -6,16 +7,18 @@ import Layout from '../../components/layout';
 import Box from '../../components/ui/box';
 import UiCard from '../../components/ui/card';
 import UiEmpy from '../../components/ui/empty';
-import { removeMoyListsOffline } from '../../store/features/offline-slice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { removeOfflineList } from '../../utils';
+import assignments from './assignment';
 
 const HomeScreen = ({ navigation }: any) => {
-  const dispatch = useAppDispatch();
-  const { moyListOffline } = useAppSelector((state) => state.offline);
   const isConnected = useIsConnected();
   const windowSize: any = Dimensions.get('screen');
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState([]);
+  const [showMenu, setShowMenu] = useState(true);
+
+  const firstSelectedItem: any = assignments[0];
+  const [selectedIssue, setSelectedIssue] = useState(firstSelectedItem);
 
   const getProducts = async () => {
     await axios
@@ -28,8 +31,10 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   const isOnline = async () => {
-    if (moyListOffline?.length === 0) return;
-    await syncData(moyListOffline);
+    const offline: any = (await AsyncStorage.getItem('@offline')) || '[]';
+    const parseOffline: any = JSON.parse(offline);
+    if (parseOffline?.length === 0) return;
+    await syncData(parseOffline);
   };
 
   const syncData = async (offlineData: any) => {
@@ -37,7 +42,7 @@ const HomeScreen = ({ navigation }: any) => {
     for (const data of offlineData) {
       try {
         await axios.post('/barcode', data);
-        dispatch(removeMoyListsOffline(data));
+        await removeOfflineList(data);
       } catch (error) {
         setRefresh(false);
         console.error(error);
@@ -50,10 +55,38 @@ const HomeScreen = ({ navigation }: any) => {
     getProducts();
     const unsubscribe = navigation.addListener('focus', () => getProducts());
     return unsubscribe;
-  }, [navigation, isConnected]);
+  }, [navigation]);
 
   return (
     <Layout isHeader openBarcode={() => navigation.navigate('barcode')}>
+      {/* <Box flexDirection="row" justifyContent="space-around" flexGap={10} m={8}>
+        <Menu
+          visible={showMenu}
+          onDismiss={() => setShowMenu(false)}
+          anchor={
+            <Button icon="dots-vertical" mode="outlined" onPress={() => setShowMenu(!showMenu)}>
+              {selectedIssue.name}
+            </Button>
+          }
+        >
+          {assignments.map((item: any) => (
+            <Menu.Item
+              key={item.name}
+              onPress={() => {
+                setSelectedIssue(item);
+                setShowMenu(false);
+              }}
+              title={item.name}
+            />
+          ))}
+        </Menu>
+        <Button icon="check" mode="outlined" onPress={() => console.log('Pressed')}>
+          Gün Başlangıcı
+        </Button>
+      </Box>
+      <Box mb={4} mr={8} ml={8} mt={8} pl={2} pr={2}>
+        <ProgressBar progress={Math.random()} />
+      </Box> */}
       <Box height={windowSize.height - 130}>
         <FlatList
           refreshing={refresh}

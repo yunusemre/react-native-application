@@ -1,7 +1,6 @@
 import { Picker } from '@react-native-picker/picker';
 import { StyleSheet, View } from 'react-native';
-import AppColors from '../../../config/colors';
-import AppTypography from '../../../config/typography';
+import theme from '../../../config';
 
 const UiPicker = ({
   onValueChange,
@@ -16,6 +15,7 @@ const UiPicker = ({
       <Picker
         mode="dropdown"
         testID={testID}
+        style={{ alignItems: 'center' }}
         {...props}
         selectedValue={selectedValue}
         onValueChange={onValueChange}
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flex: 1,
     maxHeight: 50,
-    borderColor: AppColors.borderColor,
-    borderRadius: AppTypography.roundness,
+    borderColor: theme.colors.borderColor,
+    borderRadius: theme.radius.normal,
   },
 });
 

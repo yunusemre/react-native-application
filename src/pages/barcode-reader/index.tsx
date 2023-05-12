@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 import { BarCodeScanner } from 'expo-barcode-scanner';
@@ -6,12 +7,9 @@ import { StyleSheet } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import Box from '../../components/ui/box';
 import uuid from '../../config/uuid';
-import { setMoyListsOffline } from '../../store/features/offline-slice';
-import { useAppDispatch } from '../../store/hooks';
 
 export default function BarcodeScreen({ navigation }: any) {
   const [scanned, setScanned] = useState(false);
-  const dispatch = useAppDispatch();
   const isConnected = useIsConnected();
   const isFocused = useIsFocused();
 
@@ -23,10 +21,11 @@ export default function BarcodeScreen({ navigation }: any) {
           barcode: data,
           id: uuid(),
           date: Date.now(),
+          color: true,
         });
       } else {
-        const datas = { barcode: data, id: uuid(), date: Date.now() };
-        dispatch(setMoyListsOffline(datas));
+        const datas: any = { barcode: data, id: uuid(), date: Date.now() };
+        AsyncStorage.setItem('@offline', JSON.stringify(datas));
       }
     } catch (error) {
       console.log('err', error);

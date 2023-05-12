@@ -1,111 +1,22 @@
 {
-  "auth": {
-    
-  },
+  "auth": {},
   "login": {
     "username": "emretatar",
     "password": "q1w2e3"
   },
-  "coordinates": [
-    {
-      "latitude": 40.9738116,
-      "longitude": 29.2536725,
-      "latitudeDelta": 0.003,
-      "longitudeDelta": 0.003,
-      "id": 1
-    },
-    {
-      "latitude": 40.9738116,
-      "longitude": 29.2536725,
-      "latitudeDelta": 0.003,
-      "longitudeDelta": 0.003,
-      "id": 2
-    },
-    {
-      "latitude": 40.9738116,
-      "longitude": 29.2536725,
-      "latitudeDelta": 0.003,
-      "longitudeDelta": 0.003,
-      "id": 3
-    },
-    {
-      "latitude": 40.9738116,
-      "longitude": 29.2536725,
-      "latitudeDelta": 0.003,
-      "longitudeDelta": 0.003,
-      "id": 4
-    },
-    {
-      "latitude": 40.9738116,
-      "longitude": 29.2536725,
-      "latitudeDelta": 0.003,
-      "longitudeDelta": 0.003,
-      "id": 5
-    },
-    {
-      "timestamp": 1683713856946,
-      "mocked": false,
-      "coords": {
-        "altitude": 0,
-        "heading": 0,
-        "altitudeAccuracy": 0.5,
-        "latitude": 41.0814017,
-        "speed": 0,
-        "longitude": 28.9819767,
-        "accuracy": 413.02301025390625
-      },
-      "latitude": 41.0814017,
-      "longitude": 28.9819767,
-      "id": 6
-    },
-    {
-      "timestamp": 1683713883766,
-      "mocked": false,
-      "coords": {
-        "altitude": 0,
-        "heading": 0,
-        "altitudeAccuracy": 0.5,
-        "latitude": 41.0814017,
-        "speed": 0,
-        "longitude": 28.9819767,
-        "accuracy": 5
-      },
-      "latitude": 41.0814017,
-      "longitude": 28.9819767,
-      "id": 7
-    },
-    {
-      "timestamp": 1683713887775,
-      "mocked": false,
-      "coords": {
-        "altitude": 0,
-        "heading": 0,
-        "altitudeAccuracy": 0.5,
-        "latitude": 41.0814017,
-        "speed": 0,
-        "longitude": 28.9819767,
-        "accuracy": 5
-      },
-      "latitude": 41.0814017,
-      "longitude": 28.9819767,
-      "id": 8
-    }
-  ],
+  "coordinates": [],
   "barcode": [
     {
-      "barcode": "8690536010165",
-      "id": "b3ab23f6-f9c9-41b9-901c-87b70abc0f7c",
-      "date": 1683628996336
+      "barcode": "8690536025015",
+      "id": "84bb3716-0c5c-4009-b4fd-dc7496b376b3",
+      "date": 1683882956909,
+      "color": true
     },
     {
-      "barcode": "8693890980501",
-      "id": "c1e844d5-9e31-4321-b89f-d52ae31c7eb6",
-      "date": 1683699408941
-    },
-    {
-      "barcode": "8681861008606",
-      "id": "5f4455c9-d7d1-4f2e-a6e5-6e4fe5d124d8",
-      "date": 1683699426733
+      "barcode": "]C1999000155160",
+      "id": "ac4b78a8-684f-4c24-8ebe-07263468ffc8",
+      "date": 1683882968297,
+      "color": true
     }
   ]
 }

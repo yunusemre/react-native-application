@@ -45,7 +45,7 @@ const LoginScreen = ({ navigation }: any) => {
           setVisible(true);
         }
         setIsLogin(false);
-      }, 2000);
+      }, 1000);
     } catch (error) {
       setIsLogin(false);
     }
@@ -86,7 +86,7 @@ const LoginScreen = ({ navigation }: any) => {
         />
         <Button
           disabled={isLogin}
-          icon="camera"
+          icon="send"
           loading={isLogin}
           style={styles.submitButton}
           mode="contained"

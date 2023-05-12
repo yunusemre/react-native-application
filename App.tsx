@@ -1,23 +1,19 @@
 import 'react-native-gesture-handler';
 
-import Bugsnag from '@bugsnag/expo';
 import React from 'react';
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
 import { NetworkProvider } from 'react-native-offline';
 import { DefaultTheme, Provider as PaperProvider, configureFonts } from 'react-native-paper';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import axiosInterceptor from './src/api/interceptor';
 import Box from './src/components/ui/box';
-import Text from './src/components/ui/text';
 import theme from './src/config';
 import Router from './src/router';
 import { store } from './src/store/configure-store';
 
 export default function App() {
-  Bugsnag.start();
-  axiosInterceptor(store);
-  const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
+  axiosInterceptor(store, '');
   const fontConfig = {
     fontFamily: 'sans-serif',
   };
@@ -29,7 +25,8 @@ export default function App() {
     colors: {
       ...DefaultTheme.colors,
       outline: theme.colors.borderColor,
-      onBackground: 'white',
+      onBackground: theme.colors.default,
+      background: theme.colors.default,
       primary: theme.colors.primary,
       secondary: theme.colors.default,
       tertiary: theme.colors.textColor,
@@ -44,35 +41,18 @@ export default function App() {
   };
 
   return (
-    <ErrorBoundary FallbackComponent={ErrorView}>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <NetworkProvider {...networkOptions}>
-            <PaperProvider theme={themes}>
-              <SafeAreaView style={[styles.safeArea]}>
-                <KeyboardAvoidingView style={styles.keyboardView}>
-                  <Router />
-                </KeyboardAvoidingView>
-              </SafeAreaView>
-            </PaperProvider>
-          </NetworkProvider>
-        </ThemeProvider>
-      </Provider>
-    </ErrorBoundary>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <NetworkProvider {...networkOptions}>
+          <PaperProvider theme={themes}>
+            <Box as={SafeAreaView} flex={1}>
+              <Box as={KeyboardAvoidingView} flex={1}>
+                <Router />
+              </Box>
+            </Box>
+          </PaperProvider>
+        </NetworkProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }
-
-const ErrorView = () => (
-  <Box>
-    <Text>Inform users of an error in the component tree.</Text>
-  </Box>
-);
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
-  keyboardView: {
-    flex: 1,
-  },
-});

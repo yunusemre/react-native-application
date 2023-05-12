@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Env } from './env';
 
 axios.defaults.baseURL = Env.API_URL;
-const axiosInterceptor = (store: any) => {
+const axiosInterceptor = (store: any, navigation: any) => {
   const state = store.getState();
   const requestSuccess = (config: any) => {
     config.headers['Content-Type'] = 'application/json; charset=UTF-8';
