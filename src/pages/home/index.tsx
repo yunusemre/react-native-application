@@ -70,7 +70,7 @@ const HomeScreen = ({ navigation }: any) => {
               setSelectedVal(val);
               setShow(false);
             }}
-            title={selectedVal?.name}
+            title={`Görev: ${selectedVal?.name}`}
             data={assignments}
             openMenu={() => setShow(true)}
             show={show}
