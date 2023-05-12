@@ -1,14 +1,30 @@
-import { Chip, Menu } from 'react-native-paper';
+import { Button, Menu } from 'react-native-paper';
 
-const MoreButton = ({ data, show, openMenu, closeMenu, title, selected }: any) => {
+const MoreButton = ({
+  data,
+  icon = 'dots-vertical',
+  width = '100%',
+  show,
+  style,
+  openMenu,
+  closeMenu,
+  title,
+  selected,
+}: any) => {
   return (
     <Menu
       visible={show}
       onDismiss={closeMenu}
       anchor={
-        <Chip style={{ marginRight: 5 }} icon="dots-vertical" onPress={openMenu} mode="flat">
+        <Button
+          contentStyle={{ flexDirection: 'row-reverse' }}
+          icon={icon}
+          style={[style, { width: width }]}
+          onPress={openMenu}
+          mode="outlined"
+        >
           {title}
-        </Chip>
+        </Button>
       }
     >
       {data.map((item: any) => (

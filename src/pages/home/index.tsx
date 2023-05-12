@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, FlatList } from 'react-native';
+import { Dimensions, FlatList, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
-import { Chip, ProgressBar, Searchbar, Text } from 'react-native-paper';
+import { Button, ProgressBar, Searchbar, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Layout from '../../components/layout';
 import Box from '../../components/ui/box';
@@ -63,38 +63,40 @@ const HomeScreen = ({ navigation }: any) => {
   return (
     <Layout isHeader openBarcode={() => navigation.navigate('barcode')}>
       <Box ml={8} mr={8} mt={4}>
-        <Box flexDirection="row" mb={2} width={'100%'}>
-          <MoreButton
-            style={{ width: '100%', justifyContent: 'center', flexGrow: 1 }}
-            selected={(val: any) => {
-              setSelectedVal(val);
-              setShow(false);
-            }}
-            title={`Görev: ${selectedVal?.name}`}
-            data={assignments}
-            openMenu={() => setShow(true)}
-            show={show}
-            closeMenu={() => setShow(false)}
-          />
+        <Box flexDirection="row" justifyContent="space-around" mb={2}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <MoreButton
+              selected={(val: any) => {
+                setSelectedVal(val);
+                setShow(false);
+              }}
+              title={`Görev: ${selectedVal?.name}`}
+              data={assignments}
+              openMenu={() => setShow(true)}
+              show={show}
+              closeMenu={() => setShow(false)}
+            />
 
-          <Chip
-            style={{
-              marginRight: 2,
-            }}
-            onPress={() => console.log('tatar')}
-            mode="flat"
-          >
-            Gün Başlangıcı
-          </Chip>
-          <Chip
-            style={{
-              marginRight: 2,
-            }}
-            onPress={() => setShowSearch(!showSearch)}
-            mode="flat"
-          >
-            <Icon name="search" />
-          </Chip>
+            <Button
+              mode="outlined"
+              style={{
+                marginLeft: 5,
+                marginRight: 5,
+              }}
+              onPress={() => console.log('tatar')}
+            >
+              Gün Başlangıcı
+            </Button>
+            <Button
+              style={{
+                marginRight: 5,
+              }}
+              mode="outlined"
+              onPress={() => setShowSearch(!showSearch)}
+            >
+              <Icon name="search" />
+            </Button>
+          </ScrollView>
         </Box>
         {showSearch && (
           <Box>
