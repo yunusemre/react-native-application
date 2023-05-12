@@ -21,7 +21,12 @@ const UiHeader = () => {
         color="white"
         onPress={() => navigation.navigate('barcode')}
       />
-      <Appbar.Action icon="login" color="white" onPress={() => navigation.navigate('login')} />
+      <Appbar.Action
+        icon="map"
+        size={30}
+        color="white"
+        onPress={() => navigation.navigate('mapping')}
+      />
     </Appbar>
   );
 };

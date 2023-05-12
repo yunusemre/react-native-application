@@ -6,7 +6,7 @@ const MoreButton = ({ data, show, openMenu, closeMenu, title, selected }: any) =
       visible={show}
       onDismiss={closeMenu}
       anchor={
-        <Chip style={{ marginRight: 5 }} icon="dots-vertical" onPress={openMenu} mode="outlined">
+        <Chip style={{ marginRight: 5 }} icon="dots-vertical" onPress={openMenu} mode="flat">
           {title}
         </Chip>
       }

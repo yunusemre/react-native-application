@@ -8,7 +8,7 @@ const UiCard = (props: any) => {
   const [checked, setChecked] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   return (
-    <Box borderRadius={8} ml={8} mr={8} mt={8} pt={4} pb={4} bg="borderColor">
+    <Box border={0.5} borderColor="borderColor" borderRadius={8} mt={8} pt={4} pb={4} bg="white">
       <Box flexDirection="row" minHeight={60}>
         <Box width={'15%'} alignItems="center">
           <Checkbox

@@ -4,6 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect } from 'react';
 import { PermissionsAndroid } from 'react-native';
 import Box from '../components/ui/box';
+import theme from '../config';
 import BarcodeScreen from '../pages/barcode-reader';
 import HomeScreen from '../pages/home';
 import LoginScreen from '../pages/login';
@@ -16,7 +17,7 @@ const navTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: 'transparent',
+    background: theme.colors.bgColor,
   },
 };
 

@@ -3,6 +3,7 @@ const sizes: any = {};
 const colors = {
   primary: '#3baf29',
   warning: '#fff3cd',
+  bgColor: '#f7f8fa',
   info: '#cfe2ff',
   danger: '#f8d7da',
   borderPrimary: '#3baf29',

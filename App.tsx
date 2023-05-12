@@ -32,6 +32,7 @@ export default function App() {
       onBackground: theme.colors.default,
       background: theme.colors.default,
       primary: theme.colors.primary,
+      secondaryContainer: theme.colors.lightPrimary,
       secondary: theme.colors.default,
       tertiary: theme.colors.textColor,
     },

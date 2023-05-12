@@ -4,23 +4,23 @@ const assignments = [
     value: 1,
   },
   {
-    name: 'Tamamlanan Görevler',
+    name: 'Tamamlanan',
     value: 2,
   },
   {
-    name: 'Toplama Görevleri',
+    name: 'Toplama',
     value: 3,
   },
   {
-    name: 'Dağıtma Görevleri',
+    name: 'Dağıtma',
     value: 4,
   },
   {
-    name: 'Tamamlanamayan Görevler',
+    name: 'Tamamlanamayan',
     value: 5,
   },
   {
-    name: 'Tahsilatlı Görevler',
+    name: 'Tahsilatlı',
     value: 6,
   },
 ];
