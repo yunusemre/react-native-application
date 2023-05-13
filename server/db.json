@@ -4,7 +4,15 @@
     "username": "emretatar",
     "password": "q1w2e3"
   },
-  "coordinates": [],
+  "coordinates": [
+    {
+      "latitude": 40.9738116,
+      "longitude": 29.2536725,
+      "latitudeDelta": 0.003,
+      "longitudeDelta": 0.003,
+      "id": 1
+    }
+  ],
   "barcode": [
     {
       "barcode": "8690536025015",
@@ -40,6 +48,30 @@
       "barcode": "9786254058660",
       "id": "e691e28c-589c-470b-99bb-a4d66209c433",
       "date": 1683894815249,
+      "color": true
+    },
+    {
+      "barcode": "9786051981468",
+      "id": "02624c1c-70fb-4210-bece-c2d81dd02a4d",
+      "date": 1683955457079,
+      "color": true
+    },
+    {
+      "barcode": "4015000090940",
+      "id": "b26e6f3c-2f00-41f4-847c-c77ac75c1d80",
+      "date": 1683955473371,
+      "color": true
+    },
+    {
+      "barcode": "8681861008583",
+      "id": "61721efb-68a3-45e9-9686-fbb046bd6f33",
+      "date": 1683955480916,
+      "color": true
+    },
+    {
+      "barcode": "8681861008613",
+      "id": "a2a6c213-6ae0-4b0e-969f-7d63888373ef",
+      "date": 1683955489092,
       "color": true
     }
   ]
