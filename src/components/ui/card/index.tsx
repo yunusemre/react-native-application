@@ -18,8 +18,11 @@ const UiCard = (props: any) => {
               setChecked(!checked);
             }}
           />
-          {props.color && <Icon name="alarm" size={18} />}
-          <Icon name="hours-24" size={18} />
+          <Box flexDirection="row" flexWrap="wrap" width={60} pl={12} pr={12}>
+            {props.color && <Icon name="alarm" size={18} />}
+            <Icon name="hours-24" size={18} />
+            <Icon name="check-circle-outline" size={18} />
+          </Box>
         </Box>
         <Box width={'85%'}>
           <Badge
