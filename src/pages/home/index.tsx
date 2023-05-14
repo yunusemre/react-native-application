@@ -22,8 +22,9 @@ const HomeScreen = ({ navigation }: any) => {
   const [data, setData] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
 
-  const [show, setShow] = useState(false);
-  const [selectedVal, setSelectedVal] = useState(assignments[0]);
+  const [showIssue, setShowIssue] = useState(false);
+  const [selectedIssue, setIsseu] = useState(assignments[0]);
+
   const [showAction, setShowAction] = useState(false);
   const [selectedAction, setSelectedAction] = useState(actions[0]);
 
@@ -72,14 +73,14 @@ const HomeScreen = ({ navigation }: any) => {
             <MoreButton
               style={{ marginRight: 5 }}
               selected={(val: any) => {
-                setSelectedVal(val);
-                setShow(false);
+                setIsseu(val);
+                setShowIssue(false);
               }}
-              title={`Görev: ${selectedVal?.name}`}
+              title={`Görev: ${selectedIssue?.name}`}
               data={assignments}
-              openMenu={() => setShow(true)}
-              show={show}
-              closeMenu={() => setShow(false)}
+              openMenu={() => setShowIssue(true)}
+              show={showIssue}
+              closeMenu={() => setShowIssue(false)}
             />
             <MoreButton
               style={{ marginLeft: 5 }}
@@ -92,7 +93,7 @@ const HomeScreen = ({ navigation }: any) => {
               data={actions}
               icon="menu-down"
               openMenu={() => setShowAction(true)}
-              show={selectedAction}
+              show={showAction}
               closeMenu={() => setShowAction(false)}
             />
 

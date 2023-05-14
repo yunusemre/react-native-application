@@ -43,8 +43,9 @@ const UiCard = (props: any) => {
           <Text variant="labelSmall">Parça Sayısı: 4</Text>
           <Text variant="labelSmall">Atandı</Text>
           <Box style={{ position: 'absolute', bottom: 0, right: 0 }}>
-            <Menu
-              style={{ backgroundColor: 'white' }}
+            <Box
+              as={Menu}
+              bg="white"
               visible={showMenu}
               onDismiss={() => setShowMenu(false)}
               anchor={
@@ -61,7 +62,7 @@ const UiCard = (props: any) => {
                   title={item.name}
                 />
               ))}
-            </Menu>
+            </Box>
           </Box>
         </Box>
       </Box>
