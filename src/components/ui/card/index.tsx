@@ -26,8 +26,8 @@ const UiCard = (props: any) => {
             size={18}
             style={{
               position: 'absolute',
-              top: 0,
-              right: 4,
+              top: 4,
+              right: 6,
               backgroundColor: 'white',
               color: theme.colors.primary,
               borderWidth: 1,
@@ -42,10 +42,9 @@ const UiCard = (props: any) => {
           <Text variant="labelSmall">Müşteri Takip No: -</Text>
           <Text variant="labelSmall">Parça Sayısı: 4</Text>
           <Text variant="labelSmall">Atandı</Text>
-          <Box style={{ position: 'absolute', bottom: 0, right: 0 }}>
+          <Box style={{ position: 'absolute', bottom: -10, right: -6 }}>
             <Box
               as={Menu}
-              bg="white"
               visible={showMenu}
               onDismiss={() => setShowMenu(false)}
               anchor={
@@ -54,7 +53,6 @@ const UiCard = (props: any) => {
             >
               {mores.map((item: any) => (
                 <Menu.Item
-                  style={{ backgroundColor: 'white' }}
                   key={item.name}
                   onPress={() => {
                     setShowMenu(false);

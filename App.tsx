@@ -28,13 +28,20 @@ export default function App() {
     fonts: configureFonts({ config: fontConfig }),
     colors: {
       ...DefaultTheme.colors,
-      outline: theme.colors.borderColor,
-      onBackground: theme.colors.default,
-      background: theme.colors.default,
       primary: theme.colors.primary,
-      secondaryContainer: theme.colors.lightPrimary,
-      secondary: theme.colors.default,
-      tertiary: theme.colors.textColor,
+      outline: theme.colors.borderColor,
+      background: theme.colors.default,
+      tertiary: theme.colors.lightPrimary,
+      surface: theme.colors.lightPrimary,
+      error: theme.colors.danger,
+      elevation: {
+        level0: 'white',
+        level1: 'white',
+        level2: 'white',
+        level3: 'white',
+        level4: 'white',
+        level5: 'white',
+      },
     },
   };
 

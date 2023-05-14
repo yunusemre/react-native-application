@@ -136,7 +136,7 @@ const HomeScreen = ({ navigation }: any) => {
             <Box as={Text} color="green" variant="labelMedium">
               Tamamlanan: 10
             </Box>
-            <Box as={Text} color="red" variant="labelMedium">
+            <Box as={Text} color="danger" variant="labelMedium">
               Tamamlanamayan: 10
             </Box>
           </Box>
