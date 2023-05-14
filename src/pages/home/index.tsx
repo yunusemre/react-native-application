@@ -11,17 +11,21 @@ import UiCard from '../../components/ui/card';
 import UiEmpy from '../../components/ui/empty';
 import MoreButton from '../../components/ui/more-button';
 import { removeOfflineList } from '../../utils';
+import { actions } from './actions';
 import assignments from './assignment';
 
 const HomeScreen = ({ navigation }: any) => {
   const isConnected = useIsConnected();
-  const windowSize: any = Dimensions.get('screen');
+  const screenSize: any = Dimensions.get('screen');
+  const windowSize: any = Dimensions.get('window');
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
 
   const [show, setShow] = useState(false);
   const [selectedVal, setSelectedVal] = useState(assignments[0]);
+  const [showAction, setShowAction] = useState(false);
+  const [selectedAction, setSelectedAction] = useState(actions[0]);
 
   const getProducts = async () => {
     await axios
@@ -66,6 +70,7 @@ const HomeScreen = ({ navigation }: any) => {
         <Box flexDirection="row" justifyContent="space-around" mb={2}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <MoreButton
+              style={{ marginRight: 5 }}
               selected={(val: any) => {
                 setSelectedVal(val);
                 setShow(false);
@@ -76,11 +81,25 @@ const HomeScreen = ({ navigation }: any) => {
               show={show}
               closeMenu={() => setShow(false)}
             />
+            <MoreButton
+              style={{ marginLeft: 5 }}
+              selected={(val: any) => {
+                setSelectedAction(val);
+                setShowAction(false);
+              }}
+              title="İşlemler"
+              // mode="contained"
+              data={actions}
+              icon="menu-down"
+              openMenu={() => setShowAction(true)}
+              show={selectedAction}
+              closeMenu={() => setShowAction(false)}
+            />
 
             <Button
               mode="outlined"
               style={{
-                marginLeft: 5,
+                marginLeft: 10,
                 marginRight: 5,
               }}
               onPress={() => console.log('tatar')}
@@ -122,7 +141,7 @@ const HomeScreen = ({ navigation }: any) => {
           </Box>
           <ProgressBar progress={Math.random()} />
         </Box>
-        <Box height={windowSize.height - 220}>
+        <Box height={screenSize.height - 200}>
           <FlatList
             refreshing={refresh}
             onRefresh={async () => {
@@ -132,7 +151,7 @@ const HomeScreen = ({ navigation }: any) => {
               }
             }}
             data={data}
-            renderItem={({ item }: any) => <UiCard {...item} />}
+            renderItem={({ item, index }: any) => <UiCard index={index + 1} {...item} />}
             keyExtractor={(item: any) => item.id}
             ListEmptyComponent={
               <UiEmpy

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Checkbox, IconButton, Menu, Text } from 'react-native-paper';
+import { Badge, Checkbox, IconButton, Menu, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import theme from '../../../config';
 import Box from '../box';
 import mores from './more';
 
@@ -21,6 +22,21 @@ const UiCard = (props: any) => {
           <Icon name="hours-24" size={18} />
         </Box>
         <Box width={'85%'}>
+          <Badge
+            size={18}
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 4,
+              backgroundColor: 'white',
+              color: theme.colors.primary,
+              borderWidth: 1,
+              borderColor: theme.colors.primary,
+              zIndex: 12,
+            }}
+          >
+            {props.index}
+          </Badge>
           <Text>Teknosa</Text>
           <Text variant="labelMedium">Soğanlık Yeni Mah Alataş Sk. No: 2 Kat: 1 No: 1</Text>
           <Text variant="labelSmall">Müşteri Takip No: -</Text>

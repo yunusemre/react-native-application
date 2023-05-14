@@ -4,6 +4,7 @@ const MoreButton = ({
   data,
   icon = 'dots-vertical',
   width = '100%',
+  mode = 'outlined',
   show,
   style,
   openMenu,
@@ -21,7 +22,7 @@ const MoreButton = ({
           icon={icon}
           style={[style, { width: width }]}
           onPress={openMenu}
-          mode="outlined"
+          mode={mode}
         >
           {title}
         </Button>
