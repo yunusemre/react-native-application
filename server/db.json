@@ -15,74 +15,38 @@
   ],
   "barcode": [
     {
-      "barcode": "8690536025015",
-      "taskStatus": 0,
-      "id": "84bb3716-0c5c-4009-b4fd-dc7496b376b3",
-      "date": 1683882956909,
-      "color": true
+      "TaskId": 40039150,
+      "TaskType": 2,
+      "TaskStatus": 0,
+      "TotalItemCount": 4,
+      "CompletionTime": null,
+      "Title": "MODANİSA ELEKTRONİK MAĞAZACILIK VE TİCARET A.Ş.",
+      "AddressText": "Güneşler mahallesi 5023 nolu sokakkapı no:1, daire:2 Adapazarı Sakarya",
+      "Latitude": 40.783278,
+      "Longitude": 30.424747,
+      "Gsm": "5498129230",
+      "ShipmentStatus": 0,
+      "Recipient": {
+        "RecipientName": "Emre",
+        "RecipientSurname": "Tatar"
+      }
     },
     {
-      "barcode": "]C1999000155160",
-      "taskStatus": 1,
-      "id": "ac4b78a8-684f-4c24-8ebe-07263468ffc8",
-      "date": 1683882968297,
-      "color": false
-    },
-    {
-      "barcode": "8690536025015",
-      "taskStatus": 0,
-      "id": "aa125fd0-80c8-4758-998a-8945f2b242ba",
-      "date": 1683891473706,
-      "color": false
-    },
-    {
-      "barcode": "8682241200115",
-      "taskStatus": 1,
-      "id": "c7c46118-68c6-42c1-807c-8540dec67668",
-      "date": 1683891500034,
-      "color": false
-    },
-    {
-      "barcode": "9786051981468",
-      "taskStatus": 0,
-      "id": "018e2dd7-39f9-4628-aa9f-e2c899946e79",
-      "date": 1683891524329,
-      "color": false
-    },
-    {
-      "barcode": "9786254058660",
-      "taskStatus": 0,
-      "id": "e691e28c-589c-470b-99bb-a4d66209c433",
-      "date": 1683894815249,
-      "color": false
-    },
-    {
-      "barcode": "9786051981468",
-      "taskStatus": 1,
-      "id": "02624c1c-70fb-4210-bece-c2d81dd02a4d",
-      "date": 1683955457079,
-      "color": false
-    },
-    {
-      "barcode": "4015000090940",
-      "taskStatus": 1,
-      "id": "b26e6f3c-2f00-41f4-847c-c77ac75c1d80",
-      "date": 1683955473371,
-      "color": true
-    },
-    {
-      "barcode": "8681861008583",
-      "taskStatus": 1,
-      "id": "61721efb-68a3-45e9-9686-fbb046bd6f33",
-      "date": 1683955480916,
-      "color": true
-    },
-    {
-      "barcode": "8681861008613",
-      "taskStatus": 1,
-      "id": "a2a6c213-6ae0-4b0e-969f-7d63888373ef",
-      "date": 1683955489092,
-      "color": true
+      "TaskId": 40039151,
+      "TaskType": 2,
+      "TaskStatus": 1,
+      "TotalItemCount": 2,
+      "CompletionTime": null,
+      "Title": "MODANİSA ELEKTRONİK MAĞAZACILIK VE TİCARET A.Ş.",
+      "AddressText": "Modanisa Depo Tepeören, Eski Ankara Asfaltı Cd. No:177, 34959 Tuzla/İstanbul ",
+      "Latitude": 40.906116,
+      "Longitude": 29.392978,
+      "Gsm": "5498129230",
+      "ShipmentStatus": 0,
+      "Recipient": {
+        "RecipientName": "Görkem",
+        "RecipientSurname": "Sarı"
+      }
     }
   ]
 }

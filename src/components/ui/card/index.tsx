@@ -5,7 +5,42 @@ import theme from '../../../config';
 import Box from '../box';
 import mores from './more';
 
-const UiCard = (props: any) => {
+interface ICard {
+  index: number;
+  TaskId: number;
+  TotalItemCount: number;
+  TaskType: number;
+  TaskStatus: number;
+  CompletionTime: Date | null;
+  Title: string;
+  AddressText: string;
+  Latitude: number;
+  Longitude: number;
+  Gsm: string;
+  ShipmentStatus: number;
+  modalOutput: (val: string) => void;
+  Recipient: {
+    RecipientName: string;
+    RecipientSurname: string;
+  };
+}
+
+const UiCard = ({
+  index,
+  TaskId,
+  TaskType,
+  TaskStatus,
+  CompletionTime,
+  TotalItemCount,
+  Title,
+  AddressText,
+  Latitude,
+  Longitude,
+  Gsm: string,
+  ShipmentStatus,
+  modalOutput,
+  Recipient: { RecipientName, RecipientSurname },
+}: ICard) => {
   const [checked, setChecked] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [visibleModal, setVisibleModal] = React.useState(false);
@@ -19,8 +54,8 @@ const UiCard = (props: any) => {
       mt={8}
       pt={4}
       pb={4}
-      bg={props.color ? 'danger' : 'white'}
-      color={props.color ? 'white' : ''}
+      bg={CompletionTime === null ? 'danger' : 'white'}
+      color={CompletionTime === null ? 'white' : ''}
     >
       <Box flexDirection="row" minHeight={60}>
         <Box width={'15%'} alignItems="center">
@@ -38,22 +73,22 @@ const UiCard = (props: any) => {
             pl={12}
             pr={12}
           >
-            {props.color && (
+            {CompletionTime === null && (
               <Icon
                 onPress={() =>
-                  props.modalOutput('09:00-18:00 saatleri arasında toplama işlemi yapılacaktır.')
+                  modalOutput('09:00-18:00 saatleri arasında toplama işlemi yapılacaktır.')
                 }
                 name="alarm"
                 size={18}
               />
             )}
             <Icon
-              onPress={() => props.modalOutput('24 Saat içerisinde teslim edilmesi gerekiyor')}
+              onPress={() => modalOutput('24 Saat içerisinde teslim edilmesi gerekiyor')}
               name="hours-24"
               size={18}
             />
             <Icon
-              onPress={() => props.modalOutput('Toplama işlemi tamamlandı')}
+              onPress={() => modalOutput('Toplama işlemi tamamlandı')}
               name="check-circle-outline"
               size={18}
             />
@@ -61,7 +96,7 @@ const UiCard = (props: any) => {
         </Box>
         <Box width={'85%'}>
           <Badge
-            onPress={() => props.modalOutput('24 Saat içerisinde teslim edilmesi gerekiyor')}
+            onPress={() => modalOutput('24 Saat içerisinde teslim edilmesi gerekiyor')}
             size={18}
             style={{
               position: 'absolute',
@@ -75,10 +110,10 @@ const UiCard = (props: any) => {
               zIndex: 12,
             }}
           >
-            {props.index}
+            {index}
           </Badge>
           <Icon
-            onPress={() => props.modalOutput(props.taskStatus === 1 ? 'Toplama' : 'Dağıtım')}
+            onPress={() => modalOutput(TaskStatus === 1 ? 'Toplama' : 'Dağıtım')}
             style={{
               position: 'absolute',
               top: 24,
@@ -88,13 +123,15 @@ const UiCard = (props: any) => {
               fontWeight: 'bold',
               zIndex: 12,
             }}
-            name={props.taskStatus === 1 ? 'call-merge' : 'call-split'}
+            name={TaskStatus === 1 ? 'call-merge' : 'call-split'}
             size={18}
           />
-          <Text>Teknosa</Text>
-          <Text variant="labelMedium">Soğanlık Yeni Mah Alataş Sk. No: 2 Kat: 1 No: 1</Text>
+          <Text style={{ width: '90%' }}>{Title}</Text>
+          <Text style={{ width: '90%' }} variant="labelMedium">
+            {AddressText}
+          </Text>
           <Text variant="labelSmall">Müşteri Takip No: -</Text>
-          <Text variant="labelSmall">Parça Sayısı: 4</Text>
+          <Text variant="labelSmall">Parça Sayısı: {TotalItemCount}</Text>
           <Text variant="labelSmall" style={{ fontWeight: 'bold' }}>
             Atandı
           </Text>
