@@ -17,9 +17,9 @@
     {
       "TaskId": 40039150,
       "TaskType": 2,
-      "TaskStatus": 0,
+      "TaskStatus": 1,
       "TotalItemCount": 4,
-      "CompletionTime": null,
+      "CompletionTime": "2023-05-15T13:10:57",
       "Title": "MODANİSA ELEKTRONİK MAĞAZACILIK VE TİCARET A.Ş.",
       "AddressText": "Güneşler mahallesi 5023 nolu sokakkapı no:1, daire:2 Adapazarı Sakarya",
       "Latitude": 40.783278,
@@ -34,7 +34,7 @@
     {
       "TaskId": 40039151,
       "TaskType": 2,
-      "TaskStatus": 1,
+      "TaskStatus": 2,
       "TotalItemCount": 2,
       "CompletionTime": null,
       "Title": "MODANİSA ELEKTRONİK MAĞAZACILIK VE TİCARET A.Ş.",
