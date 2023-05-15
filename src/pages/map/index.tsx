@@ -50,8 +50,6 @@ const MappingScreen = ({ route, navigation }: any) => {
         initialRegion={location}
         style={StyleSheet.absoluteFill}
         customMapStyle={mapJson}
-        showsUserLocation={true}
-        showsMyLocationButton={true}
         followsUserLocation={true}
         showsCompass={true}
         scrollEnabled={true}
