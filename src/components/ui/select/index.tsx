@@ -1,41 +1,43 @@
 import { Picker } from '@react-native-picker/picker';
-import { StyleSheet, View } from 'react-native';
 import theme from '../../../config';
+import Box from '../box';
 
 const UiPicker = ({
   onValueChange,
   stylesWrapper,
   testID,
   selectedValue,
+  minWidth,
   items,
+  mode = 'dropdown',
   ...props
 }: any) => {
   return (
-    <View style={[stylesWrapper, styles.wrapper]}>
+    <Box borderWidth={1} borderColor={theme.colors.borderColor} borderRadius={theme.radius.full}>
       <Picker
-        mode="dropdown"
+        mode={mode}
         testID={testID}
-        style={{ alignItems: 'center' }}
+        style={{
+          marginTop: -6,
+          color: theme.colors.primary,
+          alignItems: 'center',
+          width: 'auto',
+          minWidth: minWidth,
+          maxWidth: '100%',
+          height: 40,
+          borderColor: theme.colors.borderColor,
+          borderWidth: 1,
+        }}
         {...props}
         selectedValue={selectedValue}
         onValueChange={onValueChange}
       >
         {items.map((item: any, index: number) => (
-          <Picker.Item key={index} {...item} />
+          <Picker.Item key={index} label={item.name} value={item.value} />
         ))}
       </Picker>
-    </View>
+    </Box>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    borderWidth: 1,
-    flex: 1,
-    maxHeight: 50,
-    borderColor: theme.colors.borderColor,
-    borderRadius: theme.radius.normal,
-  },
-});
 
 export default UiPicker;

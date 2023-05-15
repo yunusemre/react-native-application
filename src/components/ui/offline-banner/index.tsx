@@ -4,7 +4,7 @@ import { MD2Colors } from 'react-native-paper';
 import Box from '../box';
 import Text from '../text';
 
-const Offline = () => {
+const UiOffline = () => {
   return (
     <Box style={styles.bottomBar}>
       <Text style={styles.offlineText}>No connection</Text>
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Offline;
+export default UiOffline;

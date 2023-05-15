@@ -9,7 +9,8 @@ import Layout from '../../components/layout';
 import Box from '../../components/ui/box';
 import UiCard from '../../components/ui/card';
 import UiEmpy from '../../components/ui/empty';
-import MoreButton from '../../components/ui/more-button';
+import UiMoreButton from '../../components/ui/more-button';
+import UiPicker from '../../components/ui/select';
 import { removeOfflineList } from '../../utils';
 import { actions } from './actions';
 import assignments from './assignment';
@@ -17,13 +18,12 @@ import assignments from './assignment';
 const HomeScreen = ({ navigation }: any) => {
   const isConnected = useIsConnected();
   const screenSize: any = Dimensions.get('screen');
-  const windowSize: any = Dimensions.get('window');
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
 
   const [showIssue, setShowIssue] = useState(false);
-  const [selectedIssue, setIsseu] = useState(assignments[0]);
+  const [selectedIssue, setSelectedIsseu] = useState();
 
   const [showAction, setShowAction] = useState(false);
   const [selectedAction, setSelectedAction] = useState(actions[0]);
@@ -70,19 +70,16 @@ const HomeScreen = ({ navigation }: any) => {
       <Box ml={8} mr={8} mt={4}>
         <Box flexDirection="row" justifyContent="space-around" mb={2}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <MoreButton
-              style={{ marginRight: 5 }}
-              selected={(val: any) => {
-                setIsseu(val);
-                setShowIssue(false);
+            <UiPicker
+              minWidth={160}
+              items={assignments}
+              selectedValue={selectedIssue}
+              onValueChange={(val: any) => {
+                console.log(val);
+                setSelectedIsseu(val);
               }}
-              title={`Görev: ${selectedIssue?.name}`}
-              data={assignments}
-              openMenu={() => setShowIssue(true)}
-              show={showIssue}
-              closeMenu={() => setShowIssue(false)}
             />
-            <MoreButton
+            <UiMoreButton
               style={{ marginLeft: 5 }}
               selected={(val: any) => {
                 setSelectedAction(val);

@@ -1,6 +1,6 @@
 import { Button, Menu } from 'react-native-paper';
 
-const MoreButton = ({
+const UiMoreButton = ({
   data,
   icon = 'dots-vertical',
   width = '100%',
@@ -20,7 +20,12 @@ const MoreButton = ({
         <Button
           contentStyle={{ flexDirection: 'row-reverse' }}
           icon={icon}
-          style={[style, { width: width }]}
+          style={[
+            style,
+            {
+              width: width,
+            },
+          ]}
           onPress={openMenu}
           mode={mode}
         >
@@ -40,4 +45,4 @@ const MoreButton = ({
   );
 };
 
-export default MoreButton;
+export default UiMoreButton;

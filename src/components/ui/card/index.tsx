@@ -9,7 +9,16 @@ const UiCard = (props: any) => {
   const [checked, setChecked] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   return (
-    <Box border={0.5} borderColor="borderColor" borderRadius={8} mt={8} pt={4} pb={4} bg="white">
+    <Box
+      border={0.5}
+      borderColor="borderColor"
+      borderRadius={8}
+      mt={8}
+      pt={4}
+      pb={4}
+      bg={props.color ? 'danger' : 'white'}
+      color={props.color ? 'white' : ''}
+    >
       <Box flexDirection="row" minHeight={60}>
         <Box width={'15%'} alignItems="center">
           <Checkbox
@@ -18,7 +27,14 @@ const UiCard = (props: any) => {
               setChecked(!checked);
             }}
           />
-          <Box flexDirection="row" flexWrap="wrap" width={60} pl={12} pr={12}>
+          <Box
+            flexDirection="row"
+            flexWrap="wrap"
+            justifyContent="center"
+            width={70}
+            pl={12}
+            pr={12}
+          >
             {props.color && <Icon name="alarm" size={18} />}
             <Icon name="hours-24" size={18} />
             <Icon name="check-circle-outline" size={18} />
