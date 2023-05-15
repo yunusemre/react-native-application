@@ -8,6 +8,9 @@ import mores from './more';
 const UiCard = (props: any) => {
   const [checked, setChecked] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [visibleModal, setVisibleModal] = React.useState(false);
+  const [modalContent, setModalContent] = React.useState('');
+
   return (
     <Box
       border={0.5}
@@ -35,32 +38,66 @@ const UiCard = (props: any) => {
             pl={12}
             pr={12}
           >
-            {props.color && <Icon name="alarm" size={18} />}
-            <Icon name="hours-24" size={18} />
-            <Icon name="check-circle-outline" size={18} />
+            {props.color && (
+              <Icon
+                onPress={() =>
+                  props.modalOutput('09:00-18:00 saatleri arasında toplama işlemi yapılacaktır.')
+                }
+                name="alarm"
+                size={18}
+              />
+            )}
+            <Icon
+              onPress={() => props.modalOutput('24 Saat içerisinde teslim edilmesi gerekiyor')}
+              name="hours-24"
+              size={18}
+            />
+            <Icon
+              onPress={() => props.modalOutput('Toplama işlemi tamamlandı')}
+              name="check-circle-outline"
+              size={18}
+            />
           </Box>
         </Box>
         <Box width={'85%'}>
           <Badge
+            onPress={() => props.modalOutput('24 Saat içerisinde teslim edilmesi gerekiyor')}
             size={18}
             style={{
               position: 'absolute',
               top: 4,
               right: 6,
-              backgroundColor: 'white',
-              color: theme.colors.primary,
+              backgroundColor: 'transparent',
+              color: theme.colors.color,
               borderWidth: 1,
-              borderColor: theme.colors.primary,
+              borderColor: theme.colors.color,
+              fontWeight: 'bold',
               zIndex: 12,
             }}
           >
             {props.index}
           </Badge>
+          <Icon
+            onPress={() => props.modalOutput(props.taskStatus === 1 ? 'Toplama' : 'Dağıtım')}
+            style={{
+              position: 'absolute',
+              top: 24,
+              right: 6,
+              backgroundColor: 'transparent',
+              color: theme.colors.color,
+              fontWeight: 'bold',
+              zIndex: 12,
+            }}
+            name={props.taskStatus === 1 ? 'call-merge' : 'call-split'}
+            size={18}
+          />
           <Text>Teknosa</Text>
           <Text variant="labelMedium">Soğanlık Yeni Mah Alataş Sk. No: 2 Kat: 1 No: 1</Text>
           <Text variant="labelSmall">Müşteri Takip No: -</Text>
           <Text variant="labelSmall">Parça Sayısı: 4</Text>
-          <Text variant="labelSmall">Atandı</Text>
+          <Text variant="labelSmall" style={{ fontWeight: 'bold' }}>
+            Atandı
+          </Text>
           <Box style={{ position: 'absolute', bottom: -10, right: -6 }}>
             <Box
               as={Menu}

@@ -1,6 +1,6 @@
 const assignments = [
   {
-    name: 'Tüm',
+    name: 'Tüm Görevler',
     value: 1,
   },
   {

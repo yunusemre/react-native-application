@@ -21,12 +21,13 @@ const HomeScreen = ({ navigation }: any) => {
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
-
-  const [showIssue, setShowIssue] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
-
+  const [, setSelectedAction] = useState();
   const [showAction, setShowAction] = useState(false);
-  const [selectedAction, setSelectedAction] = useState(actions[0]);
+
+  // for dialog
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState('');
 
   const getProducts = async () => {
     await axios
@@ -74,10 +75,7 @@ const HomeScreen = ({ navigation }: any) => {
               minWidth={160}
               items={assignments}
               selectedValue={selectedIssue}
-              onValueChange={(val: any) => {
-                console.log(val);
-                setSelectedIsseu(val);
-              }}
+              onValueChange={(val: any) => setSelectedIsseu(val)}
             />
             <UiMoreButton
               style={{ marginLeft: 5 }}
@@ -86,7 +84,6 @@ const HomeScreen = ({ navigation }: any) => {
                 setShowAction(false);
               }}
               title="İşlemler"
-              // mode="contained"
               data={actions}
               icon="menu-down"
               openMenu={() => setShowAction(true)}
@@ -149,7 +146,16 @@ const HomeScreen = ({ navigation }: any) => {
               }
             }}
             data={data}
-            renderItem={({ item, index }: any) => <UiCard index={index + 1} {...item} />}
+            renderItem={({ item, index }: any) => (
+              <UiCard
+                modalOutput={(val: string) => {
+                  setShowModal(true);
+                  setModalContent(val);
+                }}
+                index={index + 1}
+                {...item}
+              />
+            )}
             keyExtractor={(item: any) => item.id}
             ListEmptyComponent={
               <UiEmpy

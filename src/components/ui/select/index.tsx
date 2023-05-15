@@ -15,6 +15,7 @@ const UiPicker = ({
   return (
     <Box borderWidth={1} borderColor={theme.colors.borderColor} borderRadius={theme.radius.full}>
       <Picker
+        dropdownIconColor={theme.colors.primary}
         mode={mode}
         testID={testID}
         style={{
