@@ -6,6 +6,7 @@ import Box from '../box';
 import mores from './more';
 
 interface ICard {
+  navigation: any;
   index: number;
   TaskId: number;
   TotalItemCount: number;
@@ -14,8 +15,10 @@ interface ICard {
   CompletionTime: Date | null;
   Title: string;
   AddressText: string;
-  Latitude: number;
-  Longitude: number;
+  Coordinates: {
+    Latitude: number;
+    Longitude: number;
+  };
   Gsm: string;
   ShipmentStatus: number;
   modalOutput: (val: string) => void;
@@ -26,6 +29,7 @@ interface ICard {
 }
 
 const UiCard = ({
+  navigation,
   index,
   TaskId,
   TaskType,
@@ -34,13 +38,13 @@ const UiCard = ({
   TotalItemCount,
   Title,
   AddressText,
-  Latitude,
-  Longitude,
+  Coordinates,
   Gsm: string,
   ShipmentStatus,
   modalOutput,
   Recipient: { RecipientName, RecipientSurname },
 }: ICard) => {
+  console.log(Coordinates);
   const [checked, setChecked] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [visibleModal, setVisibleModal] = React.useState(false);
@@ -148,6 +152,9 @@ const UiCard = ({
                 <Menu.Item
                   key={item.name}
                   onPress={() => {
+                    if (item.value === 10) {
+                      navigation.navigate('mapping', { ...Coordinates });
+                    }
                     setShowMenu(false);
                   }}
                   title={item.name}

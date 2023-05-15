@@ -148,6 +148,7 @@ const HomeScreen = ({ navigation }: any) => {
             data={data}
             renderItem={({ item, index }: any) => (
               <UiCard
+                navigation={navigation}
                 modalOutput={(val: string) => {
                   setShowModal(true);
                   setModalContent(val);

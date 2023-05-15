@@ -8,16 +8,15 @@ import { Locations } from './map-model';
 import mapJson from './map-style.json';
 
 const MappingScreen = ({ route, navigation }: any) => {
-  const { itemId, otherParam } = route.params;
-  console.log('route', itemId, otherParam);
   const timer = 60 * 60;
   const [location, setLocation] = useState<Locations>({
-    latitude: 40.9738116,
-    longitude: 29.2536725,
+    latitude: route.params.Latitude || 40.9738116,
+    longitude: route.params.Longitude || 29.2536725,
     latitudeDelta: 0.003,
-    longitudeDelta: 0.003,
+    longitudeDelta: 0.002,
   });
   useEffect(() => {
+    if (route.params !== undefined) return;
     (async () => {
       try {
         const location: any = await Location.getCurrentPositionAsync({

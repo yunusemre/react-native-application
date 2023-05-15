@@ -29,7 +29,7 @@ const mores = [
   },
   {
     name: 'Navigasyonu Aç',
-    value: 1,
+    value: 10,
   },
   {
     name: 'İş Yeri Kapalı',
