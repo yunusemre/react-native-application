@@ -10,8 +10,8 @@ import mapJson from './map-style.json';
 const MappingScreen = ({ route, navigation }: any) => {
   const timer = 60 * 60;
   const [location, setLocation] = useState<Locations>({
-    latitude: route.params.Latitude || 40.9738116,
-    longitude: route.params.Longitude || 29.2536725,
+    latitude: route.params?.Latitude || 40.9738116,
+    longitude: route.params?.Longitude || 29.2536725,
     latitudeDelta: 0.003,
     longitudeDelta: 0.002,
   });

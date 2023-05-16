@@ -3,15 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface AppStateType {
   isLogin: boolean;
   name: string;
-  moyList: any[];
-  moyListOffline: any[];
+  token_type: string | null;
+  access_token: string | null;
 }
 
 const initialState: AppStateType = {
   isLogin: false,
   name: 'Admin',
-  moyList: [],
-  moyListOffline: [],
+  token_type: null,
+  access_token: null,
 };
 
 const appSlice = createSlice({
@@ -21,11 +21,12 @@ const appSlice = createSlice({
     check: (state) => {
       state.isLogin = !state.isLogin;
     },
-    setMoyLists: (state, { payload }) => {
-      state.moyList = payload;
+    setToken: (state, { payload }) => {
+      state.access_token = payload.access_token;
+      state.token_type = payload.token_type;
     },
   },
 });
 
-export const { check, setMoyLists } = appSlice.actions;
+export const { check, setToken } = appSlice.actions;
 export default appSlice.reducer;

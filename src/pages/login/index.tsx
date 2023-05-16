@@ -10,8 +10,11 @@ import Box from '../../components/ui/box';
 import Text from '../../components/ui/text';
 import UITextInput from '../../components/ui/textInput';
 import theme from '../../config';
+import { setToken } from '../../store/features/app-slice';
+import { useAppDispatch } from '../../store/hooks';
 
 const LoginScreen = ({ navigation }: any) => {
+  const dispatch = useAppDispatch();
   const [visible, setVisible] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(false);
   const schema = yup
@@ -34,18 +37,28 @@ const LoginScreen = ({ navigation }: any) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async ({ username, password }: any) => {
+    const data = `username=${username}&password=${password}&grant_type=password&channel=2`;
+
+    const config = {
+      method: 'post',
+      url: '/login',
+      data: data,
+    };
     try {
       setIsLogin(true);
-      const login = await axios.get('/login');
-      setTimeout(() => {
-        if (JSON.stringify(data) === JSON.stringify(login.data)) {
+      axios(config)
+        .then((response: any) => {
+          dispatch(
+            setToken({ access_token: response.access_token, token_type: response.token_type })
+          );
           navigation.navigate('home');
-        } else {
+        })
+        .catch(function (error) {
+          console.log('ERROR', error);
           setVisible(true);
-        }
-        setIsLogin(false);
-      }, 1000);
+          setIsLogin(false);
+        });
     } catch (error) {
       setIsLogin(false);
     }
