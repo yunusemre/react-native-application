@@ -1,5 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import * as Location from 'expo-location';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect } from 'react';
 import { PermissionsAndroid } from 'react-native';
@@ -9,6 +10,8 @@ import BarcodeScreen from '../pages/barcode-reader';
 import HomeScreen from '../pages/home';
 import LoginScreen from '../pages/login';
 import MappingScreen from '../pages/map';
+import { setFirstLocation } from '../store/features/app-slice';
+import { useAppDispatch } from '../store/hooks';
 
 SplashScreen.preventAutoHideAsync();
 const Drawer = createDrawerNavigator();
@@ -33,6 +36,23 @@ const requestCameraPermission = async () => {
 };
 
 const Router = () => {
+  const dispatch = useAppDispatch();
+
+  const setLocation = async () => {
+    const location: any = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.High,
+    });
+    let cor: any = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+    dispatch(setFirstLocation(cor));
+  };
+
+  useEffect(() => {
+    setLocation();
+  }, []);
+
   const onLayoutRootView = useCallback(async () => {
     await SplashScreen.hideAsync();
   }, []);

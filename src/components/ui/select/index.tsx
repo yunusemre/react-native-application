@@ -20,11 +20,12 @@ const UiPicker = ({
         testID={testID}
         style={{
           marginTop: -6,
+          paddingLeft: 0,
+          paddingRight: 0,
           color: theme.colors.primary,
           alignItems: 'center',
           width: 'auto',
           minWidth: minWidth,
-          maxWidth: '100%',
           height: 40,
           borderColor: theme.colors.borderColor,
           borderWidth: 1,

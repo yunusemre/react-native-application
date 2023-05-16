@@ -11,11 +11,13 @@ import UiCard from '../../components/ui/card';
 import UiEmpy from '../../components/ui/empty';
 import UiMoreButton from '../../components/ui/more-button';
 import UiPicker from '../../components/ui/select';
+import { useAppSelector } from '../../store/hooks';
 import { removeOfflineList } from '../../utils';
 import { actions } from './actions';
 import assignments from './assignment';
 
 const HomeScreen = ({ navigation }: any) => {
+  const apps = useAppSelector((state) => state.apps);
   const isConnected = useIsConnected();
   const screenSize: any = Dimensions.get('screen');
   const [refresh, setRefresh] = useState(false);
@@ -28,15 +30,28 @@ const HomeScreen = ({ navigation }: any) => {
   // for dialog
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState('');
-
   const getProducts = async () => {
-    await axios
-      .get('/barcode')
-      .then((res: any) => {
-        setData(res.data);
-        setRefresh(false);
+    var data = {
+      CurrentLocation: {
+        Latitude: 23.4234,
+        Longitude: 41.1213,
+      },
+      ShowAll: true,
+    };
+
+    var config = {
+      method: 'post',
+      url: '/getMyDailyJobs',
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response: any) {
+        console.log(response);
       })
-      .catch((err) => setRefresh(false));
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const isOnline = async () => {
@@ -163,9 +178,6 @@ const HomeScreen = ({ navigation }: any) => {
                 bg="primary"
                 textType="white"
                 mt={8}
-                mb={4}
-                ml={8}
-                mr={8}
                 p={8}
                 text="Şu anda gösterilecek bir data bulunamadı."
               />

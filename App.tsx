@@ -1,27 +1,23 @@
 import 'react-native-gesture-handler';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
 import { NetworkProvider } from 'react-native-offline';
 import { DefaultTheme, Provider as PaperProvider, configureFonts } from 'react-native-paper';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from 'styled-components';
 import axiosInterceptor from './src/api/interceptor';
 import Box from './src/components/ui/box';
 import theme from './src/config';
 import Router from './src/router';
-import { store } from './src/store/configure-store';
+import { persistor, store } from './src/store/configure-store';
 
 export default function App() {
   axiosInterceptor(store, '');
   const fontConfig = {
     fontFamily: 'sans-serif',
   };
-
-  useEffect(() => {
-    console.log('init');
-  }, []);
-
   const themes = {
     ...DefaultTheme,
     roundness: theme.radius.normal,
@@ -54,17 +50,19 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <NetworkProvider {...networkOptions}>
-          <PaperProvider theme={themes}>
-            <Box as={SafeAreaView} flex={1}>
-              <Box as={KeyboardAvoidingView} flex={1}>
-                <Router />
+      <PersistGate persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <NetworkProvider {...networkOptions}>
+            <PaperProvider theme={themes}>
+              <Box as={SafeAreaView} flex={1}>
+                <Box as={KeyboardAvoidingView} flex={1}>
+                  <Router />
+                </Box>
               </Box>
-            </Box>
-          </PaperProvider>
-        </NetworkProvider>
-      </ThemeProvider>
+            </PaperProvider>
+          </NetworkProvider>
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 }

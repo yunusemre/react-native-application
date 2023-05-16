@@ -4,7 +4,7 @@ import offlineSlice from './features/offline-slice';
 
 const rootReducer = combineReducers({
   offline: offlineSlice,
-  app: appReducer,
+  apps: appReducer,
 });
 
 export default rootReducer;

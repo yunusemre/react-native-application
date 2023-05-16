@@ -10,7 +10,7 @@ import Box from '../../components/ui/box';
 import Text from '../../components/ui/text';
 import UITextInput from '../../components/ui/textInput';
 import theme from '../../config';
-import { setToken } from '../../store/features/app-slice';
+import { resetToken, setToken } from '../../store/features/app-slice';
 import { useAppDispatch } from '../../store/hooks';
 
 const LoginScreen = ({ navigation }: any) => {
@@ -38,34 +38,36 @@ const LoginScreen = ({ navigation }: any) => {
   });
 
   const onSubmit = async ({ username, password }: any) => {
+    setIsLogin(true);
     const data = `username=${username}&password=${password}&grant_type=password&channel=2`;
-
     const config = {
       method: 'post',
       url: '/login',
       data: data,
     };
-    try {
-      setIsLogin(true);
-      axios(config)
-        .then((response: any) => {
-          dispatch(
-            setToken({ access_token: response.access_token, token_type: response.token_type })
-          );
-          navigation.navigate('home');
-        })
-        .catch(function (error) {
-          console.log('ERROR', error);
-          setVisible(true);
-          setIsLogin(false);
-        });
-    } catch (error) {
-      setIsLogin(false);
-    }
+    axios(config)
+      .then(({ access_token, token_type }: any) => {
+        console.log(access_token, token_type);
+        dispatch(
+          setToken({
+            access_token,
+            token_type,
+            username,
+          })
+        );
+        navigation.navigate('home');
+      })
+      .catch(() => {
+        setVisible(true);
+        setIsLogin(false);
+      });
   };
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => reset());
+    const unsubscribe = navigation.addListener('focus', () => {
+      reset();
+      dispatch(resetToken());
+    });
     return unsubscribe;
   }, [navigation]);
 
