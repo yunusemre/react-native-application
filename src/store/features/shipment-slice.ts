@@ -7,17 +7,18 @@ export interface AppStateType {
 
 const initialState: AppStateType = {
   data: [],
-  loading: false,
+  loading: true,
 };
 
 const ShipmentsSlice = createSlice({
   name: 'shipments',
   initialState,
   reducers: {
-    setShipments: (state, action) => {
-      state.data = action.payload;
+    setShipmentsData: (state, { payload }) => {
+      state.data = payload;
+      state.loading = false;
     },
   },
 });
-export const { setShipments } = ShipmentsSlice.actions;
+export const { setShipmentsData } = ShipmentsSlice.actions;
 export default ShipmentsSlice.reducer;

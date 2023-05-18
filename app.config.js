@@ -51,9 +51,6 @@ export default () => ({
       ],
     ],
     extra: {
-      bugsnag: {
-        apiKey: 'b33e9246b2a6275aedb9d27efeff3f6f',
-      },
       eas: {
         projectId: '29621779-a89d-48b1-b745-68a4337142bb',
       },

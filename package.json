@@ -11,7 +11,8 @@
     "web": "expo start --web",
     "server": "json-server --host 192.168.2.108 --port 3001 ./server/db.json",
     "build:production": "eas build -p android --profile production",
-    "build:local": "eas build --platform android --profile test --local"
+    "build:local": "eas build --platform android --profile test --local",
+    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=8000'"
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
@@ -25,6 +26,7 @@
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "@reduxjs/toolkit": "^1.9.5",
+    "@types/remote-redux-devtools": "^0.5.5",
     "axios": "^1.4.0",
     "expo": "~48.0.16",
     "expo-application": "~5.1.1",
@@ -76,6 +78,8 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-native": "^4.0.0",
     "prettier": "2.8.8",
+    "redux-devtools-extension": "^2.13.9",
+    "remote-redux-devtools": "^0.5.16",
     "typescript": "^4.9.4"
   }
 }

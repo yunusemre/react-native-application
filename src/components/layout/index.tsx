@@ -1,12 +1,15 @@
+import Box from '@components/ui/box';
+import UiHeader from '@components/ui/header';
+import UiOffline from '@components/ui/offline-banner';
+import theme from '@config/index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { persistor } from '@store/configure-store';
+import { setLoginStatus } from '@store/features/app-slice';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { StatusBar } from 'expo-status-bar';
 import { ReactNode, useEffect } from 'react';
 import { useIsConnected } from 'react-native-offline';
-import theme from '../../config';
-import { useAppSelector } from '../../store/hooks';
-import Box from '../ui/box';
-import UiHeader from '../ui/header';
-import UiOffline from '../ui/offline-banner';
 
 const Layout = ({
   isHeader = false,
@@ -20,13 +23,23 @@ const Layout = ({
   openBarcode?: any;
 }) => {
   const isOnline = useIsConnected();
+  const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const { isLogin } = useAppSelector((state) => state.apps);
 
+  const getToken = async () => {
+    return await AsyncStorage.getItem('access_token');
+  };
   useEffect(() => {
-    if (!isLogin) {
-      navigation.navigate('login');
-    }
+    (async () => {
+      const token = await getToken();
+      if (token === null) {
+        dispatch(setLoginStatus(false));
+        await AsyncStorage.setItem('access_token', '');
+        persistor.purge();
+        navigation.navigate('login');
+      }
+    })();
   }, [isLogin]);
 
   return (

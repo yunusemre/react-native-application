@@ -1,43 +1,46 @@
+import Layout from '@components/layout';
+import Box from '@components/ui/box';
+import UiCard from '@components/ui/card';
+import UiEmpy from '@components/ui/empty';
+import UiPicker from '@components/ui/select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setShipmentsData } from '@store/features/shipment-slice';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { removeOfflineList } from '@utils/index';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, FlatList, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import { Button, ProgressBar, Searchbar, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Layout from '../../components/layout';
-import Box from '../../components/ui/box';
-import UiCard from '../../components/ui/card';
-import UiEmpy from '../../components/ui/empty';
-import UiPicker from '../../components/ui/select';
-import { setShipments } from '../../store/features/shipment-slice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { removeOfflineList } from '../../utils';
 import { actions } from './actions';
 import assignments from './assignment';
 
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state) => state.shipments);
+  const { location, isLogin } = useAppSelector((state) => state.apps);
+  const { data, loading } = useAppSelector((state) => state.shipments);
   const isConnected = useIsConnected();
   const screenSize: any = Dimensions.get('screen');
-  const [refresh, setRefresh] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
   const [selectedAction, setSelectedAction] = useState();
-  const [showAction, setShowAction] = useState(false);
   const [search, setSearch] = useState('');
 
   const getProducts = async () => {
-    const data: any = {
+    const body: any = {
       CurrentLocation: {
         Latitude: 23.4234,
         Longitude: 41.1213,
       },
       ShowAll: true,
     };
-
-    axios.post('/getMyDailyJobs', data).then((response: any) => {
+    const config = {
+      url: '/getMyDailyJobs',
+      method: 'post',
+      data: body,
+    };
+    axios(config).then((response: any) => {
       const Lists: any = response.Payload.StopList;
       const newList: any = [];
       Lists.forEach((res: any) => {
@@ -49,7 +52,7 @@ const HomeScreen = ({ navigation }: any) => {
           });
         }
       });
-      dispatch(setShipments(newList));
+      dispatch(setShipmentsData(newList));
     });
   };
 
@@ -61,30 +64,20 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   const syncData = async (offlineData: any) => {
-    setRefresh(true);
     for (const data of offlineData) {
       try {
         await axios.post('/barcode', data);
         await removeOfflineList(data);
       } catch (error) {
-        setRefresh(false);
         console.error(error);
       }
     }
-    setRefresh(false);
-  };
-
-  const searchFilter = (val: string) => {
-    if (val === '') return data;
-    setSearch(val);
-    return data.filter((item) => item.PartyDto.Name === val);
   };
 
   useEffect(() => {
+    if (!isLogin) return;
     getProducts();
-    const unsubscribe = navigation.addListener('focus', () => getProducts());
-    return unsubscribe;
-  }, [navigation]);
+  }, [location]);
 
   return (
     <Layout isHeader openBarcode={() => navigation.navigate('barcode')}>
@@ -139,10 +132,10 @@ const HomeScreen = ({ navigation }: any) => {
           </ScrollView>
         </Box>
         {showSearch && (
-          <Box>
+          <Box mt={4} mb={4}>
             <Searchbar
               placeholder="Search"
-              onChangeText={(val) => searchFilter(val)}
+              onChangeText={(val) => console.log(val)}
               value={search}
               inputStyle={{ marginTop: -8 }}
               style={{
@@ -162,9 +155,9 @@ const HomeScreen = ({ navigation }: any) => {
           </Box>
           <ProgressBar progress={Math.random()} />
         </Box>
-        <Box height={screenSize.height - 200}>
+        <Box height={screenSize.height - 220}>
           <FlatList
-            refreshing={refresh}
+            refreshing={loading}
             onRefresh={async () => {
               if (isConnected) {
                 await isOnline();
@@ -175,7 +168,7 @@ const HomeScreen = ({ navigation }: any) => {
             renderItem={({ item, index }: any) => (
               <UiCard index={index + 1} navigation={navigation} {...item} />
             )}
-            keyExtractor={(item: any) => item.TaskId}
+            keyExtractor={(item: any, index: number) => item.TaskId}
             ListEmptyComponent={
               <UiEmpy
                 bg="primary"

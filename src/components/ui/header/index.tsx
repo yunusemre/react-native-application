@@ -1,14 +1,22 @@
+import theme from '@config/index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { persistor } from '@store/configure-store';
+import { setLoginStatus } from '@store/features/app-slice';
+import { useAppDispatch } from '@store/hooks';
 import { Platform } from 'react-native';
 import { Appbar } from 'react-native-paper';
-import theme from '../../../config';
-import { persistor } from '../../../store/configure-store';
-import { setLoginStatus } from '../../../store/features/app-slice';
-import { useAppDispatch } from '../../../store/hooks';
 
 const UiHeader = () => {
   const dispatch = useAppDispatch();
   const navigation: any = useNavigation();
+
+  const Logout = async () => {
+    dispatch(setLoginStatus(false));
+    await AsyncStorage.setItem('access_token', '');
+    persistor.purge();
+    navigation.navigate('login');
+  };
   return (
     <Appbar
       style={{
@@ -42,15 +50,7 @@ const UiHeader = () => {
         color="white"
         onPress={() => navigation.navigate('mapping')}
       />
-      <Appbar.Action
-        icon="logout"
-        size={20}
-        color="white"
-        onPress={() => {
-          dispatch(setLoginStatus(false));
-          persistor.purge();
-        }}
-      />
+      <Appbar.Action icon="logout" size={20} color="white" onPress={async () => Logout()} />
     </Appbar>
   );
 };

@@ -1,3 +1,5 @@
+import Box from '@components/ui/box';
+import uuid from '@config/uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
@@ -5,8 +7,6 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
-import Box from '../../components/ui/box';
-import uuid from '../../config/uuid';
 
 export default function BarcodeScreen({ navigation }: any) {
   const [scanned, setScanned] = useState(false);

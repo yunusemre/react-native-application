@@ -1,9 +1,9 @@
+import Box from '@components/ui/box';
 import axios from 'axios';
 import * as Location from 'expo-location';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import Box from '../../components/ui/box';
 import { Locations } from './map-model';
 import mapJson from './map-style.json';
 

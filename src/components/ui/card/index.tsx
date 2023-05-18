@@ -11,8 +11,6 @@ const UiCard = (props: any) => {
   const [checked, setChecked] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
-  const count = Math.ceil(Math.random() * 100);
-
   return (
     <Box
       border={0.5}
@@ -88,7 +86,7 @@ const UiCard = (props: any) => {
             {props.PartyDto.AddressText}
           </Text>
           <Text variant="labelSmall">Müşteri Takip No: -</Text>
-          <Text variant="labelSmall">Parça Sayısı: {count}</Text>
+          <Text variant="labelSmall">Parça Sayısı: 12</Text>
           <Text variant="labelSmall" style={{ fontWeight: 'bold' }}>
             Atandı
           </Text>

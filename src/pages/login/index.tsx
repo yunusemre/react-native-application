@@ -1,4 +1,11 @@
+import Box from '@components/ui/box';
+import Text from '@components/ui/text';
+import UITextInput from '@components/ui/textInput';
+import theme from '@config/index';
 import { yupResolver } from '@hookform/resolvers/yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { resetToken, setLoginStatus } from '@store/features/app-slice';
+import { useAppDispatch } from '@store/hooks';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import React, { useEffect } from 'react';
@@ -6,12 +13,6 @@ import { useForm } from 'react-hook-form';
 import { Image, StyleSheet } from 'react-native';
 import { Button, Snackbar } from 'react-native-paper';
 import * as yup from 'yup';
-import Box from '../../components/ui/box';
-import Text from '../../components/ui/text';
-import UITextInput from '../../components/ui/textInput';
-import theme from '../../config';
-import { resetToken, setLoginStatus, setToken } from '../../store/features/app-slice';
-import { useAppDispatch } from '../../store/hooks';
 
 const LoginScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
@@ -38,25 +39,18 @@ const LoginScreen = ({ navigation }: any) => {
   });
 
   const onSubmit = async ({ username, password }: any) => {
-    dispatch(setLoginStatus(false));
     setIsLogin(true);
-    const data = `username=${username}&password=${password}&grant_type=password&channel=2`;
+    const body = `username=${username}&password=${password}&grant_type=password&channel=2`;
     const config = {
-      method: 'post',
+      data: body,
       url: '/login',
-      data: data,
+      method: 'post',
     };
     axios(config)
-      .then((res: any) => {
-        dispatch(
-          setToken({
-            access_token: res.access_token,
-            token_type: res.token_type,
-            username: res.username,
-          })
-        );
-        dispatch(setLoginStatus(true));
+      .then(async (response: any) => {
+        await AsyncStorage.setItem('access_token', response.access_token);
         setIsLogin(false);
+        dispatch(setLoginStatus(true));
         navigation.navigate('home');
       })
       .catch((err) => {

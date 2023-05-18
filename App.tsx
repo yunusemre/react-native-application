@@ -1,6 +1,10 @@
 import 'react-native-gesture-handler';
 
-import Router from './src/router/index';
+import axiosInterceptor from '@api/interceptor';
+import Box from '@components/ui/box';
+import theme from '@config/index';
+import Router from '@router/index';
+import { persistor, store } from '@store/configure-store';
 import React from 'react';
 import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
 import { NetworkProvider } from 'react-native-offline';
@@ -8,13 +12,9 @@ import { DefaultTheme, Provider as PaperProvider, configureFonts } from 'react-n
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from 'styled-components';
-import axiosInterceptor from './src/api/interceptor';
-import Box from './src/components/ui/box';
-import theme from './src/config/index';
-import { persistor, store } from './src/store/configure-store';
 
 export default function App() {
-  axiosInterceptor(store);
+  axiosInterceptor();
   const fontConfig = {
     fontFamily: 'sans-serif',
   };
