@@ -92,13 +92,13 @@ const UiCard = (props: any) => {
           <Text variant="labelSmall" style={{ fontWeight: 'bold' }}>
             Atandı
           </Text>
-          <Box style={{ position: 'absolute', bottom: -10, right: -6 }}>
+          <Box style={{ position: 'absolute', bottom: -10, right: -7 }}>
             <Box
               as={Menu}
               visible={showMenu}
               onDismiss={() => setShowMenu(false)}
               anchor={
-                <IconButton size={14} icon="dots-vertical" onPress={() => setShowMenu(!showMenu)} />
+                <IconButton size={18} icon="dots-vertical" onPress={() => setShowMenu(!showMenu)} />
               }
             >
               {mores.map((item: any) => (
