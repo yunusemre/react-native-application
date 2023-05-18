@@ -3,9 +3,10 @@ const sizes: any = {};
 const colors = {
   primary: '#3baf29',
   warning: '#fff3cd',
-  bgColor: '#f7f8fa',
+  bgColor: '#f8f8f8',
   info: '#cfe2ff',
   danger: '#dc3545',
+  pastTime: '#f1aeb5',
   borderPrimary: '#3baf29',
   lightPrimary: '#d1e7dd',
   default: '#eeeeee',

@@ -2,8 +2,12 @@ import { useNavigation } from '@react-navigation/native';
 import { Platform } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import theme from '../../../config';
+import { persistor } from '../../../store/configure-store';
+import { setLoginStatus } from '../../../store/features/app-slice';
+import { useAppDispatch } from '../../../store/hooks';
 
 const UiHeader = () => {
+  const dispatch = useAppDispatch();
   const navigation: any = useNavigation();
   return (
     <Appbar
@@ -37,6 +41,15 @@ const UiHeader = () => {
         size={20}
         color="white"
         onPress={() => navigation.navigate('mapping')}
+      />
+      <Appbar.Action
+        icon="logout"
+        size={20}
+        color="white"
+        onPress={() => {
+          dispatch(setLoginStatus(false));
+          persistor.purge();
+        }}
       />
     </Appbar>
   );

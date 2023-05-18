@@ -10,7 +10,6 @@ import BarcodeScreen from '../pages/barcode-reader';
 import HomeScreen from '../pages/home';
 import LoginScreen from '../pages/login';
 import MappingScreen from '../pages/map';
-import { setFirstLocation } from '../store/features/app-slice';
 import { useAppDispatch } from '../store/hooks';
 
 SplashScreen.preventAutoHideAsync();
@@ -46,7 +45,7 @@ const Router = () => {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     };
-    dispatch(setFirstLocation(cor));
+    console.log('cors', cor);
   };
 
   useEffect(() => {

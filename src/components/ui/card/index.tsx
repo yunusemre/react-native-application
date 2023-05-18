@@ -5,50 +5,13 @@ import theme from '../../../config';
 import Box from '../box';
 import mores from './more';
 
-interface ICard {
-  navigation: any;
-  index: number;
-  TaskId: number;
-  TotalItemCount: number;
-  TaskType: number;
-  TaskStatus: number;
-  CompletionTime: Date | null;
-  Title: string;
-  AddressText: string;
-  Coordinates: {
-    Latitude: number;
-    Longitude: number;
-  };
-  Gsm: string;
-  ShipmentStatus: number;
-  modalOutput: (val: string) => void;
-  Recipient: {
-    RecipientName: string;
-    RecipientSurname: string;
-  };
-}
+interface ICard {}
 
-const UiCard = ({
-  navigation,
-  index,
-  TaskId,
-  TaskType,
-  TaskStatus,
-  CompletionTime,
-  TotalItemCount,
-  Title,
-  AddressText,
-  Coordinates,
-  Gsm: string,
-  ShipmentStatus,
-  modalOutput,
-  Recipient: { RecipientName, RecipientSurname },
-}: ICard) => {
-  console.log(Coordinates);
+const UiCard = (props: any) => {
   const [checked, setChecked] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [visibleModal, setVisibleModal] = React.useState(false);
-  const [modalContent, setModalContent] = React.useState('');
+
+  const count = Math.ceil(Math.random() * 100);
 
   return (
     <Box
@@ -58,8 +21,8 @@ const UiCard = ({
       mt={8}
       pt={4}
       pb={4}
-      bg={CompletionTime === null ? 'danger' : 'white'}
-      color={CompletionTime === null ? 'white' : ''}
+      bg={props.index % 2 === 0 ? 'white' : 'pastTime'}
+      color="white"
     >
       <Box flexDirection="row" minHeight={60}>
         <Box width={'15%'} alignItems="center">
@@ -77,7 +40,7 @@ const UiCard = ({
             pl={12}
             pr={12}
           >
-            {CompletionTime === null && (
+            {/* {CompletionTime === null && (
               <Icon
                 onPress={() =>
                   modalOutput('09:00-18:00 saatleri arasında toplama işlemi yapılacaktır.')
@@ -85,22 +48,13 @@ const UiCard = ({
                 name="alarm"
                 size={18}
               />
-            )}
-            <Icon
-              onPress={() => modalOutput('24 Saat içerisinde teslim edilmesi gerekiyor')}
-              name="hours-24"
-              size={18}
-            />
-            <Icon
-              onPress={() => modalOutput('Toplama işlemi tamamlandı')}
-              name="check-circle-outline"
-              size={18}
-            />
+            )} */}
+            <Icon name="hours-24" size={18} />
+            <Icon name="check-circle-outline" size={18} />
           </Box>
         </Box>
         <Box width={'85%'}>
           <Badge
-            onPress={() => modalOutput('24 Saat içerisinde teslim edilmesi gerekiyor')}
             size={18}
             style={{
               position: 'absolute',
@@ -114,10 +68,9 @@ const UiCard = ({
               zIndex: 12,
             }}
           >
-            {index}
+            {props.index}
           </Badge>
           <Icon
-            onPress={() => modalOutput(TaskStatus === 1 ? 'Toplama' : 'Dağıtım')}
             style={{
               position: 'absolute',
               top: 24,
@@ -127,15 +80,15 @@ const UiCard = ({
               fontWeight: 'bold',
               zIndex: 12,
             }}
-            name={TaskStatus === 1 ? 'call-merge' : 'call-split'}
+            name={props.TaskStatus === 1 ? 'call-merge' : 'call-split'}
             size={18}
           />
-          <Text style={{ width: '90%' }}>{Title}</Text>
+          <Text style={{ width: '90%', fontWeight: 'bold' }}>{props.PartyDto.Name}</Text>
           <Text style={{ width: '90%' }} variant="labelMedium">
-            {AddressText}
+            {props.PartyDto.AddressText}
           </Text>
           <Text variant="labelSmall">Müşteri Takip No: -</Text>
-          <Text variant="labelSmall">Parça Sayısı: {TotalItemCount}</Text>
+          <Text variant="labelSmall">Parça Sayısı: {count}</Text>
           <Text variant="labelSmall" style={{ fontWeight: 'bold' }}>
             Atandı
           </Text>
@@ -152,9 +105,9 @@ const UiCard = ({
                 <Menu.Item
                   key={item.name}
                   onPress={() => {
-                    if (item.value === 10) {
-                      navigation.navigate('mapping', { ...Coordinates });
-                    }
+                    // if (item.value === 10) {
+                    //   navigation.navigate('mapping', { ...Coordinates });
+                    // }
                     setShowMenu(false);
                   }}
                   title={item.name}

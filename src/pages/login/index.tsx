@@ -10,7 +10,7 @@ import Box from '../../components/ui/box';
 import Text from '../../components/ui/text';
 import UITextInput from '../../components/ui/textInput';
 import theme from '../../config';
-import { resetToken, setToken } from '../../store/features/app-slice';
+import { resetToken, setLoginStatus, setToken } from '../../store/features/app-slice';
 import { useAppDispatch } from '../../store/hooks';
 
 const LoginScreen = ({ navigation }: any) => {
@@ -31,13 +31,14 @@ const LoginScreen = ({ navigation }: any) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      username: '',
-      password: '',
+      username: 'barbarosozcan',
+      password: '123456',
     },
     resolver: yupResolver(schema),
   });
 
   const onSubmit = async ({ username, password }: any) => {
+    dispatch(setLoginStatus(false));
     setIsLogin(true);
     const data = `username=${username}&password=${password}&grant_type=password&channel=2`;
     const config = {
@@ -46,18 +47,20 @@ const LoginScreen = ({ navigation }: any) => {
       data: data,
     };
     axios(config)
-      .then(({ access_token, token_type }: any) => {
-        console.log(access_token, token_type);
+      .then((res: any) => {
         dispatch(
           setToken({
-            access_token,
-            token_type,
-            username,
+            access_token: res.access_token,
+            token_type: res.token_type,
+            username: res.username,
           })
         );
+        dispatch(setLoginStatus(true));
+        setIsLogin(false);
         navigation.navigate('home');
       })
-      .catch(() => {
+      .catch((err) => {
+        dispatch(setLoginStatus(false));
         setVisible(true);
         setIsLogin(false);
       });

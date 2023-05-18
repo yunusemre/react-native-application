@@ -9,29 +9,27 @@ import Layout from '../../components/layout';
 import Box from '../../components/ui/box';
 import UiCard from '../../components/ui/card';
 import UiEmpy from '../../components/ui/empty';
-import UiMoreButton from '../../components/ui/more-button';
 import UiPicker from '../../components/ui/select';
-import { useAppSelector } from '../../store/hooks';
+import { setShipments } from '../../store/features/shipment-slice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { removeOfflineList } from '../../utils';
 import { actions } from './actions';
 import assignments from './assignment';
 
 const HomeScreen = ({ navigation }: any) => {
-  const apps = useAppSelector((state) => state.apps);
+  const dispatch = useAppDispatch();
+  const { data } = useAppSelector((state) => state.shipments);
   const isConnected = useIsConnected();
   const screenSize: any = Dimensions.get('screen');
   const [refresh, setRefresh] = useState(false);
-  const [data, setData] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
-  const [, setSelectedAction] = useState();
+  const [selectedAction, setSelectedAction] = useState();
   const [showAction, setShowAction] = useState(false);
+  const [search, setSearch] = useState('');
 
-  // for dialog
-  const [showModal, setShowModal] = useState(false);
-  const [modalContent, setModalContent] = useState('');
   const getProducts = async () => {
-    var data = {
+    const data: any = {
       CurrentLocation: {
         Latitude: 23.4234,
         Longitude: 41.1213,
@@ -39,19 +37,20 @@ const HomeScreen = ({ navigation }: any) => {
       ShowAll: true,
     };
 
-    var config = {
-      method: 'post',
-      url: '/getMyDailyJobs',
-      data: data,
-    };
-
-    axios(config)
-      .then(function (response: any) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
+    axios.post('/getMyDailyJobs', data).then((response: any) => {
+      const Lists: any = response.Payload.StopList;
+      const newList: any = [];
+      Lists.forEach((res: any) => {
+        if (res.TaskList.length === 1) {
+          newList.push(res.TaskList[0]);
+        } else {
+          res.TaskList.forEach((response: any) => {
+            newList.push(response);
+          });
+        }
       });
+      dispatch(setShipments(newList));
+    });
   };
 
   const isOnline = async () => {
@@ -75,6 +74,12 @@ const HomeScreen = ({ navigation }: any) => {
     setRefresh(false);
   };
 
+  const searchFilter = (val: string) => {
+    if (val === '') return data;
+    setSearch(val);
+    return data.filter((item) => item.PartyDto.Name === val);
+  };
+
   useEffect(() => {
     getProducts();
     const unsubscribe = navigation.addListener('focus', () => getProducts());
@@ -87,12 +92,19 @@ const HomeScreen = ({ navigation }: any) => {
         <Box flexDirection="row" justifyContent="space-around" mb={2}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <UiPicker
+              mode="dropdown"
               minWidth={160}
               items={assignments}
               selectedValue={selectedIssue}
               onValueChange={(val: any) => setSelectedIsseu(val)}
             />
-            <UiMoreButton
+            <UiPicker
+              minWidth={160}
+              items={actions}
+              selectedValue={selectedAction}
+              onValueChange={(val: any) => setSelectedAction(val)}
+            />
+            {/* <UiMoreButton
               style={{ marginLeft: 5 }}
               selected={(val: any) => {
                 setSelectedAction(val);
@@ -104,12 +116,11 @@ const HomeScreen = ({ navigation }: any) => {
               openMenu={() => setShowAction(true)}
               show={showAction}
               closeMenu={() => setShowAction(false)}
-            />
+            /> */}
 
             <Button
               mode="outlined"
               style={{
-                marginLeft: 10,
                 marginRight: 5,
               }}
               onPress={() => console.log('tatar')}
@@ -131,8 +142,8 @@ const HomeScreen = ({ navigation }: any) => {
           <Box>
             <Searchbar
               placeholder="Search"
-              onChangeText={() => {}}
-              value={''}
+              onChangeText={(val) => searchFilter(val)}
+              value={search}
               inputStyle={{ marginTop: -8 }}
               style={{
                 height: 40,
@@ -146,7 +157,7 @@ const HomeScreen = ({ navigation }: any) => {
               Tamamlanan: 10
             </Box>
             <Box as={Text} color="danger" variant="labelMedium">
-              Tamamlanamayan: 10
+              Tamamlanamayan: 6
             </Box>
           </Box>
           <ProgressBar progress={Math.random()} />
@@ -162,15 +173,7 @@ const HomeScreen = ({ navigation }: any) => {
             }}
             data={data}
             renderItem={({ item, index }: any) => (
-              <UiCard
-                navigation={navigation}
-                modalOutput={(val: string) => {
-                  setShowModal(true);
-                  setModalContent(val);
-                }}
-                index={index + 1}
-                {...item}
-              />
+              <UiCard index={index + 1} navigation={navigation} {...item} />
             )}
             keyExtractor={(item: any) => item.TaskId}
             ListEmptyComponent={

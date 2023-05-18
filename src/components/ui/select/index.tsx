@@ -9,16 +9,23 @@ const UiPicker = ({
   selectedValue,
   minWidth,
   items,
-  mode = 'dropdown',
+  style,
+  mode = 'popup',
   ...props
 }: any) => {
   return (
-    <Box borderWidth={1} borderColor={theme.colors.borderColor} borderRadius={theme.radius.full}>
+    <Box
+      borderWidth={1}
+      mr={5}
+      borderColor={theme.colors.borderColor}
+      borderRadius={theme.radius.full}
+    >
       <Picker
         dropdownIconColor={theme.colors.primary}
         mode={mode}
         testID={testID}
         style={{
+          ...style,
           marginTop: -6,
           paddingLeft: 0,
           paddingRight: 0,

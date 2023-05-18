@@ -1,5 +1,5 @@
-import Box from '../ui/box';
-import Text from '../ui/text';
+import Box from '@components/ui/box';
+import Text from '@components/ui/text';
 
 const ErrorView = () => (
   <Box>

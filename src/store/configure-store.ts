@@ -7,7 +7,7 @@ const persistConfig = {
   key: 'kolaygelsin',
   storage: AsyncStorage,
   timeout: 0,
-  whitelist: ['apps'],
+  whitelist: ['apps', 'shipments'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
