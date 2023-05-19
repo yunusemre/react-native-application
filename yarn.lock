@@ -1046,6 +1046,13 @@
   dependencies:
     "regenerator-runtime" "^0.13.11"
 
+"@babel/runtime@7.19.0":
+  "integrity" "sha512-eR8Lo9hnDS7tqkO7NsV+mKvCmv5boaXFSZ70DnfhcgiEne8hv9oCEd36Klw74EtizEqLsy4YnW8UWwpBVolHZA=="
+  "resolved" "https://registry.npmjs.org/@babel/runtime/-/runtime-7.19.0.tgz"
+  "version" "7.19.0"
+  dependencies:
+    "regenerator-runtime" "^0.13.4"
+
 "@babel/template@^7.0.0", "@babel/template@^7.18.10", "@babel/template@^7.20.7":
   "integrity" "sha512-8SegXApWe6VoNw0r9JHpSteLKTpTiLZ4rMlGIm9JQ18KiCtyQiAMEazujAHrUS5flrcqYZa75ukev3P6QmUwUw=="
   "resolved" "https://registry.npmjs.org/@babel/template/-/template-7.20.7.tgz"
@@ -2669,6 +2676,15 @@
   "resolved" "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz"
   "version" "1.0.5"
 
+"axios-hooks@^4.0.0":
+  "integrity" "sha512-IYpVCh/3I99KA826+Qtms581EegvlUVzDkhljglo21Ugc6P9lQQVG6q22seZy0ieYuepjS3kvCtzUG7jAX7BTA=="
+  "resolved" "https://registry.npmjs.org/axios-hooks/-/axios-hooks-4.0.0.tgz"
+  "version" "4.0.0"
+  dependencies:
+    "@babel/runtime" "7.19.0"
+    "dequal" "2.0.3"
+    "lru-cache" "^7.14.0"
+
 "axios@^1.4.0":
   "integrity" "sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA=="
   "resolved" "https://registry.npmjs.org/axios/-/axios-1.4.0.tgz"
@@ -3674,6 +3690,11 @@
   "integrity" "sha512-Fx8jxibzkJX2aJgyfSdLhr9tlRoTnHKrRJuu2XHlAgKioN2j19/Bcbe0d4mFXYZ3+wpE2KVobUVTfDutcD17xQ=="
   "resolved" "https://registry.npmjs.org/dequal/-/dequal-1.0.1.tgz"
   "version" "1.0.1"
+
+"dequal@2.0.3":
+  "integrity" "sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA=="
+  "resolved" "https://registry.npmjs.org/dequal/-/dequal-2.0.3.tgz"
+  "version" "2.0.3"
 
 "destroy@1.2.0":
   "integrity" "sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg=="
@@ -5870,6 +5891,11 @@
   dependencies:
     "yallist" "^4.0.0"
 
+"lru-cache@^7.14.0":
+  "integrity" "sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA=="
+  "resolved" "https://registry.npmjs.org/lru-cache/-/lru-cache-7.18.3.tgz"
+  "version" "7.18.3"
+
 "make-dir@^2.0.0", "make-dir@^2.1.0":
   "integrity" "sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA=="
   "resolved" "https://registry.npmjs.org/make-dir/-/make-dir-2.1.0.tgz"
@@ -7431,7 +7457,7 @@
   "resolved" "https://registry.npmjs.org/regenerate/-/regenerate-1.4.2.tgz"
   "version" "1.4.2"
 
-"regenerator-runtime@^0.13.11", "regenerator-runtime@^0.13.2":
+"regenerator-runtime@^0.13.11", "regenerator-runtime@^0.13.2", "regenerator-runtime@^0.13.4":
   "integrity" "sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg=="
   "resolved" "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz"
   "version" "0.13.11"

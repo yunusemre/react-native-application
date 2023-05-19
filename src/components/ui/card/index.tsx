@@ -1,7 +1,7 @@
+import theme from '@config/index';
 import React, { useState } from 'react';
 import { Badge, Checkbox, IconButton, Menu, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from '../../../config';
 import Box from '../box';
 import mores from './more';
 
@@ -19,7 +19,7 @@ const UiCard = (props: any) => {
       mt={8}
       pt={4}
       pb={4}
-      bg={props.index % 2 === 0 ? 'white' : 'pastTime'}
+      bg='white'
       color="white"
     >
       <Box flexDirection="row" minHeight={60}>
@@ -103,9 +103,6 @@ const UiCard = (props: any) => {
                 <Menu.Item
                   key={item.name}
                   onPress={() => {
-                    // if (item.value === 10) {
-                    //   navigation.navigate('mapping', { ...Coordinates });
-                    // }
                     setShowMenu(false);
                   }}
                   title={item.name}

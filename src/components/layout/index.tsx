@@ -30,14 +30,18 @@ const Layout = ({
   const getToken = async () => {
     return await AsyncStorage.getItem('access_token');
   };
+
+  const Logout = async () => {
+    dispatch(setLoginStatus(false));
+    await AsyncStorage.setItem('access_token', '');
+    persistor.purge();
+    navigation.navigate('login');
+  };
   useEffect(() => {
     (async () => {
       const token = await getToken();
       if (token === null) {
-        dispatch(setLoginStatus(false));
-        await AsyncStorage.setItem('access_token', '');
-        persistor.purge();
-        navigation.navigate('login');
+        Logout();
       }
     })();
   }, [isLogin]);

@@ -1,7 +1,7 @@
 import { Controller } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { MD2Colors, TextInput } from 'react-native-paper';
-import theme from '../../../config';
+import theme from '@config/index';
 
 const UITextInput = ({
   label,

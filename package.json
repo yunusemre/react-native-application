@@ -28,6 +28,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@types/remote-redux-devtools": "^0.5.5",
     "axios": "^1.4.0",
+    "axios-hooks": "^4.0.0",
     "expo": "~48.0.16",
     "expo-application": "~5.1.1",
     "expo-barcode-scanner": "~12.3.2",

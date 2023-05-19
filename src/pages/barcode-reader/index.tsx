@@ -1,5 +1,5 @@
 import Box from '@components/ui/box';
-import uuid from '@config/uuid';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
@@ -19,12 +19,12 @@ export default function BarcodeScreen({ navigation }: any) {
       if (isConnected) {
         await axios.post('/barcode', {
           barcode: data,
-          id: uuid(),
+          id: 1,
           date: Date.now(),
           color: true,
         });
       } else {
-        const datas: any = { barcode: data, id: uuid(), date: Date.now() };
+        const datas: any = { barcode: data, id: 1, date: Date.now() };
         AsyncStorage.setItem('@offline', JSON.stringify(datas));
       }
     } catch (error) {
