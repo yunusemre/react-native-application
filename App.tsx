@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 
-import axiosInterceptor from '@api/interceptor';
 import Box from '@components/ui/box';
 import theme from '@config/index';
 import Router from '@router/index';
@@ -14,7 +13,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from 'styled-components';
 
 export default function App() {
-  axiosInterceptor();
   const fontConfig = {
     fontFamily: 'sans-serif',
   };

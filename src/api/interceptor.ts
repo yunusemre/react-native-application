@@ -1,9 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persistor } from '@store/configure-store';
+import { setLoginStatus } from '@store/features/app-slice';
+import { useAppDispatch } from '@store/hooks';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Env } from './env';
 
+const httpAuthorizationErrorCode = 401;
+// const httpForbiddenErrorCode = 403;
+
 axios.defaults.baseURL = Env.API_URL;
 const axiosInterceptor = () => {
+  const dispatch = useAppDispatch();
   axios.interceptors.request.use(
     async (config: any) => {
       const token: string | null = await AsyncStorage.getItem('access_token');
@@ -18,9 +25,15 @@ const axiosInterceptor = () => {
   );
 
   axios.interceptors.response.use(
-    (response: AxiosResponse) => response.data,
-    async (err: AxiosError) => {
-      return Promise.reject(err);
+    (response: AxiosResponse) => response?.data,
+    async (error: AxiosError) => {
+      if (error.status === httpAuthorizationErrorCode) {
+        dispatch(setLoginStatus(false));
+        await AsyncStorage.setItem('access_token', '');
+        persistor.purge();
+        return;
+      }
+      return Promise.reject(error);
     }
   );
 };

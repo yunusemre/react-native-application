@@ -1,7 +1,5 @@
 import Layout from '@components/layout';
 import Box from '@components/ui/box';
-import UiCard from '@components/ui/card';
-import UiEmpy from '@components/ui/empty';
 import UiPicker from '@components/ui/select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setShipmentsData } from '@store/features/shipment-slice';
@@ -9,19 +7,19 @@ import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { removeOfflineList } from '@utils/index';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, FlatList, ScrollView } from 'react-native';
+import { Dimensions, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import { Button, ProgressBar, Searchbar, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { actions } from './actions';
 import assignments from './assignment';
+import Issues from './issues';
 
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
   const { location, isLogin } = useAppSelector((state) => state.apps);
-  const { data, loading } = useAppSelector((state) => state.shipments);
   const isConnected = useIsConnected();
-  const screenSize: any = Dimensions.get('screen');
+  const { height }: { height: number } = Dimensions.get('screen');
   const [showSearch, setShowSearch] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
   const [selectedAction, setSelectedAction] = useState();
@@ -57,7 +55,8 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   const isOnline = async () => {
-    const offline: any = (await AsyncStorage.getItem('@offline')) || '[]';
+    const offline: any = await AsyncStorage.getItem('@offline');
+    if (offline === null) return;
     const parseOffline: any = JSON.parse(offline);
     if (parseOffline?.length === 0) return;
     await syncData(parseOffline);
@@ -97,20 +96,6 @@ const HomeScreen = ({ navigation }: any) => {
               selectedValue={selectedAction}
               onValueChange={(val: any) => setSelectedAction(val)}
             />
-            {/* <UiMoreButton
-              style={{ marginLeft: 5 }}
-              selected={(val: any) => {
-                setSelectedAction(val);
-                setShowAction(false);
-              }}
-              title="İşlemler"
-              data={actions}
-              icon="menu-down"
-              openMenu={() => setShowAction(true)}
-              show={showAction}
-              closeMenu={() => setShowAction(false)}
-            /> */}
-
             <Button
               mode="outlined"
               style={{
@@ -155,29 +140,14 @@ const HomeScreen = ({ navigation }: any) => {
           </Box>
           <ProgressBar progress={Math.random()} />
         </Box>
-        <Box height={screenSize.height - 220}>
-          <FlatList
-            refreshing={loading}
-            onRefresh={async () => {
-              if (isConnected) {
-                await isOnline();
-                await getProducts();
-              }
-            }}
-            data={data}
-            renderItem={({ item, index }: any) => (
-              <UiCard index={index + 1} navigation={navigation} {...item} />
-            )}
-            keyExtractor={(item: any, index: number) => item.TaskId}
-            ListEmptyComponent={
-              <UiEmpy
-                bg="primary"
-                textType="white"
-                mt={8}
-                p={8}
-                text="Şu anda gösterilecek bir data bulunamadı."
-              />
-            }
+        <Box height={height - 220}>
+          <Issues
+            navigation={navigation}
+            isOnline={isOnline}
+            getProducts={getProducts}
+            isConnected={isConnected}
+            data
+            loading
           />
         </Box>
       </Box>

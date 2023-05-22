@@ -1,3 +1,4 @@
+import axiosInterceptor from '@api/interceptor';
 import Box from '@components/ui/box';
 import theme from '@config/index';
 import BarcodeScreen from '@pages/barcode-reader';
@@ -36,6 +37,7 @@ const requestCameraPermission = async () => {
 };
 
 const Router = () => {
+  axiosInterceptor();
   const dispatch = useAppDispatch();
   const { location } = useAppSelector((state) => state.apps);
   const setLocation = async () => {

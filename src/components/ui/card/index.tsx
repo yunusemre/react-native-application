@@ -1,13 +1,24 @@
 import theme from '@config/index';
+import * as Linking from 'expo-linking';
 import React, { useState } from 'react';
 import { Badge, Checkbox, IconButton, Menu, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Box from '../box';
-import mores from './more';
 
-interface ICard {}
-
-const UiCard = (props: any) => {
+const UiCard = ({
+  PartyDto,
+  index,
+  TaskStatus,
+  navigation,
+  IsReturn,
+}: {
+  PartyDto: PartyDtoModel;
+  index: number;
+  TaskStatus: number;
+  navigation: any;
+  IsReturn: number;
+}) => {
+  const { Name, AddressText, Latitude, Longitude } = PartyDto;
   const [checked, setChecked] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -19,7 +30,7 @@ const UiCard = (props: any) => {
       mt={8}
       pt={4}
       pb={4}
-      bg='white'
+      bg="white"
       color="white"
     >
       <Box flexDirection="row" minHeight={60}>
@@ -38,15 +49,7 @@ const UiCard = (props: any) => {
             pl={12}
             pr={12}
           >
-            {/* {CompletionTime === null && (
-              <Icon
-                onPress={() =>
-                  modalOutput('09:00-18:00 saatleri arasında toplama işlemi yapılacaktır.')
-                }
-                name="alarm"
-                size={18}
-              />
-            )} */}
+            <Icon name="alarm" size={18} />
             <Icon name="hours-24" size={18} />
             <Icon name="check-circle-outline" size={18} />
           </Box>
@@ -66,7 +69,7 @@ const UiCard = (props: any) => {
               zIndex: 12,
             }}
           >
-            {props.index}
+            {index}
           </Badge>
           <Icon
             style={{
@@ -78,12 +81,13 @@ const UiCard = (props: any) => {
               fontWeight: 'bold',
               zIndex: 12,
             }}
-            name={props.TaskStatus === 1 ? 'call-merge' : 'call-split'}
+            // name={IsReturn === 1 ? 'call-merge' : 'call-split'}
+            name="call-merge"
             size={18}
           />
-          <Text style={{ width: '90%', fontWeight: 'bold' }}>{props.PartyDto.Name}</Text>
+          <Text style={{ width: '90%', fontWeight: 'bold' }}>{Name}</Text>
           <Text style={{ width: '90%' }} variant="labelMedium">
-            {props.PartyDto.AddressText}
+            {AddressText}
           </Text>
           <Text variant="labelSmall">Müşteri Takip No: -</Text>
           <Text variant="labelSmall">Parça Sayısı: 12</Text>
@@ -99,15 +103,28 @@ const UiCard = (props: any) => {
                 <IconButton size={18} icon="dots-vertical" onPress={() => setShowMenu(!showMenu)} />
               }
             >
-              {mores.map((item: any) => (
-                <Menu.Item
-                  key={item.name}
-                  onPress={() => {
-                    setShowMenu(false);
-                  }}
-                  title={item.name}
-                />
-              ))}
+              <Menu.Item title="Görev Tamamla" />
+              <Menu.Item title="Adres Bulunamadı" />
+              <Menu.Item title="Görev İptal" />
+              <Menu.Item title="Randevu Gir" />
+              <Menu.Item title="Adres Problemli" />
+              <Menu.Item title="Müşteriyi Arama" />
+              <Menu.Item
+                title="Adrese Git"
+                onPress={() =>
+                  navigation.navigate('mapping', {
+                    Latitude: Latitude,
+                    Longitude: Longitude,
+                  })
+                }
+              />
+              <Menu.Item
+                title="Navigasyonu Aç"
+                onPress={() =>
+                  Linking.openURL(`http://maps.google.com/maps?daddr=${Latitude}, ${Longitude}`)
+                }
+              />
+              <Menu.Item title="İş Yeri Kapalı" />
             </Box>
           </Box>
         </Box>

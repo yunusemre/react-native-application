@@ -4,12 +4,13 @@ import { useNavigation } from '@react-navigation/native';
 import { persistor } from '@store/configure-store';
 import { setLoginStatus } from '@store/features/app-slice';
 import { useAppDispatch } from '@store/hooks';
-import { Platform } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 const UiHeader = () => {
   const dispatch = useAppDispatch();
   const navigation: any = useNavigation();
+  const statusBarHeight = StatusBar?.currentHeight;
 
   const Logout = async () => {
     dispatch(setLoginStatus(false));
@@ -22,7 +23,7 @@ const UiHeader = () => {
       style={{
         backgroundColor: theme.colors.primary,
         height: 40,
-        marginTop: Platform.OS === 'android' ? 24 : 0,
+        marginTop: Platform.OS === 'android' ? statusBarHeight : 0,
       }}
     >
       <Appbar.Action

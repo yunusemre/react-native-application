@@ -1,40 +1,11 @@
 const mores = [
-  {
-    name: 'Görev Tamamla',
-    value: 1,
-  },
-  {
-    name: 'Adres Bulunamadı',
-    value: 1,
-  },
-  {
-    name: 'Görev İptal',
-    value: 1,
-  },
-  {
-    name: 'Randevu Gir',
-    value: 1,
-  },
-  {
-    name: 'Adres Problemli',
-    value: 1,
-  },
-  {
-    name: 'Müşteriyi Arama',
-    value: 1,
-  },
-  {
-    name: 'Adrese Git',
-    value: 1,
-  },
-  {
-    name: 'Navigasyonu Aç',
-    value: 10,
-  },
-  {
-    name: 'İş Yeri Kapalı',
-    value: 1,
-  },
-];
-
-export default mores;
+  
+     <Menu.Item title='Görev Tamamla' />
+     <Menu.Item title='Adres Bulunamadı' />
+     <Menu.Item title='Görev İptal' />
+     <Menu.Item title='Randevu Gir' />
+     <Menu.Item title='Adres Problemli' />
+     <Menu.Item title='Müşteriyi Arama' />
+     <Menu.Item title='Adrese Git' />
+     <Menu.Item title='Navigasyonu Aç' />
+     <Menu.Item title='İş Yeri Kapalı' />
