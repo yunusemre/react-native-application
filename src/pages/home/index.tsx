@@ -73,7 +73,7 @@ const HomeScreen = ({ navigation }: any) => {
 
   const find_dimesions = (layout: any) => {
     const { height: layoutHeight } = layout;
-    setDimentions(height - (layoutHeight + 40 + Constants.statusBarHeight + 50));
+    setDimentions(height - (layoutHeight + 40 + Constants.statusBarHeight + 60));
   };
 
   return (
