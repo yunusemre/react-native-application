@@ -8,15 +8,17 @@ import Box from '../box';
 const UiCard = ({
   PartyDto,
   index,
-  TaskStatus,
   navigation,
-  IsReturn,
+  StopOrder,
+  ShipmentList,
 }: {
   PartyDto: PartyDtoModel;
   index: number;
-  TaskStatus: number;
+  TaskStatus?: number;
   navigation: any;
-  IsReturn: number;
+  IsReturn?: number;
+  StopOrder?: number;
+  ShipmentList?: any;
 }) => {
   const { Name, AddressText, Latitude, Longitude } = PartyDto;
   const [checked, setChecked] = useState(false);
@@ -69,7 +71,7 @@ const UiCard = ({
               zIndex: 12,
             }}
           >
-            {index}
+            {StopOrder}
           </Badge>
           <Icon
             style={{
@@ -90,7 +92,7 @@ const UiCard = ({
             {AddressText}
           </Text>
           <Text variant="labelSmall">Müşteri Takip No: -</Text>
-          <Text variant="labelSmall">Parça Sayısı: 12</Text>
+          <Text variant="labelSmall">Parça Sayısı: {ShipmentList?.length}</Text>
           <Text variant="labelSmall" style={{ fontWeight: 'bold' }}>
             Atandı
           </Text>
@@ -113,8 +115,8 @@ const UiCard = ({
                 title="Adrese Git"
                 onPress={() =>
                   navigation.navigate('mapping', {
-                    Latitude: Latitude,
-                    Longitude: Longitude,
+                    Latitude,
+                    Longitude,
                   })
                 }
               />

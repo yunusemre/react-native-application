@@ -1,5 +1,5 @@
 import Layout from '@components/layout';
-import { Box, Text, UiCard, UiEmpy } from '@components/ui';
+import { Box, Text } from '@components/ui';
 import UiPicker from '@components/ui/select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setShipmentsData } from '@store/features/shipment-slice';
@@ -8,12 +8,13 @@ import { removeOfflineList } from '@utils/index';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, RefreshControl, ScrollView } from 'react-native';
+import { Dimensions, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
-import { ActivityIndicator, Button, ProgressBar, Searchbar } from 'react-native-paper';
+import { Button, ProgressBar, Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { actions } from './actions';
 import assignments from './assignment';
+import Issues from './issues';
 
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
@@ -25,7 +26,6 @@ const HomeScreen = ({ navigation }: any) => {
   const [selectedIssue, setSelectedIsseu] = useState();
   const [selectedAction, setSelectedAction] = useState();
   const [search, setSearch] = useState('');
-  const [count, setCount] = useState(0);
   const [dimentions, setDimentions] = useState(0);
 
   const getProducts = async () => {
@@ -143,57 +143,16 @@ const HomeScreen = ({ navigation }: any) => {
             <ProgressBar progress={Math.random()} />
           </Box>
         </Box>
-        <Box height={dimentions}>
-          {loading && (
-            <UiEmpy
-              bg="white"
-              textType="primary"
-              mt={8}
-              mb={8}
-              p={8}
-              text={
-                <Box flexDirection="row" justifyContent="center">
-                  <ActivityIndicator />
-                  <Text ml={10}>Şu anda işlem gerçekleştiriliyor...</Text>
-                </Box>
-              }
-            />
-          )}
-          {loading === false && data.length === 0 && (
-            <UiEmpy
-              bg="warning"
-              textType="textColor"
-              mt={8}
-              mb={8}
-              p={8}
-              text={
-                <Box flexDirection="row">
-                  <ActivityIndicator />
-                  <Text ml={10}>Gösterilecek bir data yok.</Text>
-                </Box>
-              }
-            />
-          )}
-          <ScrollView
-            refreshControl={
-              <RefreshControl
-                refreshing={loading}
-                onRefresh={async () => {
-                  if (isConnected) {
-                    await isOnline();
-                    await getProducts();
-                  }
-                }}
-              />
-            }
-          >
-            {data?.map((response: any) => {
-              return response.TaskList?.map((item: any, index: number) => (
-                <UiCard key={index} index={index + 1} navigation={navigation} {...item} />
-              ));
-            })}
-          </ScrollView>
-        </Box>
+        <Issues
+          onPress={() => console.log('blabla')}
+          dimentions={dimentions}
+          data={data}
+          loading={loading}
+          navigation={navigation}
+          isOnline={isOnline}
+          getProducts={getProducts}
+          isConnected={isConnected}
+        />
       </Box>
     </Layout>
   );
