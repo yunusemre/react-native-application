@@ -4,7 +4,7 @@ import UITextInput from '@components/ui/textInput';
 import theme from '@config/index';
 import { yupResolver } from '@hookform/resolvers/yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { resetToken, setLoginStatus } from '@store/features/app-slice';
+import { setLoginStatus } from '@store/features/app-slice';
 import { useAppDispatch } from '@store/hooks';
 import axios from 'axios';
 import Constants from 'expo-constants';
@@ -63,7 +63,6 @@ const LoginScreen = ({ navigation }: any) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       reset();
-      dispatch(resetToken());
     });
     return unsubscribe;
   }, [navigation]);

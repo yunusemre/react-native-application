@@ -7,7 +7,6 @@ import { setShipmentsData } from '@store/features/shipment-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { removeOfflineList } from '@utils/index';
 import axios from 'axios';
-import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, RefreshControl, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
@@ -16,19 +15,18 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { actions } from './actions';
 import assignments from './assignment';
 
-const statusBarHeight = Constants.statusBarHeight;
-
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
   const { location, isLogin } = useAppSelector((state) => state.apps);
   const { data, loading } = useAppSelector((state) => state.shipments);
   const isConnected = useIsConnected();
-  const { height }: { height: number } = Dimensions.get('window');
+  const { height }: { height: number } = Dimensions.get('screen');
   const [showSearch, setShowSearch] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
   const [selectedAction, setSelectedAction] = useState();
   const [search, setSearch] = useState('');
   const [count, setCount] = useState(0);
+  const [dimentions, setDimentions] = useState(0);
 
   const getProducts = async () => {
     const body: any = {
@@ -73,69 +71,80 @@ const HomeScreen = ({ navigation }: any) => {
     getProducts();
   }, [location]);
 
+  const find_dimesions = (layout: any) => {
+    const { height: layoutHeight } = layout;
+    setDimentions(height - layoutHeight - 170);
+  };
+
   return (
     <Layout isHeader openBarcode={() => navigation.navigate('barcode')}>
       <Box ml={8} mr={8} mt={4}>
-        <Box flexDirection="row" justifyContent="space-around" mb={2}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <UiPicker
-              mode="dropdown"
-              minWidth={160}
-              items={assignments}
-              selectedValue={selectedIssue}
-              onValueChange={(val: any) => setSelectedIsseu(val)}
-            />
-            <UiPicker
-              minWidth={160}
-              items={actions}
-              selectedValue={selectedAction}
-              onValueChange={(val: any) => setSelectedAction(val)}
-            />
-            <Button
-              mode="outlined"
-              style={{
-                marginRight: 5,
-              }}
-              onPress={() => console.log('tatar')}
-            >
-              Gün Başlangıcı
-            </Button>
-            <Button
-              style={{
-                marginRight: 5,
-              }}
-              mode="outlined"
-              onPress={() => setShowSearch(!showSearch)}
-            >
-              <Icon name="search" />
-            </Button>
-          </ScrollView>
-        </Box>
-        {showSearch && (
-          <Box mt={4} mb={4}>
-            <Searchbar
-              placeholder="Search"
-              onChangeText={(val) => console.log(val)}
-              value={search}
-              inputStyle={{ marginTop: -8 }}
-              style={{
-                height: 40,
-              }}
-            />
+        <Box onLayout={(event: any) => find_dimesions(event.nativeEvent.layout)}>
+          <Box flexDirection="row" justifyContent="space-around" mb={2}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <UiPicker
+                mode="dropdown"
+                minWidth={160}
+                items={assignments}
+                selectedValue={selectedIssue}
+                onValueChange={(val: any) => setSelectedIsseu(val)}
+              />
+              <UiPicker
+                minWidth={160}
+                items={actions}
+                selectedValue={selectedAction}
+                onValueChange={(val: any) => setSelectedAction(val)}
+              />
+              <Button
+                mode="outlined"
+                style={{
+                  marginRight: 5,
+                }}
+                onPress={() => console.log('tatar')}
+              >
+                Gün Başlangıcı
+              </Button>
+              <Button
+                style={{
+                  marginRight: 5,
+                }}
+                mode="outlined"
+                onPress={() => setShowSearch(!showSearch)}
+              >
+                <Icon name="search" />
+              </Button>
+            </ScrollView>
           </Box>
-        )}
-        <Box mt={4}>
-          <Box flexDirection="row" justifyContent="space-between" mb={8}>
-            <Box as={Text} color="green" variant="labelMedium">
-              Tamamlanan: 10
+          {showSearch && (
+            <Box mt={4} mb={4}>
+              <Searchbar
+                placeholder="Search"
+                onChangeText={(val) => console.log(val)}
+                value={search}
+                inputStyle={{ marginTop: -8 }}
+                style={{
+                  height: 40,
+                }}
+              />
             </Box>
-            <Box as={Text} color="danger" variant="labelMedium">
-              Tamamlanamayan: 6
+          )}
+          <Box mt={4}>
+            <Box flexDirection="row" justifyContent="space-between" mb={8}>
+              <Box as={Text} color="green" variant="labelMedium">
+                Tamamlanan: 10
+              </Box>
+              <Box as={Text} color="green" variant="labelMedium">
+                40%
+              </Box>
+              <Box as={Text} color="danger" variant="labelMedium">
+                Tamamlanamayan: 6
+              </Box>
             </Box>
+            <ProgressBar progress={Math.random()} />
           </Box>
-          <ProgressBar progress={Math.random()} />
         </Box>
-        <Box height={height - statusBarHeight - 140}>
+        <Text>{dimentions}</Text>
+        <Box height={dimentions} bg="red">
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -162,16 +171,3 @@ const HomeScreen = ({ navigation }: any) => {
 };
 
 export default HomeScreen;
-
-{
-  /* // (
-  //   <FlatList
-  //     key={response.StopId}
-  //     data={response.TaskList}
-  //     renderItem={({ item, index }: any) => (
-  //       <UiCard index={index + 1} navigation={navigation} {...item} />
-  //     )}
-  //     keyExtractor={(item: any) => item.TaskId}
-  //   />
-  // )) */
-}
