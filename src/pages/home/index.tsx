@@ -1,4 +1,5 @@
 import Layout from '@components/layout';
+import { UiCard } from '@components/ui';
 import Box from '@components/ui/box';
 import UiPicker from '@components/ui/select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,24 +7,28 @@ import { setShipmentsData } from '@store/features/shipment-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { removeOfflineList } from '@utils/index';
 import axios from 'axios';
+import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, ScrollView } from 'react-native';
+import { Dimensions, RefreshControl, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import { Button, ProgressBar, Searchbar, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { actions } from './actions';
 import assignments from './assignment';
-import Issues from './issues';
+
+const statusBarHeight = Constants.statusBarHeight;
 
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
   const { location, isLogin } = useAppSelector((state) => state.apps);
+  const { data, loading } = useAppSelector((state) => state.shipments);
   const isConnected = useIsConnected();
-  const { height }: { height: number } = Dimensions.get('screen');
+  const { height }: { height: number } = Dimensions.get('window');
   const [showSearch, setShowSearch] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
   const [selectedAction, setSelectedAction] = useState();
   const [search, setSearch] = useState('');
+  const [count, setCount] = useState(0);
 
   const getProducts = async () => {
     const body: any = {
@@ -39,18 +44,8 @@ const HomeScreen = ({ navigation }: any) => {
       data: body,
     };
     axios(config).then((response: any) => {
-      const Lists: any = response.Payload.StopList;
-      const newList: any = [];
-      Lists.forEach((res: any) => {
-        if (res.TaskList.length === 1) {
-          newList.push(res.TaskList[0]);
-        } else {
-          res.TaskList.forEach((response: any) => {
-            newList.push(response);
-          });
-        }
-      });
-      dispatch(setShipmentsData(newList));
+      const Lists: any = response?.Payload?.StopList;
+      dispatch(setShipmentsData(Lists));
     });
   };
 
@@ -140,15 +135,26 @@ const HomeScreen = ({ navigation }: any) => {
           </Box>
           <ProgressBar progress={Math.random()} />
         </Box>
-        <Box height={height - 220}>
-          <Issues
-            navigation={navigation}
-            isOnline={isOnline}
-            getProducts={getProducts}
-            isConnected={isConnected}
-            data
-            loading
-          />
+        <Box height={height - statusBarHeight - 140}>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={async () => {
+                  if (isConnected) {
+                    await isOnline();
+                    await getProducts();
+                  }
+                }}
+              />
+            }
+          >
+            {data?.map((response: any) => {
+              return response.TaskList?.map((item: any, index: number) => (
+                <UiCard key={index} index={index + 1} navigation={navigation} {...item} />
+              ));
+            })}
+          </ScrollView>
         </Box>
       </Box>
     </Layout>
@@ -156,3 +162,16 @@ const HomeScreen = ({ navigation }: any) => {
 };
 
 export default HomeScreen;
+
+{
+  /* // (
+  //   <FlatList
+  //     key={response.StopId}
+  //     data={response.TaskList}
+  //     renderItem={({ item, index }: any) => (
+  //       <UiCard index={index + 1} navigation={navigation} {...item} />
+  //     )}
+  //     keyExtractor={(item: any) => item.TaskId}
+  //   />
+  // )) */
+}

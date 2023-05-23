@@ -1,9 +1,7 @@
-import { UiCard, UiEmpy } from '@components/ui';
-import { useAppSelector } from '@store/hooks';
+import { UiCard } from '@components/ui';
 import { FlatList } from 'react-native';
 
-const Issues = ({ navigation, isOnline, getProducts, isConnected }: any) => {
-  const { data, loading } = useAppSelector((state) => state.shipments);
+const Issues = ({ data, loading, navigation, isOnline, getProducts, isConnected }: any) => {
   return (
     <FlatList
       refreshing={loading}
@@ -18,15 +16,6 @@ const Issues = ({ navigation, isOnline, getProducts, isConnected }: any) => {
         <UiCard index={index + 1} navigation={navigation} {...item} />
       )}
       keyExtractor={(item: any) => item.TaskId}
-      ListEmptyComponent={
-        <UiEmpy
-          bg="primary"
-          textType="white"
-          mt={8}
-          p={8}
-          text="Şu anda gösterilecek bir data bulunamadı."
-        />
-      }
     />
   );
 };

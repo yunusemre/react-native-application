@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 
 import Box from '@components/ui/box';
 import theme from '@config/index';
-import Router from '@router/index';
+import Router from '@router/drawer';
 import { persistor, store } from '@store/configure-store';
 import React from 'react';
 import { KeyboardAvoidingView, SafeAreaView } from 'react-native';

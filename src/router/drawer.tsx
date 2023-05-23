@@ -8,11 +8,10 @@ import MappingScreen from '@pages/map';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { setLocations } from '@store/features/app-slice';
-import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { useAppDispatch } from '@store/hooks';
 import * as Location from 'expo-location';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect } from 'react';
-import { PermissionsAndroid } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 const Drawer = createDrawerNavigator();
@@ -25,22 +24,12 @@ const navTheme = {
   },
 };
 
-const requestCameraPermission = async () => {
-  try {
-    await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
-    await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-    await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION);
-    await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CALL_PHONE);
-  } catch (err) {
-    console.warn(err);
-  }
-};
-
 const Router = () => {
   axiosInterceptor();
   const dispatch = useAppDispatch();
-  const { location } = useAppSelector((state) => state.apps);
+
   const setLocation = async () => {
+    await Location.requestForegroundPermissionsAsync();
     const location: any = await Location.getCurrentPositionAsync({
       accuracy: Location.Accuracy.High,
     });
@@ -53,14 +42,10 @@ const Router = () => {
 
   useEffect(() => {
     setLocation();
-  }, [location]);
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
     await SplashScreen.hideAsync();
-  }, []);
-
-  useEffect(() => {
-    requestCameraPermission();
   }, []);
 
   return (
