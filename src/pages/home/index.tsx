@@ -1,16 +1,16 @@
 import Layout from '@components/layout';
-import { UiCard } from '@components/ui';
-import Box from '@components/ui/box';
+import { Box, Text, UiCard, UiEmpy } from '@components/ui';
 import UiPicker from '@components/ui/select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setShipmentsData } from '@store/features/shipment-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { removeOfflineList } from '@utils/index';
 import axios from 'axios';
+import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, RefreshControl, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
-import { Button, ProgressBar, Searchbar, Text } from 'react-native-paper';
+import { ActivityIndicator, Button, ProgressBar, Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { actions } from './actions';
 import assignments from './assignment';
@@ -73,7 +73,7 @@ const HomeScreen = ({ navigation }: any) => {
 
   const find_dimesions = (layout: any) => {
     const { height: layoutHeight } = layout;
-    setDimentions(height - layoutHeight - 170);
+    setDimentions(height - (layoutHeight + 40 + Constants.statusBarHeight + 50));
   };
 
   return (
@@ -128,13 +128,13 @@ const HomeScreen = ({ navigation }: any) => {
               />
             </Box>
           )}
-          <Box mt={4}>
+          <Box mt={4} mb={4}>
             <Box flexDirection="row" justifyContent="space-between" mb={8}>
               <Box as={Text} color="green" variant="labelMedium">
                 Tamamlanan: 10
               </Box>
               <Box as={Text} color="green" variant="labelMedium">
-                40%
+                <Text>{Math.ceil(40.3848)}%</Text>
               </Box>
               <Box as={Text} color="danger" variant="labelMedium">
                 Tamamlanamayan: 6
@@ -143,8 +143,37 @@ const HomeScreen = ({ navigation }: any) => {
             <ProgressBar progress={Math.random()} />
           </Box>
         </Box>
-        <Text>{dimentions}</Text>
-        <Box height={dimentions} bg="red">
+        <Box height={dimentions}>
+          {loading && (
+            <UiEmpy
+              bg="white"
+              textType="primary"
+              mt={8}
+              mb={8}
+              p={8}
+              text={
+                <Box flexDirection="row" justifyContent="center">
+                  <ActivityIndicator />
+                  <Text ml={10}>Şu anda işlem gerçekleştiriliyor...</Text>
+                </Box>
+              }
+            />
+          )}
+          {loading === false && data.length === 0 && (
+            <UiEmpy
+              bg="warning"
+              textType="textColor"
+              mt={8}
+              mb={8}
+              p={8}
+              text={
+                <Box flexDirection="row">
+                  <ActivityIndicator />
+                  <Text ml={10}>Gösterilecek bir data yok.</Text>
+                </Box>
+              }
+            />
+          )}
           <ScrollView
             refreshControl={
               <RefreshControl
