@@ -34,8 +34,8 @@ const HomeScreen = ({ navigation }: any) => {
     setLoading(true);
     const body: any = {
       CurrentLocation: {
-        Latitude: 23.4234,
-        Longitude: 41.1213,
+        Latitude: location.latitude || 23.4234,
+        Longitude: location.longitude || 41.1213,
       },
       ShowAll: true,
     };
@@ -74,9 +74,8 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   useEffect(() => {
-    if (!isLogin) return;
     getProducts();
-  }, [location]);
+  }, []);
 
   const findDimesions = useCallback((layout: any) => {
     const { height: layoutHeight } = layout;
