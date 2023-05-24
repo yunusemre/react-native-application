@@ -44,12 +44,14 @@ const HomeScreen = ({ navigation }: any) => {
       method: 'post',
       data: body,
     };
-    axios(config).then((response: any) => {
-      const Lists: any = response?.Payload?.StopList;
-      setMasterData(Lists);
-      dispatch(setShipmentsData(Lists));
-      setLoading(false);
-    });
+    axios(config)
+      .then((response: any) => {
+        const Lists: any = response?.Payload?.StopList;
+        setMasterData(Lists);
+        dispatch(setShipmentsData(Lists));
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   };
 
   const isOnline = async () => {
@@ -93,6 +95,10 @@ const HomeScreen = ({ navigation }: any) => {
     }
   };
 
+  const itemInformations = () => {
+    return data?.reduce((first: any, item: any) => first + item.TaskList?.length, 0) || 0;
+  };
+
   return (
     <Layout isHeader openBarcode={() => navigation.navigate('barcode')}>
       <Box ml={8} mr={8} mt={4}>
@@ -111,24 +117,20 @@ const HomeScreen = ({ navigation }: any) => {
                 selectedValue={selectedAction}
                 onValueChange={(val: any) => setSelectedAction(val)}
               />
-              <Button
+              <Box
+                as={Button}
                 mode="outlined"
-                style={{
-                  marginRight: 5,
+                mr={5}
+                labelStyle={{
+                  fontSize: 16,
                 }}
                 onPress={() => console.log('tatar')}
               >
                 Gün Başlangıcı
-              </Button>
-              <Button
-                style={{
-                  marginRight: 5,
-                }}
-                mode="outlined"
-                onPress={() => setShowSearch(!showSearch)}
-              >
-                <Icon name="search" />
-              </Button>
+              </Box>
+              <Box as={Button} mr={5} mode="outlined" onPress={() => setShowSearch(!showSearch)}>
+                <Icon name="search" size={16} />
+              </Box>
             </ScrollView>
           </Box>
           {showSearch && (
@@ -147,7 +149,8 @@ const HomeScreen = ({ navigation }: any) => {
           <Box mt={4} mb={4}>
             <Box flexDirection="row" justifyContent="space-between" mb={8}>
               <Box as={Text} color="green" variant="labelMedium">
-                Tamamlanan: 10
+                Tamamlanan: {itemInformations()}
+                {/* TaskListdeki taskstatus'a bakılacak */}
               </Box>
               <Box as={Text} color="green" variant="labelMedium">
                 <Text>{Math.ceil(40.3848)}%</Text>
