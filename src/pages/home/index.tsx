@@ -27,6 +27,7 @@ const HomeScreen = ({ navigation }: any) => {
   const [selectedAction, setSelectedAction] = useState();
   const [search, setSearch] = useState('');
   const [dimentions, setDimentions] = useState(0);
+  const [masterData, setMasterData] = useState<any[]>([]);
 
   const getProducts = async () => {
     const body: any = {
@@ -43,6 +44,7 @@ const HomeScreen = ({ navigation }: any) => {
     };
     axios(config).then((response: any) => {
       const Lists: any = response?.Payload?.StopList;
+      setMasterData(Lists);
       dispatch(setShipmentsData(Lists));
     });
   };
@@ -71,15 +73,27 @@ const HomeScreen = ({ navigation }: any) => {
     getProducts();
   }, [location]);
 
-  const find_dimesions = (layout: any) => {
+  const findDimesions = (layout: any) => {
     const { height: layoutHeight } = layout;
     setDimentions(height - (layoutHeight + 40 + Constants.statusBarHeight + 60));
+  };
+
+  const searchList = (text: string) => {
+    setSearch(text);
+    if (text) {
+      const searchData = data.filter((obj) =>
+        JSON.stringify(obj).toLowerCase().includes(text.toLowerCase())
+      );
+      setMasterData(searchData);
+    } else {
+      setMasterData(data);
+    }
   };
 
   return (
     <Layout isHeader openBarcode={() => navigation.navigate('barcode')}>
       <Box ml={8} mr={8} mt={4}>
-        <Box onLayout={(event: any) => find_dimesions(event.nativeEvent.layout)}>
+        <Box onLayout={(event: any) => findDimesions(event.nativeEvent.layout)}>
           <Box flexDirection="row" justifyContent="space-around" mb={2}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <UiPicker
@@ -119,7 +133,7 @@ const HomeScreen = ({ navigation }: any) => {
             <Box mt={4} mb={4}>
               <Searchbar
                 placeholder="Search"
-                onChangeText={(val) => console.log(val)}
+                onChangeText={(val) => searchList(val)}
                 value={search}
                 inputStyle={{ marginTop: -8 }}
                 style={{
@@ -146,7 +160,7 @@ const HomeScreen = ({ navigation }: any) => {
         <Issues
           onPress={() => console.log('blabla')}
           dimentions={dimentions}
-          data={data}
+          data={masterData}
           loading={loading}
           navigation={navigation}
           isOnline={isOnline}

@@ -6,7 +6,6 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Env } from './env';
 
 const httpAuthorizationErrorCode = 401;
-// const httpForbiddenErrorCode = 403;
 
 axios.defaults.baseURL = Env.API_URL;
 const axiosInterceptor = () => {
@@ -27,7 +26,8 @@ const axiosInterceptor = () => {
   axios.interceptors.response.use(
     (response: AxiosResponse) => response?.data,
     async (error: AxiosError) => {
-      if (error.status === httpAuthorizationErrorCode) {
+      console.log('error.status', error);
+      if (error.status === httpAuthorizationErrorCode || error.status === undefined) {
         dispatch(setLoginStatus(false));
         await AsyncStorage.setItem('access_token', '');
         persistor.purge();
