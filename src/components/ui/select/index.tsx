@@ -10,7 +10,7 @@ const UiPicker = ({
   minWidth,
   items,
   style,
-  mode = 'popup',
+  mode = 'dropdown',
   ...props
 }: any) => {
   return (

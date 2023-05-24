@@ -1,5 +1,6 @@
 import { Box, Text, UiCard, UiEmpy } from '@components/ui';
-import { ActivityIndicator, RefreshControl, ScrollView } from 'react-native';
+import { memo } from 'react';
+import { RefreshControl, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Issues = ({
@@ -10,6 +11,7 @@ const Issues = ({
   isOnline,
   getProducts,
   isConnected,
+  setCheck,
 }: any) => {
   return (
     <Box height={dimentions}>
@@ -20,12 +22,7 @@ const Issues = ({
           mt={8}
           mb={8}
           p={8}
-          text={
-            <Box flexDirection="row" justifyContent="center">
-              <ActivityIndicator />
-              <Text ml={10}>Şu anda işlem gerçekleştiriliyor...</Text>
-            </Box>
-          }
+          text="Şu anda işlem gerçekleştiriliyor..."
         />
       )}
       {loading === false && data?.length === 0 && (
@@ -58,7 +55,18 @@ const Issues = ({
       >
         {data?.map((response: any) => {
           return response.TaskList?.map((item: any, index: number) => {
-            return <UiCard key={index} index={index + 1} navigation={navigation} {...item} />;
+            return (
+              <UiCard
+                setCheck={(res: number) => {
+                  console.log(res);
+                  setCheck(res);
+                }}
+                key={index}
+                index={index + 1}
+                navigation={navigation}
+                {...item}
+              />
+            );
           });
         })}
       </ScrollView>
@@ -66,4 +74,4 @@ const Issues = ({
   );
 };
 
-export default Issues;
+export default memo(Issues);

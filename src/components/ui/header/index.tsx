@@ -5,6 +5,7 @@ import { persistor } from '@store/configure-store';
 import { setLoginStatus } from '@store/features/app-slice';
 import { useAppDispatch } from '@store/hooks';
 import Constants from 'expo-constants';
+import { memo, useCallback } from 'react';
 import { Platform } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
@@ -13,12 +14,13 @@ const UiHeader = () => {
   const navigation: any = useNavigation();
   const statusBarHeight = Constants.statusBarHeight;
 
-  const Logout = async () => {
+  const onLogout = useCallback(async () => {
     dispatch(setLoginStatus(false));
     await AsyncStorage.setItem('access_token', '');
     persistor.purge();
     navigation.navigate('login');
-  };
+  }, []);
+
   return (
     <Appbar
       style={{
@@ -52,9 +54,9 @@ const UiHeader = () => {
         color="white"
         onPress={() => navigation.navigate('mapping')}
       />
-      <Appbar.Action icon="logout" size={20} color="white" onPress={async () => Logout()} />
+      <Appbar.Action icon="logout" size={20} color="white" onPress={async () => onLogout()} />
     </Appbar>
   );
 };
 
-export default UiHeader;
+export default memo(UiHeader);

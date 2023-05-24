@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { removeOfflineList } from '@utils/index';
 import axios from 'axios';
 import Constants from 'expo-constants';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import { Button, ProgressBar, Searchbar } from 'react-native-paper';
@@ -19,10 +19,11 @@ import Issues from './issues';
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
   const { location, isLogin } = useAppSelector((state) => state.apps);
-  const { data, loading } = useAppSelector((state) => state.shipments);
+  const { data } = useAppSelector((state) => state.shipments);
   const isConnected = useIsConnected();
   const { height }: { height: number } = Dimensions.get('screen');
   const [showSearch, setShowSearch] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
   const [selectedAction, setSelectedAction] = useState();
   const [search, setSearch] = useState('');
@@ -30,6 +31,7 @@ const HomeScreen = ({ navigation }: any) => {
   const [masterData, setMasterData] = useState<any[]>([]);
 
   const getProducts = async () => {
+    setLoading(true);
     const body: any = {
       CurrentLocation: {
         Latitude: 23.4234,
@@ -46,6 +48,7 @@ const HomeScreen = ({ navigation }: any) => {
       const Lists: any = response?.Payload?.StopList;
       setMasterData(Lists);
       dispatch(setShipmentsData(Lists));
+      setLoading(false);
     });
   };
 
@@ -73,16 +76,16 @@ const HomeScreen = ({ navigation }: any) => {
     getProducts();
   }, [location]);
 
-  const findDimesions = (layout: any) => {
+  const findDimesions = useCallback((layout: any) => {
     const { height: layoutHeight } = layout;
     setDimentions(height - (layoutHeight + 40 + Constants.statusBarHeight + 60));
-  };
+  }, []);
 
   const searchList = (text: string) => {
     setSearch(text);
     if (text) {
       const searchData = data.filter((obj) =>
-        JSON.stringify(obj).toLowerCase().includes(text.toLowerCase())
+        JSON.stringify(obj.TaskList).toLowerCase().includes(text.toLowerCase())
       );
       setMasterData(searchData);
     } else {
@@ -97,7 +100,6 @@ const HomeScreen = ({ navigation }: any) => {
           <Box flexDirection="row" justifyContent="space-around" mb={2}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <UiPicker
-                mode="dropdown"
                 minWidth={160}
                 items={assignments}
                 selectedValue={selectedIssue}

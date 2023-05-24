@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { StyleSheet } from 'react-native';
 import { MD2Colors } from 'react-native-paper';
 import Box from '../box';
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UiOffline;
+export default memo(UiOffline);

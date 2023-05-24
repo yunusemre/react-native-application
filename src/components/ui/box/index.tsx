@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 import {
@@ -17,4 +18,4 @@ const Box: any = styled(View)(
   compose(flexbox, space, grid, layout, border, color, size, borderRadius, background)
 );
 
-export default Box;
+export default memo(Box);

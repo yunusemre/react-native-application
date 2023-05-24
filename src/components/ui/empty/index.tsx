@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Box from '../box';
 import Text from '../text';
 
@@ -10,4 +10,4 @@ const UiEmpy = (props: any) => {
   );
 };
 
-export default UiEmpy;
+export default memo(UiEmpy);

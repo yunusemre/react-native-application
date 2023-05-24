@@ -7,18 +7,20 @@ import Box from '../box';
 
 const UiCard = ({
   PartyDto,
-  index,
+  TaskId,
   navigation,
   StopOrder,
   ShipmentList,
+  setCheck,
 }: {
   PartyDto: PartyDtoModel;
-  index: number;
   TaskStatus?: number;
   navigation: any;
   IsReturn?: number;
   StopOrder?: number;
+  TaskId?: number;
   ShipmentList?: any;
+  setCheck: any;
 }) => {
   const { Name, AddressText, Latitude, Longitude } = PartyDto;
   const [checked, setChecked] = useState(false);
@@ -41,6 +43,7 @@ const UiCard = ({
             status={checked ? 'checked' : 'unchecked'}
             onPress={() => {
               setChecked(!checked);
+              setCheck(TaskId);
             }}
           />
           <Box
