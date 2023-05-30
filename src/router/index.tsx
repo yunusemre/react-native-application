@@ -2,7 +2,6 @@ import axiosInterceptor from '@api/interceptor';
 import Box from '@components/ui/box';
 import theme from '@config/index';
 import BarcodeScreen from '@pages/barcode-reader';
-import HomeScreen from '@pages/home';
 import LoginScreen from '@pages/login';
 import MappingScreen from '@pages/map';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -12,6 +11,7 @@ import { useAppDispatch } from '@store/hooks';
 import * as Location from 'expo-location';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect } from 'react';
+import StackRouter from './stack-navigation';
 
 SplashScreen.preventAutoHideAsync();
 const Drawer = createDrawerNavigator();
@@ -27,7 +27,7 @@ const navTheme = {
 const Router = () => {
   axiosInterceptor();
   const dispatch = useAppDispatch();
-  
+  // const { isLogin } = useAppSelector((state) => state.apps);
   const setLocation = async () => {
     await Location.requestForegroundPermissionsAsync();
     const location: any = await Location.getCurrentPositionAsync({
@@ -51,10 +51,10 @@ const Router = () => {
   return (
     <Box flex={1} onLayout={onLayoutRootView}>
       <NavigationContainer theme={navTheme}>
-        <Drawer.Navigator useLegacyImplementation initialRouteName="home">
+        <Drawer.Navigator useLegacyImplementation initialRouteName="issues">
           <Drawer.Screen
-            name="home"
-            component={HomeScreen}
+            name="issues"
+            component={StackRouter}
             options={{
               unmountOnBlur: true,
               headerShown: false,

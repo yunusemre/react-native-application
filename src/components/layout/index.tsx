@@ -13,11 +13,13 @@ import { useIsConnected } from 'react-native-offline';
 
 const Layout = ({
   isHeader = false,
+  hasBack = false,
   openBarcode,
   backgroundColor = theme.colors.primary,
   children,
 }: {
   isHeader?: boolean;
+  hasBack?: boolean;
   backgroundColor?: any;
   children: ReactNode;
   openBarcode?: any;
@@ -49,7 +51,7 @@ const Layout = ({
   return (
     <Box flex={1}>
       <StatusBar backgroundColor={backgroundColor} />
-      {isHeader && <UiHeader openBarcode={openBarcode} />}
+      {isHeader && <UiHeader hasBack={hasBack} openBarcode={openBarcode} />}
       <Box>{children}</Box>
       {isOnline === null || isOnline === true ? null : <UiOffline />}
     </Box>

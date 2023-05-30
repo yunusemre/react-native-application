@@ -9,7 +9,7 @@ import { memo, useCallback } from 'react';
 import { Platform } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
-const UiHeader = () => {
+const UiHeader = ({ hasBack = false }) => {
   const dispatch = useAppDispatch();
   const navigation: any = useNavigation();
   const statusBarHeight = Constants.statusBarHeight;
@@ -29,12 +29,15 @@ const UiHeader = () => {
         marginTop: Platform.OS === 'android' ? statusBarHeight : 0,
       }}
     >
-      <Appbar.Action
-        size={20}
-        color="white"
-        icon="menu"
-        onPress={() => navigation.toggleDrawer()}
-      />
+      {!hasBack && (
+        <Appbar.Action
+          size={20}
+          color="white"
+          icon="menu"
+          onPress={() => navigation.toggleDrawer()}
+        />
+      )}
+      {hasBack && <Appbar.BackAction size={20} color="white" onPress={() => navigation.goBack()} />}
       <Appbar.Content
         style={{ margin: 0 }}
         color="white"

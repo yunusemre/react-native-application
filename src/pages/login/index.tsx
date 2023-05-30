@@ -48,12 +48,13 @@ const LoginScreen = ({ navigation }: any) => {
     };
     axios(config)
       .then(async (response: any) => {
+        dispatch(setLoginStatus(true));
         await AsyncStorage.setItem('access_token', response.access_token);
         setIsLogin(false);
-        dispatch(setLoginStatus(true));
-        navigation.navigate('home');
+        navigation.navigate('issues');
       })
       .catch((err) => {
+        console.log(err);
         dispatch(setLoginStatus(false));
         setVisible(true);
         setIsLogin(false);

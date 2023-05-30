@@ -1,5 +1,6 @@
 import Layout from '@components/layout';
 import { Box, Text } from '@components/ui';
+import UiPicker from '@components/ui/select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setShipmentsData } from '@store/features/shipment-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
@@ -8,7 +9,10 @@ import Constants from 'expo-constants';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
-import { Checkbox } from 'react-native-paper';
+import { Button, ProgressBar, Searchbar } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { actions } from './actions';
+import assignments from './assignment';
 import Issues from './issues';
 
 const HomeScreen = ({ navigation }: any) => {
@@ -90,23 +94,63 @@ const HomeScreen = ({ navigation }: any) => {
       <Box ml={8} mr={8} mt={4}>
         <Box onLayout={(event: any) => findDimesions(event.nativeEvent.layout)}>
           <Box flexDirection="row" justifyContent="space-around" mb={2}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}></ScrollView>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <UiPicker
+                minWidth={160}
+                items={assignments}
+                selectedValue={selectedIssue}
+                onValueChange={(val: any) => setSelectedIsseu(val)}
+              />
+              <UiPicker
+                minWidth={160}
+                items={actions}
+                selectedValue={selectedAction}
+                onValueChange={(val: any) => setSelectedAction(val)}
+              />
+              <Box
+                as={Button}
+                mode="outlined"
+                mr={5}
+                labelStyle={{
+                  fontSize: 16,
+                }}
+                onPress={() => console.log('tatar')}
+              >
+                Gün Başlangıcı
+              </Box>
+              <Box as={Button} mr={5} mode="outlined" onPress={() => setShowSearch(!showSearch)}>
+                <Icon name="search" size={16} />
+              </Box>
+            </ScrollView>
           </Box>
-        </Box>
-        <Box
-          border={1}
-          borderColor="borderColor"
-          borderRadius={8}
-          mb={8}
-          pt={4}
-          pb={4}
-          color="white"
-          flexDirection="row"
-          alignItems="center"
-          height={40}
-        >
-          <Checkbox status="unchecked" onPress={() => {}} />
-          <Text>Tümünü Seç</Text>
+          {showSearch && (
+            <Box mt={4} mb={4}>
+              <Searchbar
+                placeholder="Search"
+                onChangeText={(val) => searchList(val)}
+                value={search}
+                inputStyle={{ marginTop: -8 }}
+                style={{
+                  height: 40,
+                }}
+              />
+            </Box>
+          )}
+          <Box mt={4} mb={4}>
+            <Box flexDirection="row" justifyContent="space-between" mb={8}>
+              <Box as={Text} color="green" variant="labelMedium">
+                Tamamlanan: {itemInformations()}
+                {/* TaskListdeki taskstatus'a bakılacak */}
+              </Box>
+              <Box as={Text} color="green" variant="labelMedium">
+                <Text>{Math.ceil(40.3848)}%</Text>
+              </Box>
+              <Box as={Text} color="danger" variant="labelMedium">
+                Tamamlanamayan: 6
+              </Box>
+            </Box>
+            <ProgressBar progress={Math.random()} />
+          </Box>
         </Box>
         <Issues
           dimentions={dimentions}
