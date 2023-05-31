@@ -20,7 +20,7 @@ export default () => ({
     android: {
       adaptiveIcon: {
         foregroundImage: './assets/ic_launcher.png',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#3baf29',
       },
       package: 'com.cargo.ekol.ekolcargo',
       permissions: [

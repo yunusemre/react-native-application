@@ -15,3 +15,12 @@ export enum ShipmentItemStatusEnum {
   MISSING = 100,
   DAMAGED = 110,
 }
+
+export enum DailyMissionStatus {
+  START_OF_DAY = 1,
+  WAITING_FOR_EXIT_REQUEST_APPROVAL = 2,
+  EXIT_REQUEST_APPROVED = 3,
+  MISSION_STARTED = 4,
+  MISSION_COMPLETED = 5,
+  RECONCILED = 6,
+}

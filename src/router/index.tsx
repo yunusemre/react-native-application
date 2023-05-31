@@ -1,9 +1,7 @@
 import axiosInterceptor from '@api/interceptor';
 import Box from '@components/ui/box';
 import theme from '@config/index';
-import BarcodeScreen from '@pages/barcode-reader';
 import LoginScreen from '@pages/login';
-import MappingScreen from '@pages/map';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { setLocations } from '@store/features/app-slice';
@@ -64,21 +62,6 @@ const Router = () => {
             name="login"
             component={LoginScreen}
             options={{
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name="barcode"
-            component={BarcodeScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name="mapping"
-            component={MappingScreen}
-            options={{
-              unmountOnBlur: true,
               headerShown: false,
             }}
           />

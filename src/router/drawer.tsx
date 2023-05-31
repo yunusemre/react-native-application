@@ -67,21 +67,6 @@ const Router = () => {
               headerShown: false,
             }}
           />
-          <Drawer.Screen
-            name="barcode"
-            component={BarcodeScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name="mapping"
-            component={MappingScreen}
-            options={{
-              unmountOnBlur: true,
-              headerShown: false,
-            }}
-          />
         </Drawer.Navigator>
       </NavigationContainer>
     </Box>

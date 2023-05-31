@@ -6,7 +6,6 @@ import { setLoginStatus } from '@store/features/app-slice';
 import { useAppDispatch } from '@store/hooks';
 import Constants from 'expo-constants';
 import { memo, useCallback } from 'react';
-import { Platform } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 const UiHeader = ({ hasBack = false }) => {
@@ -26,7 +25,7 @@ const UiHeader = ({ hasBack = false }) => {
       style={{
         backgroundColor: theme.colors.primary,
         height: 44,
-        marginTop: Platform.OS === 'android' ? statusBarHeight : 0,
+        marginTop: statusBarHeight,
       }}
     >
       {!hasBack && (
@@ -46,18 +45,18 @@ const UiHeader = ({ hasBack = false }) => {
       />
       <Appbar.Action
         style={{ margin: 0 }}
-        icon="barcode-scan"
+        icon="bell"
         size={20}
         color="white"
-        onPress={() => navigation.navigate('barcode')}
+        onPress={() => navigation.navigate('notification')}
       />
-      <Appbar.Action
+      {/* <Appbar.Action
         icon="map-marker"
         size={20}
         color="white"
         onPress={() => navigation.navigate('mapping')}
       />
-      <Appbar.Action icon="logout" size={20} color="white" onPress={async () => onLogout()} />
+      <Appbar.Action icon="logout" size={20} color="white" onPress={async () => onLogout()} /> */}
     </Appbar>
   );
 };

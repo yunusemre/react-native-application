@@ -4,6 +4,7 @@ import UiOffline from '@components/ui/offline-banner';
 import theme from '@config/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import BottomTab from '@router/bottom-tab';
 import { persistor } from '@store/configure-store';
 import { setLoginStatus } from '@store/features/app-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
@@ -13,12 +14,14 @@ import { useIsConnected } from 'react-native-offline';
 
 const Layout = ({
   isHeader = false,
+  isBottom = false,
   hasBack = false,
   openBarcode,
   backgroundColor = theme.colors.primary,
   children,
 }: {
   isHeader?: boolean;
+  isBottom?: boolean;
   hasBack?: boolean;
   backgroundColor?: any;
   children: ReactNode;
@@ -51,8 +54,9 @@ const Layout = ({
   return (
     <Box flex={1}>
       <StatusBar backgroundColor={backgroundColor} />
-      {isHeader && <UiHeader hasBack={hasBack} openBarcode={openBarcode} />}
+      {isHeader ? <UiHeader hasBack={hasBack} openBarcode={openBarcode} />: null}
       <Box>{children}</Box>
+      {isBottom ? <BottomTab /> : null}
       {isOnline === null || isOnline === true ? null : <UiOffline />}
     </Box>
   );

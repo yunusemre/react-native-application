@@ -38,7 +38,7 @@ export const TaskStatusComponent = ({
       break;
     case 'REJECTED':
       text = {
-        val: 'İptal Edildi',
+        val: 'Reddedildi',
         bg: 'borderColor',
       };
       break;

@@ -16,27 +16,16 @@ const UiPicker = ({
   return (
     <Box
       borderWidth={1}
-      mr={5}
-      borderColor={theme.colors.borderColor}
-      borderRadius={theme.radius.full}
+      borderColor={theme.colors.default}
+      borderRadius={theme.radius.normal}
+      mr={4}
+      bg="white"
     >
       <Picker
         dropdownIconColor={theme.colors.primary}
         mode={mode}
         testID={testID}
-        style={{
-          ...style,
-          marginTop: -6,
-          paddingLeft: 0,
-          paddingRight: 0,
-          color: theme.colors.primary,
-          alignItems: 'center',
-          width: 'auto',
-          minWidth: minWidth,
-          height: 40,
-          borderColor: theme.colors.borderColor,
-          borderWidth: 1,
-        }}
+        style={[{ color: theme.colors.primary }, style]}
         {...props}
         selectedValue={selectedValue}
         onValueChange={onValueChange}

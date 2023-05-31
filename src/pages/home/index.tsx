@@ -1,5 +1,6 @@
 import Layout from '@components/layout';
-import { Box, Text } from '@components/ui';
+import { Box, Text, UiPicker } from '@components/ui';
+import theme from '@config/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setShipmentsData } from '@store/features/shipment-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
@@ -8,7 +9,8 @@ import Constants from 'expo-constants';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
-import { Checkbox } from 'react-native-paper';
+import { ProgressBar, Searchbar } from 'react-native-paper';
+import assignments from './assignment';
 import Issues from './issues';
 
 const HomeScreen = ({ navigation }: any) => {
@@ -16,7 +18,7 @@ const HomeScreen = ({ navigation }: any) => {
   const { location } = useAppSelector((state) => state.apps);
   const { data } = useAppSelector((state) => state.shipments);
   const isConnected = useIsConnected();
-  const { height }: { height: number } = Dimensions.get('screen');
+  const { height, width }: { height: number; width: number } = Dimensions.get('window');
   const [showSearch, setShowSearch] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
@@ -24,6 +26,9 @@ const HomeScreen = ({ navigation }: any) => {
   const [search, setSearch] = useState('');
   const [dimentions, setDimentions] = useState(0);
   const [masterData, setMasterData] = useState<any[]>([]);
+
+  const [complateCount, setComplateCount] = useState(0);
+  const [percent, setPercent] = useState(0);
 
   const getProducts = async () => {
     setLoading(true);
@@ -43,6 +48,13 @@ const HomeScreen = ({ navigation }: any) => {
       .then((response: any) => {
         setMasterData(response?.Payload?.StopList);
         dispatch(setShipmentsData(response?.Payload?.StopList));
+        const total =
+          response?.Payload?.StopList?.reduce(
+            (first: any, item: any) => first + item.TaskList?.length,
+            0
+          ) || 0;
+        setComplateCount(total);
+        setPercent(Math.ceil((4 / total) * 100));
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -66,7 +78,8 @@ const HomeScreen = ({ navigation }: any) => {
 
   const findDimesions = useCallback((layout: any) => {
     const { height: layoutHeight } = layout;
-    setDimentions(height - (layoutHeight + 40 + Constants.statusBarHeight + 60));
+    console.log(layoutHeight);
+    setDimentions(height - (layoutHeight + Constants.statusBarHeight + 136));
   }, []);
 
   const searchList = (text: string) => {
@@ -81,32 +94,56 @@ const HomeScreen = ({ navigation }: any) => {
     }
   };
 
-  const itemInformations = () => {
-    return data?.reduce((first: any, item: any) => first + item.TaskList?.length, 0) || 0;
-  };
-
   return (
-    <Layout isHeader openBarcode={() => navigation.navigate('barcode')}>
+    <Layout isHeader isBottom openBarcode={() => navigation.navigate('barcode')}>
       <Box ml={8} mr={8} mt={4}>
         <Box onLayout={(event: any) => findDimesions(event.nativeEvent.layout)}>
-          <Box flexDirection="row" justifyContent="space-around" mb={2}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}></ScrollView>
+          <Box flexDirection="row" height={40} mb={4}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <UiPicker
+                style={{ width: width / 2 - 4, marginTop: -8 }}
+                items={assignments}
+                selectedValue={selectedIssue}
+                onValueChange={(val: any) => setSelectedIsseu(val)}
+              />
+              <Box
+                borderWidth={1}
+                borderRadius={theme.radius.normal}
+                borderColor={theme.colors.default}
+                bg="info"
+                pl={4}
+                pr={4}
+                mr={4}
+                width={width / 2 - 16}
+                justifyContent="center"
+              >
+                <Text color="white">Takım lideri onayı bekleniyor</Text>
+              </Box>
+              <Searchbar
+                style={{
+                  width: width / 2 - 16,
+                  borderRadius: theme.radius.normal,
+                  borderBottomWidth: 0,
+                }}
+                inputStyle={{ marginTop: -17, borderBottomWidth: 0 }}
+                mode="view"
+                placeholder="Search"
+                onChangeText={(val) => searchList(val)}
+                value={search}
+              />
+            </ScrollView>
           </Box>
-        </Box>
-        <Box
-          border={1}
-          borderColor="borderColor"
-          borderRadius={8}
-          mb={8}
-          pt={4}
-          pb={4}
-          color="white"
-          flexDirection="row"
-          alignItems="center"
-          height={40}
-        >
-          <Checkbox status="unchecked" onPress={() => {}} />
-          <Text>Tümünü Seç</Text>
+          <Box height={34}>
+            <Box flexDirection="row" justifyContent="space-between" mb={8}>
+              <Box as={Text} variant="labelMedium">
+                Tamamlanma Oranı: 4/{complateCount}
+              </Box>
+              <Box as={Text} variant="labelMedium">
+                {percent} %
+              </Box>
+            </Box>
+            <ProgressBar progress={percent / 100} />
+          </Box>
         </Box>
         <Issues
           dimentions={dimentions}

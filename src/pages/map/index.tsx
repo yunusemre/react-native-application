@@ -1,8 +1,7 @@
-import Box from '@components/ui/box';
+import Layout from '@components/layout';
 import axios from 'axios';
 import * as Location from 'expo-location';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Locations } from './map-model';
 import mapJson from './map-style.json';
@@ -44,11 +43,11 @@ const MappingScreen = ({ route, navigation }: any) => {
   }, []);
 
   return (
-    <Box flex={1} justifyContent="center" alignItems="center">
+    <Layout isHeader>
       <MapView
         ref={(mapRef) => mapRef?.fitToElements(true)}
         initialRegion={location}
-        style={StyleSheet.absoluteFill}
+        style={{ width: '100%', height: '100%' }}
         customMapStyle={mapJson}
         followsUserLocation={true}
         showsCompass={true}
@@ -70,7 +69,7 @@ const MappingScreen = ({ route, navigation }: any) => {
           anchor={{ x: 0.5, y: 1.5 }}
         />
       </MapView>
-    </Box>
+    </Layout>
   );
 };
 

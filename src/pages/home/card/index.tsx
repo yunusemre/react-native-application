@@ -5,9 +5,9 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Badge, Checkbox, IconButton, Menu, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Box from '../../../components/ui/box';
+import { TaskTypeEnum } from '../../../types/enums';
 import { IUICard } from './model';
 import TaskStatusComponent from './status';
-import { TaskTypeEnum } from './task-type';
 
 const UiCard = ({
   PartyDto,
@@ -41,14 +41,7 @@ const UiCard = ({
               setCheck(items.TaskId);
             }}
           />
-          <Box
-            flexDirection="row"
-            flexWrap="wrap"
-            justifyContent="center"
-            width={70}
-            pl={12}
-            pr={12}
-          >
+          <Box flexDirection="row" flexWrap="wrap" width={70} pl={10} pr={12}>
             {items.ShipmentList.length !== 0 &&
             items.ShipmentList.some((ship: any) => ship.Neighbour !== null) ? (
               <Icon name="alert-circle-outline" size={18} />
