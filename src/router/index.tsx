@@ -40,6 +40,8 @@ const Router = () => {
 
   useEffect(() => {
     setLocation();
+    const getLocation = setInterval(() => setLocation(), 60 * 1000);
+    return clearInterval(getLocation);
   }, []);
 
   const onLayoutRootView = useCallback(async () => {

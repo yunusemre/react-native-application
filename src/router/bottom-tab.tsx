@@ -39,7 +39,7 @@ const BottomTab = () => {
         <Icon size={36} name="barcode-scan" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.center} onPress={() => navigation.navigate('mapping')}>
-        <Icon size={24} name="playlist-star" />
+        <Icon size={28} name="playlist-star" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.center} onPress={() => navigation.navigate('issues')}>
         <Icon

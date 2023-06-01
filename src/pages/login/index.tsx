@@ -4,7 +4,7 @@ import UITextInput from '@components/ui/textInput';
 import theme from '@config/index';
 import { yupResolver } from '@hookform/resolvers/yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setLoginStatus } from '@store/features/app-slice';
+import { setLoginStatus, setUsername } from '@store/features/app-slice';
 import { useAppDispatch } from '@store/hooks';
 import axios from 'axios';
 import Constants from 'expo-constants';
@@ -49,6 +49,7 @@ const LoginScreen = ({ navigation }: any) => {
     axios(config)
       .then(async (response: any) => {
         dispatch(setLoginStatus(true));
+        dispatch(setUsername(username));
         await AsyncStorage.setItem('access_token', response.access_token);
         setIsLogin(false);
         navigation.navigate('issues');

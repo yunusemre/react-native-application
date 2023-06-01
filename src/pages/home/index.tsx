@@ -11,6 +11,7 @@ import { Dimensions, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import { ProgressBar, Searchbar } from 'react-native-paper';
 import assignments from './assignment';
+import { TaskStatusEnum } from './card/status';
 import Issues from './issues';
 
 const HomeScreen = ({ navigation }: any) => {
@@ -27,7 +28,8 @@ const HomeScreen = ({ navigation }: any) => {
   const [dimentions, setDimentions] = useState(0);
   const [masterData, setMasterData] = useState<any[]>([]);
 
-  const [complateCount, setComplateCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const [completeCount, setCompleteCount] = useState(0);
   const [percent, setPercent] = useState(0);
 
   const getProducts = async () => {
@@ -46,15 +48,29 @@ const HomeScreen = ({ navigation }: any) => {
     };
     axios(config)
       .then((response: any) => {
-        setMasterData(response?.Payload?.StopList);
-        dispatch(setShipmentsData(response?.Payload?.StopList));
+        const result = response?.Payload?.StopList;
+        setMasterData(result);
+        dispatch(setShipmentsData(result));
+
+        //  Task Item Total Count
         const total =
-          response?.Payload?.StopList?.reduce(
-            (first: any, item: any) => first + item.TaskList?.length,
-            0
-          ) || 0;
-        setComplateCount(total);
-        setPercent(Math.ceil((4 / total) * 100));
+          result?.reduce((first: any, item: any) => first + item.TaskList?.length, 0) || 0;
+        setTotalCount(total);
+        //  Task Item Completed Count
+        let totalCompletedCount = 0;
+        result?.forEach((task: any) => {
+          task.TaskList.map((taskItem: any) => {
+            const taskStatusId = taskItem.TaskStatus;
+            if (
+              taskStatusId === TaskStatusEnum.COMPLETED ||
+              taskStatusId === TaskStatusEnum.CANCELLED
+            ) {
+              totalCompletedCount++;
+            }
+          }, 0);
+        });
+        setCompleteCount(totalCompletedCount);
+        setPercent(Math.ceil((totalCompletedCount / total) * 100));
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -78,8 +94,9 @@ const HomeScreen = ({ navigation }: any) => {
 
   const findDimesions = useCallback((layout: any) => {
     const { height: layoutHeight } = layout;
-    console.log(layoutHeight);
-    setDimentions(height - (layoutHeight + Constants.statusBarHeight + 136));
+    setDimentions(
+      height - (layoutHeight + Constants.statusBarHeight + Constants.statusBarHeight + 94)
+    );
   }, []);
 
   const searchList = (text: string) => {
@@ -101,7 +118,7 @@ const HomeScreen = ({ navigation }: any) => {
           <Box flexDirection="row" height={40} mb={4}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <UiPicker
-                style={{ width: width / 2 - 4, marginTop: -8 }}
+                style={{ width: width / 2 - 4, marginTop: -6 }}
                 items={assignments}
                 selectedValue={selectedIssue}
                 onValueChange={(val: any) => setSelectedIsseu(val)}
@@ -110,14 +127,14 @@ const HomeScreen = ({ navigation }: any) => {
                 borderWidth={1}
                 borderRadius={theme.radius.normal}
                 borderColor={theme.colors.default}
-                bg="info"
+                bg="white"
                 pl={4}
                 pr={4}
                 mr={4}
                 width={width / 2 - 16}
                 justifyContent="center"
               >
-                <Text color="white">Takım lideri onayı bekleniyor</Text>
+                <Text color="info">Takım lideri onayı bekleniyor</Text>
               </Box>
               <Searchbar
                 style={{
@@ -136,7 +153,7 @@ const HomeScreen = ({ navigation }: any) => {
           <Box height={34}>
             <Box flexDirection="row" justifyContent="space-between" mb={8}>
               <Box as={Text} variant="labelMedium">
-                Tamamlanma Oranı: 4/{complateCount}
+                Tamamlanma Oranı: {completeCount}/{totalCount}
               </Box>
               <Box as={Text} variant="labelMedium">
                 {percent} %

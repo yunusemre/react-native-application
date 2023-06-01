@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { persistor } from '@store/configure-store';
 import { setLoginStatus } from '@store/features/app-slice';
 import { useAppDispatch } from '@store/hooks';
+import axios from 'axios';
 import Constants from 'expo-constants';
 import { memo, useCallback } from 'react';
 import { Appbar } from 'react-native-paper';
@@ -14,7 +15,9 @@ const UiHeader = ({ hasBack = false }) => {
   const statusBarHeight = Constants.statusBarHeight;
 
   const onLogout = useCallback(async () => {
-    dispatch(setLoginStatus(false));
+    axios.post('/releaseDevice', {}).then(() => {
+      dispatch(setLoginStatus(false));
+    });
     await AsyncStorage.setItem('access_token', '');
     persistor.purge();
     navigation.navigate('login');

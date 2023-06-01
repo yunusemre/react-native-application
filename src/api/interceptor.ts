@@ -10,11 +10,14 @@ const httpAuthorizationErrorCode = 401;
 axios.defaults.baseURL = Env.API_URL;
 const axiosInterceptor = () => {
   const dispatch = useAppDispatch();
+  // const { location } = useAppSelector((state) => state.apps);
   axios.interceptors.request.use(
     async (config: any) => {
       const token: string | null = await AsyncStorage.getItem('access_token');
       if (token !== '') {
         config.headers['Authorization'] = `Bearer ${token}`;
+        // config.headers['Latitude'] = location?.latitude;
+        // config.headers['Longitude'] = location?.longitude;
       }
       return config;
     },

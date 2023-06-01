@@ -14,6 +14,7 @@ export interface IUICard {
   TaskType?: number;
   navigation: any;
   IsReturn?: number;
+  IsPunctual?: boolean | any;
   StopOrder?: number;
   TaskId?: number;
   TimePeriodId?: number;

@@ -8,6 +8,7 @@ import BottomTab from '@router/bottom-tab';
 import { persistor } from '@store/configure-store';
 import { setLoginStatus } from '@store/features/app-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
+import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import { ReactNode, useEffect } from 'react';
 import { useIsConnected } from 'react-native-offline';
@@ -30,18 +31,21 @@ const Layout = ({
   const isOnline = useIsConnected();
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
-  const { isLogin } = useAppSelector((state) => state.apps);
+  const { isLogin, username } = useAppSelector((state) => state.apps);
 
   const getToken = async () => {
-    return await AsyncStorage.getItem('access_token');
+    const token = await AsyncStorage.getItem('access_token');
+    return token;
   };
 
   const Logout = async () => {
     dispatch(setLoginStatus(false));
+    await axios.post('/releaseDevice', {});
     await AsyncStorage.setItem('access_token', '');
     persistor.purge();
     navigation.navigate('login');
   };
+
   useEffect(() => {
     (async () => {
       const token = await getToken();
@@ -51,10 +55,38 @@ const Layout = ({
     })();
   }, [isLogin]);
 
+  // useEffect(() => {
+  // axios.post('/getUserNotification', {}).then((response) => {
+  //   console.log('getUserNotification', response);
+  // });
+  // EXIT
+  // axios.post('/releaseDevice', {}).then((response) => {
+  //   console.log('releaseDevice', response);
+  // });
+  // axios.post('/setDeviceInUse', {}).then((response) => {
+  //   console.log('setDeviceInUse', response);
+  // });
+  // axios.post('/getUserInfo', {}).then((response) => {
+  //   dispatch(setUserInfo(response));
+  // });
+  // axios.post('/getAllParameters', {}).then((response) => {
+  //   dispatch(setAllParameters(response));
+  // });
+  // axios.post('/getCountries', {}).then((response) => {
+  //   console.log('getCountries', response);
+  // });
+  // axios.post('/getMyTeamMembers', {}).then((response) => {
+  //   console.log('getMyTeamMembers', response);
+  // });
+  // axios.post('/getUserMenu', {}).then((response) => {
+  //   dispatch(setUserMenu(response));
+  // });
+  // }, []);
+
   return (
     <Box flex={1}>
       <StatusBar backgroundColor={backgroundColor} />
-      {isHeader ? <UiHeader hasBack={hasBack} openBarcode={openBarcode} />: null}
+      {isHeader ? <UiHeader hasBack={hasBack} openBarcode={openBarcode} /> : null}
       <Box>{children}</Box>
       {isBottom ? <BottomTab /> : null}
       {isOnline === null || isOnline === true ? null : <UiOffline />}

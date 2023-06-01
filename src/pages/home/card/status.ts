@@ -1,4 +1,4 @@
-enum TaskStatusEnum {
+export enum TaskStatusEnum {
   UNKNOWN,
   ASSIGNED,
   FORWARDED,
@@ -9,7 +9,7 @@ enum TaskStatusEnum {
   WAITING_TO_BE_ASSIGNED,
 }
 
-export const TaskStatusComponent = ({
+const TaskStatusComponent = ({
   status,
   params = 'white',
 }: {
@@ -74,4 +74,40 @@ export const TaskStatusComponent = ({
   return text[params];
 };
 
-export default TaskStatusComponent;
+const taskStatusFunction = ({
+  status,
+  IsPunctual,
+}: {
+  status: number | any;
+  IsPunctual?: boolean;
+}) => {
+  if (TaskStatusEnum[status] === 'UNKNOWN') {
+    return '';
+  }
+  if (TaskStatusEnum[status] === 'ASSIGNED') {
+    return '';
+  }
+  if (TaskStatusEnum[status] === 'FORWARDED') {
+    return '';
+  }
+  if (TaskStatusEnum[status] === 'REJECTED') {
+    return 'danger';
+  }
+  if (TaskStatusEnum[status] === 'COMPLETED') {
+    return 'primary';
+  }
+  if (TaskStatusEnum[status] === 'CANCELLED') {
+    return 'canceled';
+  }
+  if (TaskStatusEnum[status] === 'SUSPENDED') {
+    return 'info';
+  }
+  if (TaskStatusEnum[status] === 'WAITING_TO_BE_ASSIGNED') {
+    return '';
+  }
+  if (!IsPunctual) {
+    return 'danger';
+  }
+};
+
+export { TaskStatusComponent, taskStatusFunction };

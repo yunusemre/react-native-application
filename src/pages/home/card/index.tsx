@@ -7,13 +7,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Box from '../../../components/ui/box';
 import { TaskTypeEnum } from '../../../types/enums';
 import { IUICard } from './model';
-import TaskStatusComponent from './status';
+import { TaskStatusComponent } from './status';
 
 const UiCard = ({
   PartyDto,
   navigation,
   setCheck,
   itemCount = 0,
+  IsPunctual,
   customerTrackingId,
   ...items
 }: IUICard) => {
@@ -29,7 +30,7 @@ const UiCard = ({
       mb={8}
       pt={4}
       pb={4}
-      bg={TaskStatusComponent({ status: items.TaskStatus, params: 'bg' })}
+      bg="red"
       color="white"
     >
       <Box flexDirection="row" minHeight={60}>
