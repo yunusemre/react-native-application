@@ -1,5 +1,5 @@
 import { Box, Text, UiEmpy } from '@components/ui';
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,8 +13,23 @@ const Issues = ({
   isOnline,
   getProducts,
   isConnected,
+  checkList,
   setCheck,
 }: any) => {
+  const allItemCheckList = { ...checkList };
+  const [checked, setChecked] = useState(false);
+
+  const checkAllItems = (val: boolean) => {
+    for (const [key] of Object.entries(allItemCheckList)) allItemCheckList[key] = !val;
+    setCheck(allItemCheckList);
+    setChecked(!val);
+  };
+
+  useEffect(() => {
+    setChecked(false);
+  }, [data]);
+  
+  const height = dimentions - 52;
   return (
     <Box>
       <Box
@@ -30,10 +45,15 @@ const Issues = ({
         alignItems="center"
         height={30}
       >
-        <Checkbox status="unchecked" onPress={() => {}} />
+        <Checkbox
+          status={checked ? 'checked' : 'unchecked'}
+          onPress={() => {
+            checkAllItems(checked);
+          }}
+        />
         <Text>Tümünü Seç</Text>
       </Box>
-      <Box height={dimentions}>
+      <Box height={height}>
         {loading === false && data?.length === 0 && (
           <UiEmpy
             bg="info"
@@ -74,11 +94,10 @@ const Issues = ({
                 item.ShipmentList[0].ShipmentItemList[0].CustomerTrackingId;
               return (
                 <UiCard
+                  isCheck={checkList[item.TaskId]}
                   customerTrackingId={customerTrackingId}
                   itemCount={sumShipmentItemListCount}
-                  setCheck={(res: number) => {
-                    console.log(res);
-                  }}
+                  setCheck={(res: any) => setCheck({ ...checkList, ...res })}
                   key={index}
                   navigation={navigation}
                   {...item}

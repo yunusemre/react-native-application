@@ -9,15 +9,17 @@ export interface PartyDtoModel {
 }
 
 export interface IUICard {
+  isCheck: boolean;
   PartyDto: PartyDtoModel;
   TaskStatus?: number;
   TaskType?: number;
   navigation: any;
   IsReturn?: number;
   StopOrder?: number;
-  TaskId?: number;
+  TaskId?: number | any;
   TimePeriodId?: number;
   ShipmentList?: any;
+  IsPunctual?: boolean | any;
   IsSamedayDelivery: boolean;
   setCheck: any;
   itemCount: number;

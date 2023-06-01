@@ -2,9 +2,9 @@ import axiosInterceptor from '@api/interceptor';
 import Box from '@components/ui/box';
 import theme from '@config/index';
 import LoginScreen from '@pages/login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import { setLocations } from '@store/features/app-slice';
 import { useAppDispatch } from '@store/hooks';
 import * as Location from 'expo-location';
 import * as SplashScreen from 'expo-splash-screen';
@@ -25,7 +25,7 @@ const navTheme = {
 const Router = () => {
   axiosInterceptor();
   const dispatch = useAppDispatch();
-  // const { isLogin } = useAppSelector((state) => state.apps);
+
   const setLocation = async () => {
     await Location.requestForegroundPermissionsAsync();
     const location: any = await Location.getCurrentPositionAsync({
@@ -35,11 +35,13 @@ const Router = () => {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     };
-    dispatch(setLocations(cor));
+    await AsyncStorage.setItem('location', JSON.stringify(cor));
   };
 
   useEffect(() => {
     setLocation();
+    const getLocation = setInterval(() => setLocation(), 60 * 1000);
+    return clearInterval(getLocation);
   }, []);
 
   const onLayoutRootView = useCallback(async () => {

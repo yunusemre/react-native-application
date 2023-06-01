@@ -1,4 +1,4 @@
-enum TaskStatusEnum {
+export enum TaskStatusEnum {
   UNKNOWN,
   ASSIGNED,
   FORWARDED,

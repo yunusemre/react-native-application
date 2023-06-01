@@ -8,6 +8,7 @@ import BottomTab from '@router/bottom-tab';
 import { persistor } from '@store/configure-store';
 import { setLoginStatus } from '@store/features/app-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
+import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import { ReactNode, useEffect } from 'react';
 import { useIsConnected } from 'react-native-offline';
@@ -37,7 +38,7 @@ const Layout = ({
   };
 
   const Logout = async () => {
-    dispatch(setLoginStatus(false));
+    axios.post('/releaseDevice', {}).then(() => dispatch(setLoginStatus(false)));
     await AsyncStorage.setItem('access_token', '');
     persistor.purge();
     navigation.navigate('login');
@@ -54,7 +55,7 @@ const Layout = ({
   return (
     <Box flex={1}>
       <StatusBar backgroundColor={backgroundColor} />
-      {isHeader ? <UiHeader hasBack={hasBack} openBarcode={openBarcode} />: null}
+      {isHeader ? <UiHeader hasBack={hasBack} openBarcode={openBarcode} /> : null}
       <Box>{children}</Box>
       {isBottom ? <BottomTab /> : null}
       {isOnline === null || isOnline === true ? null : <UiOffline />}

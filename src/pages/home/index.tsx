@@ -6,11 +6,12 @@ import { setShipmentsData } from '@store/features/shipment-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import axios from 'axios';
 import Constants from 'expo-constants';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import { ProgressBar, Searchbar } from 'react-native-paper';
 import assignments from './assignment';
+import { TaskStatusEnum } from './card/status';
 import Issues from './issues';
 
 const HomeScreen = ({ navigation }: any) => {
@@ -18,17 +19,19 @@ const HomeScreen = ({ navigation }: any) => {
   const { location } = useAppSelector((state) => state.apps);
   const { data } = useAppSelector((state) => state.shipments);
   const isConnected = useIsConnected();
-  const { height, width }: { height: number; width: number } = Dimensions.get('window');
-  const [showSearch, setShowSearch] = useState(false);
+  const { height, width }: { height: number; width: number } = Dimensions.get('screen');
   const [loading, setLoading] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
-  const [selectedAction, setSelectedAction] = useState();
   const [search, setSearch] = useState('');
   const [dimentions, setDimentions] = useState(0);
   const [masterData, setMasterData] = useState<any[]>([]);
 
-  const [complateCount, setComplateCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const [completeCount, setCompleteCount] = useState(0);
   const [percent, setPercent] = useState(0);
+  const [checkListItem, setCheckListItem] = useState({});
+
+  const checkList: any = {};
 
   const getProducts = async () => {
     setLoading(true);
@@ -46,15 +49,29 @@ const HomeScreen = ({ navigation }: any) => {
     };
     axios(config)
       .then((response: any) => {
-        setMasterData(response?.Payload?.StopList);
-        dispatch(setShipmentsData(response?.Payload?.StopList));
-        const total =
-          response?.Payload?.StopList?.reduce(
-            (first: any, item: any) => first + item.TaskList?.length,
-            0
-          ) || 0;
-        setComplateCount(total);
-        setPercent(Math.ceil((4 / total) * 100));
+        const result = response?.Payload?.StopList;
+        setMasterData(result);
+        dispatch(setShipmentsData(result));
+
+        const total = result?.reduce((first: any, item: any) => first + item.TaskList?.length, 0);
+        setTotalCount(total);
+        //  Task Item Completed Count
+        let totalCompletedCount = 0;
+        result?.forEach((task: any) => {
+          task.TaskList.map((taskItem: any) => {
+            checkList[taskItem.TaskId] = false;
+            const taskStatusId = taskItem.TaskStatus;
+            if (
+              taskStatusId === TaskStatusEnum.COMPLETED ||
+              taskStatusId === TaskStatusEnum.CANCELLED
+            ) {
+              totalCompletedCount++;
+            }
+          });
+        });
+        setCheckListItem(checkList);
+        setCompleteCount(totalCompletedCount);
+        setPercent(Math.ceil((totalCompletedCount / total) * 100));
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -73,13 +90,8 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   useEffect(() => {
+    setDimentions(height - (Constants.statusBarHeight + 220));
     getProducts();
-  }, []);
-
-  const findDimesions = useCallback((layout: any) => {
-    const { height: layoutHeight } = layout;
-    console.log(layoutHeight);
-    setDimentions(height - (layoutHeight + Constants.statusBarHeight + 136));
   }, []);
 
   const searchList = (text: string) => {
@@ -97,7 +109,7 @@ const HomeScreen = ({ navigation }: any) => {
   return (
     <Layout isHeader isBottom openBarcode={() => navigation.navigate('barcode')}>
       <Box ml={8} mr={8} mt={4}>
-        <Box onLayout={(event: any) => findDimesions(event.nativeEvent.layout)}>
+        <Box height={80}>
           <Box flexDirection="row" height={40} mb={4}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <UiPicker
@@ -136,7 +148,7 @@ const HomeScreen = ({ navigation }: any) => {
           <Box height={34}>
             <Box flexDirection="row" justifyContent="space-between" mb={8}>
               <Box as={Text} variant="labelMedium">
-                Tamamlanma Oranı: 4/{complateCount}
+                Tamamlanma Oranı: {completeCount}/{totalCount}
               </Box>
               <Box as={Text} variant="labelMedium">
                 {percent} %
@@ -146,11 +158,15 @@ const HomeScreen = ({ navigation }: any) => {
           </Box>
         </Box>
         <Issues
+          checkList={checkListItem}
           dimentions={dimentions}
           data={masterData}
           loading={loading}
           navigation={navigation}
           isOnline={isOnline}
+          setCheck={(items: any) => {
+            setCheckListItem(items);
+          }}
           getProducts={getProducts}
           isConnected={isConnected}
         />

@@ -12,9 +12,13 @@ const axiosInterceptor = () => {
   const dispatch = useAppDispatch();
   axios.interceptors.request.use(
     async (config: any) => {
-      const token: string | null = await AsyncStorage.getItem('access_token');
+      const token: any = await AsyncStorage.getItem('access_token');
+      const loc: any = await AsyncStorage.getItem('location');
+      const location: any = JSON.parse(loc);
       if (token !== '') {
         config.headers['Authorization'] = `Bearer ${token}`;
+        config.headers['Latitude'] = location?.latitude;
+        config.headers['Longitude'] = location?.longitude;
       }
       return config;
     },

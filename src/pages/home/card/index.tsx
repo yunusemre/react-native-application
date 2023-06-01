@@ -13,12 +13,14 @@ const UiCard = ({
   PartyDto,
   navigation,
   setCheck,
+  TaskId,
+  isCheck,
   itemCount = 0,
   customerTrackingId,
   ...items
 }: IUICard) => {
   const { Name, AddressText, Latitude, Longitude, IsConfirmed } = PartyDto;
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(isCheck);
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -35,10 +37,10 @@ const UiCard = ({
       <Box flexDirection="row" minHeight={60}>
         <Box width={'15%'}>
           <Checkbox
-            status={checked ? 'checked' : 'unchecked'}
+            status={isCheck ? 'checked' : 'unchecked'}
             onPress={() => {
               setChecked(!checked);
-              setCheck(items.TaskId);
+              setCheck({ [TaskId]: !checked });
             }}
           />
           <Box flexDirection="row" flexWrap="wrap" width={70} pl={10} pr={12}>

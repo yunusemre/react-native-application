@@ -15,7 +15,8 @@ const colors = {
   borderColor: '#dddddd',
   borderDanger: '#f1aeb5',
   white: '#ffffff',
-  gray: '#4C4C4E'
+  gray: '#4C4C4E',
+  canceled: '#b1b3b1',
 };
 
 const radius = {
