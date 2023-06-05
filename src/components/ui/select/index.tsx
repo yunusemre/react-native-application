@@ -20,12 +20,13 @@ const UiPicker = ({
       borderRadius={theme.radius.normal}
       mr={4}
       bg="white"
+      height={40}
     >
       <Picker
         dropdownIconColor={theme.colors.primary}
         mode={mode}
         testID={testID}
-        style={[{ color: theme.colors.primary }, style]}
+        style={[{ color: theme.colors.primary, marginTop: -8 }, style]}
         {...props}
         selectedValue={selectedValue}
         onValueChange={onValueChange}

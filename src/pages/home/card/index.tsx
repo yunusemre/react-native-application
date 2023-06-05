@@ -95,7 +95,7 @@ const UiCard = ({
           <TouchableOpacity
             activeOpacity={0.7}
             style={[styles.w90]}
-            onPress={() => navigation.navigate('detail', items.ShipmentList)}
+            onPress={() => navigation.navigate('home-detail', { ...items.ShipmentList, TaskId })}
           >
             <Text style={[styles.w90, styles.fontBold]}>{Name}</Text>
             <Text style={styles.w90} variant="labelMedium">

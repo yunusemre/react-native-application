@@ -4,6 +4,7 @@ import theme from '@config/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setShipmentsData } from '@store/features/shipment-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { dailyMissionStatusText } from '@utils/daily-mission-status';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
@@ -30,6 +31,7 @@ const HomeScreen = ({ navigation }: any) => {
   const [completeCount, setCompleteCount] = useState(0);
   const [percent, setPercent] = useState(0);
   const [checkListItem, setCheckListItem] = useState({});
+  const [dailyMissionStatus, setDailyMissionStatus] = useState<number>(1);
 
   const checkList: any = {};
 
@@ -49,6 +51,7 @@ const HomeScreen = ({ navigation }: any) => {
     };
     axios(config)
       .then((response: any) => {
+        setDailyMissionStatus(response?.Payload.DailyMissionStatus);
         const result = response?.Payload?.StopList;
         setMasterData(result);
         dispatch(setShipmentsData(result));
@@ -113,7 +116,7 @@ const HomeScreen = ({ navigation }: any) => {
           <Box flexDirection="row" height={40} mb={4}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <UiPicker
-                style={{ width: width / 2 - 4, marginTop: -8 }}
+                style={{ width: width / 2 - 4 }}
                 items={assignments}
                 selectedValue={selectedIssue}
                 onValueChange={(val: any) => setSelectedIsseu(val)}
@@ -128,8 +131,9 @@ const HomeScreen = ({ navigation }: any) => {
                 mr={4}
                 width={width / 2 - 16}
                 justifyContent="center"
+                aligItems="center"
               >
-                <Text color="white">Takım lideri onayı bekleniyor</Text>
+                <Text color="white">{dailyMissionStatusText(dailyMissionStatus)}</Text>
               </Box>
               <Searchbar
                 style={{

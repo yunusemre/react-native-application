@@ -21,19 +21,19 @@ export const TaskStatusComponent = ({
     case 'UNKNOWN':
       text = {
         val: 'Bilinmiyor',
-        bg: '',
+        bg: 'white',
       };
       break;
     case 'ASSIGNED':
       text = {
         val: 'Atandı',
-        bg: '',
+        bg: 'white',
       };
       break;
     case 'FORWARDED':
       text = {
         val: 'Yönlendirildi',
-        bg: '',
+        bg: 'white',
       };
       break;
     case 'REJECTED':
@@ -63,12 +63,15 @@ export const TaskStatusComponent = ({
     case 'WAITING_TO_BE_ASSIGNED':
       text = {
         val: 'Atanmayı Bekliyor',
-        bg: '',
+        bg: 'white',
       };
       break;
 
     default:
-      text = '';
+      text = {
+        val: '',
+        bg: 'white',
+      };
       break;
   }
   return text[params];

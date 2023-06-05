@@ -28,7 +28,7 @@ const Issues = ({
   useEffect(() => {
     setChecked(false);
   }, [data]);
-  
+
   const height = dimentions - 52;
   return (
     <Box>
@@ -44,6 +44,7 @@ const Issues = ({
         flexDirection="row"
         alignItems="center"
         height={30}
+        bg="white"
       >
         <Checkbox
           status={checked ? 'checked' : 'unchecked'}
