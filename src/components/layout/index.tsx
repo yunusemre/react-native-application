@@ -6,11 +6,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import BottomTab from '@router/bottom-tab';
 import { persistor } from '@store/configure-store';
-import { setLoginStatus } from '@store/features/app-slice';
+import { setLayoutHeight, setLoginStatus } from '@store/features/app-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import axios from 'axios';
+import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useLayoutEffect } from 'react';
+import { Dimensions } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 
 const Layout = ({
@@ -28,10 +30,13 @@ const Layout = ({
   children: ReactNode;
   openBarcode?: any;
 }) => {
+  const { height }: { height: number } = Dimensions.get('screen');
+  const statusBarHeight = isHeader ? Constants.statusBarHeight * 2 : 0;
+  const bottomBar = isBottom ? 52 : 0;
   const isOnline = useIsConnected();
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
-  const { isLogin } = useAppSelector((state) => state.apps);
+  const { isLogin, screenHeight } = useAppSelector((state) => state.apps);
 
   const getToken = async () => {
     return await AsyncStorage.getItem('access_token');
@@ -43,6 +48,12 @@ const Layout = ({
     persistor.purge();
     navigation.navigate('login');
   };
+
+  useLayoutEffect(() => {
+    const layoutHeight = height - (statusBarHeight + bottomBar + 70);
+    dispatch(setLayoutHeight(layoutHeight));
+  }, []);
+
   useEffect(() => {
     (async () => {
       const token = await getToken();
@@ -56,7 +67,7 @@ const Layout = ({
     <Box flex={1}>
       <StatusBar backgroundColor={backgroundColor} />
       {isHeader ? <UiHeader hasBack={hasBack} openBarcode={openBarcode} /> : null}
-      <Box>{children}</Box>
+      <Box height={screenHeight}>{children}</Box>
       {isBottom ? <BottomTab /> : null}
       {isOnline === null || isOnline === true ? null : <UiOffline />}
     </Box>

@@ -6,7 +6,6 @@ import { setShipmentsData } from '@store/features/shipment-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { dailyMissionStatusText } from '@utils/daily-mission-status';
 import axios from 'axios';
-import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
@@ -17,14 +16,13 @@ import Issues from './issues';
 
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
-  const { location } = useAppSelector((state) => state.apps);
+  const { location, screenHeight } = useAppSelector((state) => state.apps);
   const { data } = useAppSelector((state) => state.shipments);
   const isConnected = useIsConnected();
-  const { height, width }: { height: number; width: number } = Dimensions.get('screen');
+  const { width }: { width: number } = Dimensions.get('screen');
   const [loading, setLoading] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
   const [search, setSearch] = useState('');
-  const [dimentions, setDimentions] = useState(0);
   const [masterData, setMasterData] = useState<any[]>([]);
 
   const [totalCount, setTotalCount] = useState(0);
@@ -93,7 +91,6 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   useEffect(() => {
-    setDimentions(height - (Constants.statusBarHeight + 220));
     getProducts();
   }, []);
 
@@ -163,7 +160,7 @@ const HomeScreen = ({ navigation }: any) => {
         </Box>
         <Issues
           checkList={checkListItem}
-          dimentions={dimentions}
+          dimentions={screenHeight - 80}
           data={masterData}
           loading={loading}
           navigation={navigation}

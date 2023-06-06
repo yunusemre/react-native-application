@@ -1,7 +1,8 @@
 import Layout from '@components/layout';
 import { Box, Text } from '@components/ui';
 
-export const HomeDetailWeights = () => {
+export const HomeDetailWeights = ({ route }: any) => {
+  console.log(route.params.data);
   return (
     <Layout isHeader isBottom hasBack={true}>
       <Box
