@@ -12,7 +12,7 @@ const HomeDetails = ({ navigation, checkList, route, setCheck }: any) => {
   const taskId = route.params.TaskId;
   const { data } = useAppSelector((state) => state.shipments);
   const { screenHeight } = useAppSelector((state) => state.apps);
-  const { height, width }: { height: number; width: number } = Dimensions.get('window');
+  const { width }: { height: number; width: number } = Dimensions.get('window');
   const [selectedIssue, setSelectedIsseu] = useState();
   const [masterData, setMasterData] = useState<any>([]);
   const [taskItem, setTaskItem] = useState<any>({});
@@ -45,6 +45,7 @@ const HomeDetails = ({ navigation, checkList, route, setCheck }: any) => {
     );
   };
 
+  const layoutHeight = screenHeight - 88;
   return (
     <Layout isHeader isBottom hasBack={true}>
       <Box ml={8} mr={8} mt={4}>
@@ -84,7 +85,7 @@ const HomeDetails = ({ navigation, checkList, route, setCheck }: any) => {
         </Box>
         <ShipmentItems
           taskId={route.params.TaskId}
-          dimentions={screenHeight - 88}
+          dimentions={layoutHeight}
           navigation={navigation}
           data={masterData}
         />

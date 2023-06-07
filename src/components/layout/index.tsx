@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '@store/hooks';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
-import { ReactNode, useEffect, useLayoutEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 
@@ -36,8 +36,8 @@ const Layout = ({
   const { isLogin, screenHeight } = useAppSelector((state) => state.apps);
   const { height }: { height: number } = Dimensions.get('screen');
 
-  const statusBarHeight = Constants.statusBarHeight * 2 + 44;
-  const bottomBar = 52;
+  // const statusBarHeight = Constants.statusBarHeight * 2 + 44;
+  // const bottomBar = 52;
 
   const getToken = async () => {
     return await AsyncStorage.getItem('access_token');
@@ -49,9 +49,8 @@ const Layout = ({
     persistor.purge();
     navigation.navigate('login');
   };
-
-  useLayoutEffect(() => {
-    const layoutHeight = height - (statusBarHeight + bottomBar);
+  useEffect(() => {
+    const layoutHeight = height - (Constants.statusBarHeight * 2 + 44 + 52);
     dispatch(setLayoutHeight(layoutHeight));
   }, []);
 

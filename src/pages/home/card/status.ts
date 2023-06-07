@@ -9,72 +9,39 @@ export enum TaskStatusEnum {
   WAITING_TO_BE_ASSIGNED,
 }
 
-export const TaskStatusComponent = ({
-  status,
-  params = 'white',
-}: {
-  status: number | any;
-  params: string;
-}) => {
-  let text: any = null;
-  switch (TaskStatusEnum[status]) {
-    case 'UNKNOWN':
-      text = {
-        val: 'Bilinmiyor',
-        bg: 'white',
-      };
-      break;
-    case 'ASSIGNED':
-      text = {
-        val: 'Atandı',
-        bg: 'white',
-      };
-      break;
-    case 'FORWARDED':
-      text = {
-        val: 'Yönlendirildi',
-        bg: 'white',
-      };
-      break;
-    case 'REJECTED':
-      text = {
-        val: 'Reddedildi',
-        bg: 'borderColor',
-      };
-      break;
-    case 'COMPLETED':
-      text = {
-        val: 'Tamamlandı',
-        bg: 'primary',
-      };
-      break;
-    case 'CANCELLED':
-      text = {
-        val: 'İptal',
-        bg: 'borderColor',
-      };
-      break;
-    case 'SUSPENDED':
-      text = {
-        val: 'Beklemede',
-        bg: 'info',
-      };
-      break;
-    case 'WAITING_TO_BE_ASSIGNED':
-      text = {
-        val: 'Atanmayı Bekliyor',
-        bg: 'white',
-      };
-      break;
-
-    default:
-      text = {
-        val: '',
-        bg: 'white',
-      };
-      break;
+export const taskStatusByColor = ({ status, ...props }: any) => {
+  const { IsPunctual } = props;
+  if (TaskStatusEnum.COMPLETED === status) {
+    return 'primary';
   }
-  return text[params];
+  if (TaskStatusEnum.CANCELLED === status) {
+    return 'borderColor';
+  }
+  if (TaskStatusEnum.SUSPENDED === status) {
+    return 'info';
+  }
+  if (!IsPunctual) {
+    return 'danger';
+  }
 };
 
-export default TaskStatusComponent;
+export const taskStatusByText = ({ status }: { status: number }) => {
+  if (TaskStatusEnum.ASSIGNED === status) {
+    return 'Atandı';
+  }
+  if (TaskStatusEnum.REJECTED === status) {
+    return 'Reddedildi';
+  }
+  if (TaskStatusEnum.COMPLETED === status) {
+    return 'Tamamlandı';
+  }
+  if (TaskStatusEnum.CANCELLED === status) {
+    return 'İptal edildi';
+  }
+  if (TaskStatusEnum.SUSPENDED === status) {
+    return 'Beklemede';
+  }
+  if (TaskStatusEnum.WAITING_TO_BE_ASSIGNED === status) {
+    return 'Atanmayı bekliyor';
+  }
+};

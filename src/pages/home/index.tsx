@@ -6,7 +6,6 @@ import { setShipmentsData } from '@store/features/shipment-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { dailyMissionStatusText } from '@utils/daily-mission-status';
 import axios from 'axios';
-import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
@@ -20,11 +19,10 @@ const HomeScreen = ({ navigation }: any) => {
   const { location, screenHeight } = useAppSelector((state) => state.apps);
   const { data } = useAppSelector((state) => state.shipments);
   const isConnected = useIsConnected();
-  const { height, width }: { height: number; width: number } = Dimensions.get('screen');
+  const { width }: { width: number } = Dimensions.get('screen');
   const [loading, setLoading] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
   const [search, setSearch] = useState('');
-  const [dimentions, setDimentions] = useState(0);
   const [masterData, setMasterData] = useState<any[]>([]);
 
   const [totalCount, setTotalCount] = useState(0);
@@ -93,7 +91,6 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   useEffect(() => {
-    setDimentions(height - (Constants.statusBarHeight + 220));
     getProducts();
   }, []);
 
@@ -109,6 +106,7 @@ const HomeScreen = ({ navigation }: any) => {
     }
   };
 
+  const layoutHeight = screenHeight - 84;
   return (
     <Layout isHeader isBottom openBarcode={() => navigation.navigate('barcode')}>
       <Box ml={8} mr={8} mt={4}>
@@ -163,7 +161,7 @@ const HomeScreen = ({ navigation }: any) => {
         </Box>
         <Issues
           checkList={checkListItem}
-          dimentions={screenHeight - 84}
+          dimentions={layoutHeight}
           data={masterData}
           loading={loading}
           navigation={navigation}

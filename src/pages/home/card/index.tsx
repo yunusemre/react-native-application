@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Box from '../../../components/ui/box';
 import { TaskTypeEnum } from '../../../types/enums';
 import { IUICard } from './model';
-import TaskStatusComponent from './status';
+import { taskStatusByColor, taskStatusByText } from './status';
 
 const UiCard = ({
   PartyDto,
@@ -29,11 +29,13 @@ const UiCard = ({
       border={1}
       borderColor="borderColor"
       borderRadius={8}
-      mb={8}
+      mb={4}
       pt={4}
       pb={4}
-      bg={TaskStatusComponent({ status: items.TaskStatus, params: 'bg' })}
-      color="white"
+      bg={taskStatusByColor({
+        IsPunctual: items.IsPunctual,
+        status: items.TaskStatus,
+      })}
     >
       <Box flexDirection="row" minHeight={60}>
         <Box width={'15%'}>
@@ -105,7 +107,7 @@ const UiCard = ({
             <Text variant="labelSmall">Müşteri Takip No: {customerTrackingId}</Text>
             <Text variant="labelSmall">Parça Sayısı: {itemCount}</Text>
             <Text variant="labelSmall" style={globalStyle.bold}>
-              {TaskStatusComponent({ status: items.TaskStatus, params: 'val' })}
+              {taskStatusByText({ status: items.TaskStatus })}
             </Text>
           </TouchableOpacity>
           <Box style={styles.menuDropdown}>

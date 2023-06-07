@@ -12,7 +12,7 @@ const colors = {
   default: '#eeeeee',
   color: '#333333',
   textColor: '#999999',
-  borderColor: '#eeeeee',
+  borderColor: '#dddddd',
   borderDanger: '#f1aeb5',
   white: '#ffffff',
   gray: '#4C4C4E',
