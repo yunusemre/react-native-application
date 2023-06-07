@@ -25,7 +25,7 @@ export const taskStatusByColor = ({ status, ...props }: any) => {
   }
 };
 
-export const taskStatusByText = ({ status }: { status: number }) => {
+export const taskStatusByText = ({ status }: { status: number | any }) => {
   if (TaskStatusEnum.ASSIGNED === status) {
     return 'Atandı';
   }
