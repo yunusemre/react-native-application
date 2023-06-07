@@ -1,4 +1,5 @@
 import theme from '@config/index';
+import { globalStyle } from '@utils/global-style';
 import * as Linking from 'expo-linking';
 import React, { memo, useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
@@ -84,11 +85,11 @@ const UiCard = ({
           </Box>
         </Box>
         <Box width={'85%'}>
-          <Badge size={20} style={styles.orderBagde}>
+          <Badge size={20} style={[styles.orderBagde, globalStyle.bold]}>
             {items.StopOrder}
           </Badge>
           <Icon
-            style={styles.taskType}
+            style={[styles.taskType, globalStyle.bold]}
             name={items.TaskType === 1 ? 'archive-plus' : 'truck-delivery-outline'}
             size={22}
           />
@@ -97,13 +98,13 @@ const UiCard = ({
             style={[styles.w90]}
             onPress={() => navigation.navigate('home-detail', { ...items.ShipmentList, TaskId })}
           >
-            <Text style={[styles.w90, styles.fontBold]}>{Name}</Text>
+            <Text style={[styles.w90, globalStyle.bold]}>{Name}</Text>
             <Text style={styles.w90} variant="labelMedium">
               {AddressText}
             </Text>
             <Text variant="labelSmall">Müşteri Takip No: {customerTrackingId}</Text>
             <Text variant="labelSmall">Parça Sayısı: {itemCount}</Text>
-            <Text variant="labelSmall" style={styles.fontBold}>
+            <Text variant="labelSmall" style={globalStyle.bold}>
               {TaskStatusComponent({ status: items.TaskStatus, params: 'val' })}
             </Text>
           </TouchableOpacity>
@@ -171,7 +172,6 @@ const styles = StyleSheet.create({
   },
   menuDropdown: { position: 'absolute', bottom: -10, right: -7 },
   w90: { width: '90%' },
-  fontBold: { fontWeight: 'bold' },
 });
 
 export default memo(UiCard);

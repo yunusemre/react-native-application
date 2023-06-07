@@ -66,7 +66,7 @@ const HomeDetails = ({ navigation, checkList, route, setCheck }: any) => {
           pb={4}
           bg="white"
           flexDirection="row"
-          alignItems="center"
+          justifyContent="space-between"
           height={30}
         >
           <Box flexDirection="row" alignItems="center">
@@ -78,7 +78,7 @@ const HomeDetails = ({ navigation, checkList, route, setCheck }: any) => {
             />
             <Text>Gönderi listesi</Text>
           </Box>
-          <Text>
+          <Text style={{ marginRight: 6 }}>
             Adet: <Text style={[globalStyle.bold]}>{masterData.length}</Text>
           </Text>
         </Box>
