@@ -29,7 +29,6 @@ const Issues = ({
     setChecked(false);
   }, [data]);
 
-  const height = dimentions - 52;
   return (
     <Box>
       <Box
@@ -54,7 +53,7 @@ const Issues = ({
         />
         <Text>Tümünü Seç</Text>
       </Box>
-      <Box height={height}>
+      <Box height={dimentions - 62}>
         {loading === false && data?.length === 0 && (
           <UiEmpy
             bg="info"

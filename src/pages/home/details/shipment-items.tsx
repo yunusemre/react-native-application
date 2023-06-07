@@ -1,7 +1,6 @@
 import { Box, UiEmpy, UiPicker } from '@components/ui';
 import theme from '@config/index';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Constants from 'expo-constants';
 import { memo, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Checkbox, Dialog, Text } from 'react-native-paper';
@@ -9,7 +8,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { issueCancelList } from './isssues';
 
 const ShipmentItems = ({ data, navigation, dimentions, taskId }: any) => {
-  const height = dimentions - (Constants.statusBarHeight + 50 + 130 + 60);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -17,13 +15,12 @@ const ShipmentItems = ({ data, navigation, dimentions, taskId }: any) => {
 
   const onChange = (event: any, selectedDate: any) => {
     const currentDate = selectedDate;
-    console.log(currentDate);
     setShow(false);
     setDate(currentDate);
   };
 
   return (
-    <Box mb={8} pt={4} pb={4}>
+    <Box mb={8} pb={4}>
       {data.ShipmentItemList?.length === 0 ? (
         <UiEmpy
           bg="info"
@@ -40,7 +37,7 @@ const ShipmentItems = ({ data, navigation, dimentions, taskId }: any) => {
           }
         />
       ) : null}
-      <Box height={height}>
+      <Box height={dimentions - 70}>
         <ScrollView>
           {data.map((result: any) => {
             return result?.ShipmentItemList?.map((item: any, indexS: number) => {
@@ -151,7 +148,7 @@ const ShipmentItems = ({ data, navigation, dimentions, taskId }: any) => {
           })}
         </ScrollView>
       </Box>
-      <Box mt={8} flexDirection="row" justifyContent="space-between">
+      <Box height={40} mt={8} flexDirection="row" justifyContent="space-between">
         <Button onPress={() => setShow(true)} style={{ width: '49%' }} mode="contained">
           Toplam Randevu Gir
         </Button>

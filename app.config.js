@@ -8,7 +8,7 @@ export default () => ({
     icon: './assets/ic_launcher.png',
     userInterfaceStyle: 'light',
     splash: {
-      image: './assets/splash.png',
+      image: './assets/splash_green.png',
       resizeMode: 'cover',
       backgroundColor: '#ffffff',
       // hdpi: '',

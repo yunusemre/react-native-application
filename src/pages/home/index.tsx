@@ -17,7 +17,7 @@ import Issues from './issues';
 
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
-  const { location } = useAppSelector((state) => state.apps);
+  const { location, screenHeight } = useAppSelector((state) => state.apps);
   const { data } = useAppSelector((state) => state.shipments);
   const isConnected = useIsConnected();
   const { height, width }: { height: number; width: number } = Dimensions.get('screen');
@@ -163,7 +163,7 @@ const HomeScreen = ({ navigation }: any) => {
         </Box>
         <Issues
           checkList={checkListItem}
-          dimentions={dimentions}
+          dimentions={screenHeight - 84}
           data={masterData}
           loading={loading}
           navigation={navigation}
