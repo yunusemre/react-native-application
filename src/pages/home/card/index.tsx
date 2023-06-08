@@ -25,20 +25,118 @@ const UiCard = ({
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <Box
-      border={1}
-      borderColor="borderColor"
-      borderRadius={8}
-      mb={2}
-      pt={4}
-      pb={4}
-      bg={taskStatusByColor({
-        IsPunctual: items.IsPunctual,
-        status: items.TaskStatus,
-      })}
-    >
+    <Box border={1} borderColor="borderColor" borderRadius={8} mb={4} pb={4}>
+      <Box
+        borderTopLeftRadius={8}
+        borderTopRightRadius={8}
+        p={6}
+        bg={taskStatusByColor({
+          IsPunctual: items.IsPunctual,
+          status: items.TaskStatus,
+        })}
+      >
+        <Box flexDirection="row" width={'100%'} justifyContent="space-between">
+          <Box width={'92%'} flexDirection="row" justifyContent="space-between">
+            <Box as={Text} justifyContent="flex-start" style={globalStyle.bold}>
+              {taskStatusByText({ status: items.TaskStatus })}
+            </Box>
+            <Box flexDirection="row" justifyContent="flex-end" alignItems="center">
+              <Box flexDirection="row" flexWrap="wrap">
+                {items.ShipmentList.length !== 0 &&
+                items.ShipmentList.some((ship: any) => ship.Neighbour !== null) ? (
+                  <Icon name="alert-circle-outline" size={18} />
+                ) : null}
+
+                {TaskTypeEnum.PICKUP === items.TaskType &&
+                items.TimePeriodModel !== null &&
+                items.TimePeriodModel.TimePeriodId > 0 ? (
+                  <Icon name="bell-off" size={18} />
+                ) : null}
+
+                {!items.IsRingTheBellPermitted ? null : <Icon name="alarm" size={18} />}
+
+                {TaskTypeEnum.PICKUP === items.TaskType &&
+                items.ShipmentList.some((ship: any) => ship.IsReturn) ? (
+                  <Icon name="basket" size={18} />
+                ) : null}
+
+                {items.IsPartyAtTheAddress ? <Icon name="home" size={18} /> : null}
+
+                {items.ShipmentList.some((ship: any) => ship.OnlyDeliverToRecipient) ? (
+                  <Icon name="face-man" size={18} />
+                ) : null}
+
+                {items.ShipmentList.some((ship: any) => ship.IsCollectionRequired) ? (
+                  <Icon name="cash" size={18} />
+                ) : null}
+
+                {items.ShipmentList.some((ship: any) => ship.IsDeliveryInsideTimeWindow) ? (
+                  <Icon name="truck-fast-outline" size={18} />
+                ) : null}
+
+                {items.ShipmentList.some((ship: any) => ship.IsSamedayDelivery) ? (
+                  <Icon name="hours-24" size={18} />
+                ) : null}
+
+                {IsConfirmed ? <Icon name="check-circle-outline" size={18} /> : null}
+              </Box>
+              <Box
+                bg="rgba(255, 255, 255, 0.3)"
+                p={2}
+                borderRadius={4}
+                ml={6}
+                as={Text}
+                variant="bodySmall"
+              >
+                {items.TaskType === 1 ? 'Toplama' : 'Yükleme'}
+              </Box>
+            </Box>
+          </Box>
+          <Box width={'8%'} flexDirection="row" justifyContent="space-between">
+            <Box style={styles.menuDropdown}>
+              <Box
+                as={Menu}
+                visible={showMenu}
+                onDismiss={() => setShowMenu(false)}
+                anchor={
+                  <IconButton
+                    size={18}
+                    icon="dots-horizontal"
+                    onPress={() => setShowMenu(!showMenu)}
+                  />
+                }
+              >
+                <Menu.Item title="Zimmete Devam Et" />
+                <Menu.Item title="Görevi Tamamla" />
+                <Menu.Item title="Adreste Bulunamadı" />
+                <Menu.Item title="Görev İptal" />
+                <Menu.Item title="Teslim Edilemedi" />
+                <Menu.Item title="Randevu Gir" />
+                <Menu.Item title="Adres Problemli" />
+                <Menu.Item title="Müşteriyi Arama" />
+                <Menu.Item
+                  title="Adrese Git"
+                  onPress={() =>
+                    navigation.navigate('mapping', {
+                      Latitude,
+                      Longitude,
+                    })
+                  }
+                />
+                <Menu.Item
+                  title="Navigasyonu Aç"
+                  onPress={() =>
+                    Linking.openURL(`http://maps.google.com/maps?daddr=${Latitude}, ${Longitude}`)
+                  }
+                />
+                <Menu.Item title="İş Yeri Kapalı" />
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
       <Box flexDirection="row" minHeight={60}>
-        <Box width={'15%'}>
+        <Box width={'10%'}>
           <Checkbox
             status={isCheck ? 'checked' : 'unchecked'}
             onPress={() => {
@@ -46,105 +144,23 @@ const UiCard = ({
               setCheck({ [TaskId]: !checked });
             }}
           />
-          <Box flexDirection="row" flexWrap="wrap" width={70} pl={10} pr={12}>
-            {items.ShipmentList.length !== 0 &&
-            items.ShipmentList.some((ship: any) => ship.Neighbour !== null) ? (
-              <Icon name="alert-circle-outline" size={18} />
-            ) : null}
-
-            {TaskTypeEnum.PICKUP === items.TaskType &&
-            items.TimePeriodModel !== null &&
-            items.TimePeriodModel.TimePeriodId > 0 ? (
-              <Icon name="bell-off" size={18} />
-            ) : null}
-
-            {!items.IsRingTheBellPermitted ? null : <Icon name="alarm" size={18} />}
-
-            {TaskTypeEnum.PICKUP === items.TaskType &&
-            items.ShipmentList.some((ship: any) => ship.IsReturn) ? (
-              <Icon name="basket" size={18} />
-            ) : null}
-
-            {items.IsPartyAtTheAddress ? <Icon name="home" size={18} /> : null}
-
-            {items.ShipmentList.some((ship: any) => ship.OnlyDeliverToRecipient) ? (
-              <Icon name="face-man" size={18} />
-            ) : null}
-
-            {items.ShipmentList.some((ship: any) => ship.IsCollectionRequired) ? (
-              <Icon name="cash" size={18} />
-            ) : null}
-
-            {items.ShipmentList.some((ship: any) => ship.IsDeliveryInsideTimeWindow) ? (
-              <Icon name="truck-fast-outline" size={18} />
-            ) : null}
-
-            {items.ShipmentList.some((ship: any) => ship.IsSamedayDelivery) ? (
-              <Icon name="hours-24" size={18} />
-            ) : null}
-
-            {IsConfirmed ? <Icon name="check-circle-outline" size={18} /> : null}
-          </Box>
         </Box>
-        <Box width={'85%'}>
+        <Box width={'90%'}>
           <Badge size={20} style={[styles.orderBagde, globalStyle.bold]}>
             {items.StopOrder}
           </Badge>
-          <Icon
-            style={[styles.taskType, globalStyle.bold]}
-            name={items.TaskType === 1 ? 'archive-plus' : 'truck-delivery-outline'}
-            size={22}
-          />
           <TouchableOpacity
             activeOpacity={0.7}
             style={[styles.w90]}
             onPress={() => navigation.navigate('home-detail', { ...items.ShipmentList, TaskId })}
           >
-            <Text style={[styles.w90, globalStyle.bold]}>{Name}</Text>
+            <Text style={[styles.w90]}>{Name}</Text>
             <Text style={styles.w90} variant="labelMedium">
               {AddressText}
             </Text>
             <Text variant="labelSmall">Müşteri Takip No: {customerTrackingId}</Text>
             <Text variant="labelSmall">Parça Sayısı: {itemCount}</Text>
-            <Text variant="labelSmall" style={globalStyle.bold}>
-              {taskStatusByText({ status: items.TaskStatus })}
-            </Text>
           </TouchableOpacity>
-          <Box style={styles.menuDropdown}>
-            <Box
-              as={Menu}
-              visible={showMenu}
-              onDismiss={() => setShowMenu(false)}
-              anchor={
-                <IconButton size={18} icon="dots-vertical" onPress={() => setShowMenu(!showMenu)} />
-              }
-            >
-              <Menu.Item title="Zimmete Devam Et" />
-              <Menu.Item title="Görevi Tamamla" />
-              <Menu.Item title="Adreste Bulunamadı" />
-              <Menu.Item title="Görev İptal" />
-              <Menu.Item title="Teslim Edilemedi" />
-              <Menu.Item title="Randevu Gir" />
-              <Menu.Item title="Adres Problemli" />
-              <Menu.Item title="Müşteriyi Arama" />
-              <Menu.Item
-                title="Adrese Git"
-                onPress={() =>
-                  navigation.navigate('mapping', {
-                    Latitude,
-                    Longitude,
-                  })
-                }
-              />
-              <Menu.Item
-                title="Navigasyonu Aç"
-                onPress={() =>
-                  Linking.openURL(`http://maps.google.com/maps?daddr=${Latitude}, ${Longitude}`)
-                }
-              />
-              <Menu.Item title="İş Yeri Kapalı" />
-            </Box>
-          </Box>
         </Box>
       </Box>
     </Box>
@@ -154,7 +170,7 @@ const UiCard = ({
 const styles = StyleSheet.create({
   orderBagde: {
     position: 'absolute',
-    top: 2,
+    top: 6,
     right: 6,
     backgroundColor: 'transparent',
     color: theme.colors.color,
@@ -172,8 +188,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     zIndex: 12,
   },
-  menuDropdown: { position: 'absolute', bottom: -10, right: -7 },
-  w90: { width: '90%' },
+  menuDropdown: { position: 'absolute', bottom: -12, right: -14 },
+  w90: { width: '95%' },
 });
 
 export default memo(UiCard);
