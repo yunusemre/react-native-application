@@ -1,4 +1,5 @@
 import { Box, Text, UiEmpy } from '@components/ui';
+import { DailyMissionStatus, TaskStatusEnum, TaskTypeEnum } from '@types/enums';
 import { memo, useEffect, useState } from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
 import { Checkbox } from 'react-native-paper';
@@ -15,9 +16,11 @@ const Issues = ({
   isConnected,
   checkList,
   setCheck,
+  dailyMissionStatus,
 }: any) => {
   const allItemCheckList = { ...checkList };
   const [checked, setChecked] = useState(false);
+  const [isAllShipmentItemReadyForDelivery, setIsAllShipmentItemReadyForDelivery] = useState(false);
 
   const checkAllItems = (val: boolean) => {
     for (const [key] of Object.entries(allItemCheckList)) allItemCheckList[key] = !val;
@@ -83,6 +86,15 @@ const Issues = ({
         >
           {data?.map((response: any) => {
             return response.TaskList?.map((item: any, index: number) => {
+              const taskType = item.TaskType;
+              if (
+                TaskTypeEnum.DELIVERY === taskType &&
+                taskType !== TaskStatusEnum.COMPLETED &&
+                (DailyMissionStatus.START_OF_DAY === dailyMissionStatus ||
+                  DailyMissionStatus.WAITING_FOR_EXIT_REQUEST_APPROVAL === dailyMissionStatus)
+              ) {
+                console.log('blabla');
+              }
               const sumShipmentItemListCount = item.ShipmentList.reduce(
                 (accumulator: any, currentValue: any) =>
                   accumulator + currentValue.ShipmentItemList?.length,
@@ -112,3 +124,27 @@ const Issues = ({
 };
 
 export default memo(Issues);
+
+// if (taskTypeEnumInstance == Extensions.TaskType.DELIVERY && taskStatusEnumInstance != Extensions.TaskStatus.COMPLETED &&
+//   (dailyMissionStatusEnumInstance == Extensions.DailyMissionStatus.START_OF_DAY ||
+//   dailyMissionStatusEnumInstance == Extensions.DailyMissionStatus.WAITING_FOR_EXIT_REQUEST_APPROVAL)) {
+// outerloop:
+// for (Shipment shipmentModel : mItem.getShipmentList()) {
+
+//   for (ShipmentItem shipmentItemModel : shipmentModel.getShipmentItemList()) {
+//       Extensions.ShipmentItemStatus shipmentItemStatusEnumInstance = Extensions.ShipmentItemStatus.enumOf(shipmentItemModel.getShipmentItemStatusId());
+//       Extensions.ShipmentLocationStatus shipmentLocationStatusEnumInstance = Extensions.ShipmentLocationStatus.enumOf(shipmentItemModel.getShipmentLocationId());
+//       if (shipmentItemStatusEnumInstance == Extensions.ShipmentItemStatus.LOADED
+//               && shipmentLocationStatusEnumInstance == Extensions.ShipmentLocationStatus.ON_DELIVERY_COURIER
+//               && shipmentItemModel.getCurrentWithholderUserId() == Constants.getSPreferences(context).getUSER_ID()) {
+//           isAllShipmentItemReadyForDelivery = true;
+//       } else {
+//           isAllShipmentItemReadyForDelivery = false;
+//           break outerloop;
+//       }
+
+//   }
+
+// }
+
+// }

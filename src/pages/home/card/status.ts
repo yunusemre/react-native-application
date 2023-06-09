@@ -1,13 +1,4 @@
-export enum TaskStatusEnum {
-  UNKNOWN,
-  ASSIGNED,
-  FORWARDED,
-  REJECTED,
-  COMPLETED,
-  CANCELLED,
-  SUSPENDED,
-  WAITING_TO_BE_ASSIGNED,
-}
+import { TaskStatusEnum } from '@types/enums';
 
 export const taskStatusByColor = ({ status, ...props }: any) => {
   const { IsPunctual } = props;

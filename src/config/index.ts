@@ -5,7 +5,7 @@ const colors = {
   warning: '#fcc804',
   bgColor: '#f8f8f8',
   info: '#568ce2',
-  danger: '#dc3545',
+  danger: '#f55c5c',
   pastTime: '#f1aeb5',
   borderPrimary: '#3baf29',
   lightPrimary: '#d1e7dd',

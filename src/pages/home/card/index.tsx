@@ -29,7 +29,7 @@ const UiCard = ({
       <Box
         borderTopLeftRadius={8}
         borderTopRightRadius={8}
-        p={6}
+        p={8}
         bg={taskStatusByColor({
           IsPunctual: items.IsPunctual,
           status: items.TaskStatus,
@@ -85,8 +85,9 @@ const UiCard = ({
                 p={2}
                 borderRadius={4}
                 ml={6}
+                height={20}
                 as={Text}
-                variant="bodySmall"
+                variant="labelSmall"
               >
                 {items.TaskType === 1 ? 'Toplama' : 'Yükleme'}
               </Box>
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     zIndex: 12,
   },
-  menuDropdown: { position: 'absolute', bottom: -12, right: -14 },
+  menuDropdown: { position: 'absolute', bottom: -13, right: -12  },
   w90: { width: '95%' },
 });
 

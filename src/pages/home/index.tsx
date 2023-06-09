@@ -160,6 +160,7 @@ const HomeScreen = ({ navigation }: any) => {
           </Box>
         </Box>
         <Issues
+          dailyMissionStatus={dailyMissionStatus}
           checkList={checkListItem}
           dimentions={layoutHeight}
           data={masterData}

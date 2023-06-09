@@ -24,3 +24,14 @@ export enum DailyMissionStatus {
   MISSION_COMPLETED = 5,
   RECONCILED = 6,
 }
+
+export enum TaskStatusEnum {
+  UNKNOWN,
+  ASSIGNED,
+  FORWARDED,
+  REJECTED,
+  COMPLETED,
+  CANCELLED,
+  SUSPENDED,
+  WAITING_TO_BE_ASSIGNED,
+}
