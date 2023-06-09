@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import BottomTab from '@router/bottom-tab';
 import { persistor } from '@store/configure-store';
-import { setLayoutHeight, setLoginStatus } from '@store/features/app-slice';
+import { setLayoutHeight, setLoginStatus, setUserInfo } from '@store/features/app-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import axios from 'axios';
 import Constants from 'expo-constants';
@@ -36,9 +36,6 @@ const Layout = ({
   const { isLogin, screenHeight } = useAppSelector((state) => state.apps);
   const { height }: { height: number } = Dimensions.get('screen');
 
-  // const statusBarHeight = Constants.statusBarHeight * 2 + 44;
-  // const bottomBar = 52;
-
   const getToken = async () => {
     return await AsyncStorage.getItem('access_token');
   };
@@ -50,9 +47,19 @@ const Layout = ({
     navigation.navigate('login');
   };
   useEffect(() => {
-    const layoutHeight = height - (Constants.statusBarHeight * 2 + 44 + 52);
+    const barHeight = Constants.statusBarHeight;
+    const screenHeightForDimention = height ?? 0;
+    const layoutHeight = screenHeightForDimention - (barHeight * 2 + 96);
     dispatch(setLayoutHeight(layoutHeight));
+
+    getUserInfo();
   }, []);
+
+  const getUserInfo = async () => {
+    axios.post('/getUserInfo', {}).then((response) => {
+      dispatch(setUserInfo(response));
+    });
+  };
 
   useEffect(() => {
     (async () => {

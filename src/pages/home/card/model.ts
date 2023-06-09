@@ -11,7 +11,7 @@ export interface PartyDtoModel {
 export interface IUICard {
   isCheck: boolean;
   PartyDto: PartyDtoModel;
-  TaskStatus?: number;
+  TaskStatus?: any;
   TaskType?: number;
   navigation: any;
   IsReturn?: number;
@@ -31,4 +31,7 @@ export interface IUICard {
   IsCollectionRequired: boolean;
   IsDeliveryInsideTimeWindow: boolean;
   TimePeriodModel: any;
+  dailyMissionStatus: any;
+  courierUserId: number;
+  TaskCompletionReason: number;
 }

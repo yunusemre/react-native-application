@@ -10,13 +10,12 @@ import {
   flexbox,
   grid,
   layout,
-  shadow,
   size,
   space,
 } from 'styled-system';
 
 const Box: any = styled(View)(
-  compose(flexbox, space, grid, layout, border, shadow, color, size, borderRadius, background)
+  compose(flexbox, space, grid, layout, border, color, size, borderRadius, background)
 );
 
 export default memo(Box);

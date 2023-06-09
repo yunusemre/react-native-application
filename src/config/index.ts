@@ -8,7 +8,7 @@ const colors = {
   danger: '#f55c5c',
   pastTime: '#f1aeb5',
   borderPrimary: '#3baf29',
-  lightPrimary: '#d1e7dd',
+  lightPrimary: '#19a84c',
   default: '#eeeeee',
   color: '#333333',
   textColor: '#999999',

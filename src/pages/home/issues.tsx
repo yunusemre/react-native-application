@@ -1,8 +1,9 @@
-import { Box, Text, UiEmpy } from '@components/ui';
-import { DailyMissionStatus, TaskStatusEnum, TaskTypeEnum } from '@types/enums';
+import { Box, UiEmpy } from '@components/ui';
+import { dailyMissionStatusText } from '@utils/daily-mission-status';
+import { globalStyle } from '@utils/global-style';
 import { memo, useEffect, useState } from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
-import { Checkbox } from 'react-native-paper';
+import { Checkbox, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import UiCard from './card';
 
@@ -44,17 +45,23 @@ const Issues = ({
         pb={4}
         color="white"
         flexDirection="row"
+        justifyContent="space-between"
         alignItems="center"
         height={30}
         bg="white"
       >
-        <Checkbox
-          status={checked ? 'checked' : 'unchecked'}
-          onPress={() => {
-            checkAllItems(checked);
-          }}
-        />
-        <Text>Tümünü Seç</Text>
+        <Box flexDirection="row" alignItems="center">
+          <Checkbox
+            status={checked ? 'checked' : 'unchecked'}
+            onPress={() => {
+              checkAllItems(checked);
+            }}
+          />
+          <Text>Tümünü Seç</Text>
+        </Box>
+        <Box style={globalStyle.bold} as={Text} variant="labelSmall" mr={6}>
+          {dailyMissionStatusText(dailyMissionStatus)}
+        </Box>
       </Box>
       <Box height={dimentions - 62}>
         {loading === false && data?.length === 0 && (
@@ -86,15 +93,6 @@ const Issues = ({
         >
           {data?.map((response: any) => {
             return response.TaskList?.map((item: any, index: number) => {
-              const taskType = item.TaskType;
-              if (
-                TaskTypeEnum.DELIVERY === taskType &&
-                taskType !== TaskStatusEnum.COMPLETED &&
-                (DailyMissionStatus.START_OF_DAY === dailyMissionStatus ||
-                  DailyMissionStatus.WAITING_FOR_EXIT_REQUEST_APPROVAL === dailyMissionStatus)
-              ) {
-                console.log('blabla');
-              }
               const sumShipmentItemListCount = item.ShipmentList.reduce(
                 (accumulator: any, currentValue: any) =>
                   accumulator + currentValue.ShipmentItemList?.length,
@@ -106,6 +104,8 @@ const Issues = ({
                 item.ShipmentList[0].ShipmentItemList[0].CustomerTrackingId;
               return (
                 <UiCard
+                  courierUserId={response.CourierUserId}
+                  dailyMissionStatus={dailyMissionStatus}
                   isCheck={checkList[item.TaskId]}
                   customerTrackingId={customerTrackingId}
                   itemCount={sumShipmentItemListCount}

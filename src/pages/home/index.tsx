@@ -4,14 +4,13 @@ import theme from '@config/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setShipmentsData } from '@store/features/shipment-slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
-import { dailyMissionStatusText } from '@utils/daily-mission-status';
+import { TaskStatusEnum } from '@types/enums';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import { ProgressBar, Searchbar } from 'react-native-paper';
 import assignments from './assignment';
-import { TaskStatusEnum } from './card/status';
 import Issues from './issues';
 
 const HomeScreen = ({ navigation }: any) => {
@@ -49,8 +48,8 @@ const HomeScreen = ({ navigation }: any) => {
     };
     axios(config)
       .then((response: any) => {
-        setDailyMissionStatus(response?.Payload.DailyMissionStatus);
         const result = response?.Payload?.StopList;
+        setDailyMissionStatus(response?.Payload.DailyMissionStatus);
         setMasterData(result);
         dispatch(setShipmentsData(result));
 
@@ -59,7 +58,7 @@ const HomeScreen = ({ navigation }: any) => {
         //  Task Item Completed Count
         let totalCompletedCount = 0;
         result?.forEach((task: any) => {
-          task.TaskList.map((taskItem: any) => {
+          task.TaskList.forEach((taskItem: any) => {
             checkList[taskItem.TaskId] = false;
             const taskStatusId = taskItem.TaskStatus;
             if (
@@ -119,20 +118,6 @@ const HomeScreen = ({ navigation }: any) => {
                 selectedValue={selectedIssue}
                 onValueChange={(val: any) => setSelectedIsseu(val)}
               />
-              <Box
-                borderWidth={1}
-                borderRadius={theme.radius.normal}
-                borderColor={theme.colors.default}
-                bg="info"
-                pl={4}
-                pr={4}
-                mr={4}
-                width={width / 2 - 16}
-                justifyContent="center"
-                aligItems="center"
-              >
-                <Text color="white">{dailyMissionStatusText(dailyMissionStatus)}</Text>
-              </Box>
               <Searchbar
                 style={{
                   width: width / 2 - 16,

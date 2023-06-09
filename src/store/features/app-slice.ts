@@ -5,6 +5,7 @@ export interface AppStateType {
   username: string | null;
   location: any;
   screenHeight: number;
+  userInfo: any;
 }
 
 const initialState: AppStateType = {
@@ -12,6 +13,7 @@ const initialState: AppStateType = {
   username: null,
   location: {},
   screenHeight: 0,
+  userInfo: {},
 };
 
 const appSlice = createSlice({
@@ -27,8 +29,11 @@ const appSlice = createSlice({
     setLayoutHeight: (state, { payload }) => {
       state.screenHeight = payload;
     },
+    setUserInfo: (state, { payload }) => {
+      state.userInfo = payload;
+    },
   },
 });
 
-export const { setLoginStatus, setLocations, setLayoutHeight } = appSlice.actions;
+export const { setLoginStatus, setLocations, setLayoutHeight, setUserInfo } = appSlice.actions;
 export default appSlice.reducer;
