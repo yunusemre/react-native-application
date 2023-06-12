@@ -71,7 +71,7 @@ const HomeDetails = ({ navigation, checkList, route, setCheck }: any) => {
           height={30}
         >
           <Box flexDirection="row" alignItems="center">
-            <Checkbox
+            <Checkbox.Android
               status={checked ? 'checked' : 'unchecked'}
               onPress={() => {
                 checkAllItems(checked);

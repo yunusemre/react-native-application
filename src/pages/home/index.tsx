@@ -24,10 +24,10 @@ const HomeScreen = ({ navigation }: any) => {
   const [search, setSearch] = useState('');
   const [masterData, setMasterData] = useState<any[]>([]);
 
-  const [totalCount, setTotalCount] = useState(0);
-  const [completeCount, setCompleteCount] = useState(0);
-  const [percent, setPercent] = useState(0);
-  const [checkListItem, setCheckListItem] = useState({});
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [completeCount, setCompleteCount] = useState<number>(0);
+  const [percent, setPercent] = useState<number>(0);
+  const [checkListItem, setCheckListItem] = useState<any>({});
   const [dailyMissionStatus, setDailyMissionStatus] = useState<number>(1);
 
   const checkList: any = {};
@@ -70,8 +70,9 @@ const HomeScreen = ({ navigation }: any) => {
           });
         });
         setCheckListItem(checkList);
-        setCompleteCount(totalCompletedCount);
-        setPercent(Math.ceil((totalCompletedCount / total) * 100));
+        if (totalCompletedCount > 0) setCompleteCount(totalCompletedCount);
+        if (totalCompletedCount > 0 && total > 0)
+          setPercent(Math.ceil((totalCompletedCount / total) * 100));
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -91,6 +92,8 @@ const HomeScreen = ({ navigation }: any) => {
 
   useEffect(() => {
     getProducts();
+    // const fetch = setInterval(() => getProducts(), 15 * 1000);
+    // return () => clearInterval(fetch);
   }, []);
 
   const searchList = (text: string) => {
@@ -107,7 +110,12 @@ const HomeScreen = ({ navigation }: any) => {
 
   const layoutHeight = screenHeight - 84;
   return (
-    <Layout isHeader isBottom openBarcode={() => navigation.navigate('barcode')}>
+    <Layout
+      isHeader
+      isBottom
+      backgroundColor={theme.colors.primary}
+      openBarcode={() => navigation.navigate('barcode')}
+    >
       <Box ml={8} mr={8} mt={4}>
         <Box height={80}>
           <Box flexDirection="row" height={40} mb={4}>

@@ -14,13 +14,13 @@
       "developmentClient": true,
       "extends": "profile",
       "env": {
-        "API_URL": "https://apitest.klyglsn.com/api/request"
+        "API_URL": "https://apibeta.klyglsn.com/api/request"
       }
     },
     "test": {
       "extends": "profile",
       "env": {
-        "API_URL": "https://apitest.klyglsn.com/api/request"
+        "API_URL": "https://apibeta.klyglsn.com/api/request"
       }
     },
     "preprod": {

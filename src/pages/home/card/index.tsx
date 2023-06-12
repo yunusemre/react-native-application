@@ -150,51 +150,54 @@ const UiCard = ({
             </Box>
           </Box>
           <Box width={'8%'} flexDirection="row" justifyContent="space-between">
-            <Box style={styles.menuDropdown}>
-              <Box
-                as={Menu}
-                visible={showMenu}
-                onDismiss={() => setShowMenu(false)}
-                anchor={
-                  <IconButton
-                    size={18}
-                    icon="dots-horizontal"
-                    onPress={() => setShowMenu(!showMenu)}
+            {TaskStatusEnum.CANCELLED === TaskStatus ? null : (
+              <Box style={styles.menuDropdown}>
+                <Box
+                  as={Menu}
+                  visible={showMenu}
+                  onDismiss={() => setShowMenu(false)}
+                  anchor={
+                    <IconButton
+                      style={{ backgroundColor: 'transparent' }}
+                      size={18}
+                      icon="dots-horizontal"
+                      onPress={() => setShowMenu(!showMenu)}
+                    />
+                  }
+                >
+                  <Menu.Item title="Zimmete Devam Et" />
+                  <Menu.Item title="Görevi Tamamla" />
+                  <Menu.Item title="Adreste Bulunamadı" />
+                  <Menu.Item title="Görev İptal" />
+                  <Menu.Item title="Teslim Edilemedi" />
+                  <Menu.Item title="Randevu Gir" />
+                  <Menu.Item title="Adres Problemli" />
+                  <Menu.Item title="Müşteriyi Arama" />
+                  <Menu.Item
+                    title="Adrese Git"
+                    onPress={() =>
+                      navigation.navigate('mapping', {
+                        Latitude,
+                        Longitude,
+                      })
+                    }
                   />
-                }
-              >
-                <Menu.Item title="Zimmete Devam Et" />
-                <Menu.Item title="Görevi Tamamla" />
-                <Menu.Item title="Adreste Bulunamadı" />
-                <Menu.Item title="Görev İptal" />
-                <Menu.Item title="Teslim Edilemedi" />
-                <Menu.Item title="Randevu Gir" />
-                <Menu.Item title="Adres Problemli" />
-                <Menu.Item title="Müşteriyi Arama" />
-                <Menu.Item
-                  title="Adrese Git"
-                  onPress={() =>
-                    navigation.navigate('mapping', {
-                      Latitude,
-                      Longitude,
-                    })
-                  }
-                />
-                <Menu.Item
-                  title="Navigasyonu Aç"
-                  onPress={() =>
-                    Linking.openURL(`http://maps.google.com/maps?daddr=${Latitude}, ${Longitude}`)
-                  }
-                />
-                <Menu.Item title="İş Yeri Kapalı" />
+                  <Menu.Item
+                    title="Navigasyonu Aç"
+                    onPress={() =>
+                      Linking.openURL(`http://maps.google.com/maps?daddr=${Latitude}, ${Longitude}`)
+                    }
+                  />
+                  <Menu.Item title="İş Yeri Kapalı" />
+                </Box>
               </Box>
-            </Box>
+            )}
           </Box>
         </Box>
       </Box>
       <Box flexDirection="row" minHeight={60}>
         <Box width={'10%'}>
-          <Checkbox
+          <Checkbox.Android
             status={isCheck ? 'checked' : 'unchecked'}
             onPress={() => {
               setChecked(!checked);

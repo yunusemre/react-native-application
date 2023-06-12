@@ -56,7 +56,7 @@ const ShipmentItems = ({ data, navigation, dimentions, taskId }: any) => {
                   flexDirection="row"
                 >
                   <Box width={'10%'}>
-                    <Checkbox status="checked" onPress={() => {}} />
+                    <Checkbox.Android status="checked" onPress={() => {}} />
                   </Box>
                   <Box width={'90%'}>
                     <TouchableOpacity

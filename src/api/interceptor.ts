@@ -31,7 +31,11 @@ const axiosInterceptor = () => {
     (response: AxiosResponse) => response?.data,
     async (error: AxiosError) => {
       console.log('error.status', error);
-      if (error.status === httpAuthorizationErrorCode || error.status === undefined) {
+      if (
+        error.status === httpAuthorizationErrorCode ||
+        error.status === 400 ||
+        error.status === undefined
+      ) {
         dispatch(setLoginStatus(false));
         await AsyncStorage.setItem('access_token', '');
         persistor.purge();

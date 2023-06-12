@@ -7,24 +7,20 @@ import { persistor, store } from '@store/configure-store';
 import React from 'react';
 import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
 import { NetworkProvider } from 'react-native-offline';
-import { DefaultTheme, Provider as PaperProvider, configureFonts } from 'react-native-paper';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from 'styled-components';
 
 export default function App() {
-  const fontConfig = {
-    fontFamily: 'sans-serif',
-  };
   const themes = {
     ...DefaultTheme,
     roundness: theme.radius.normal,
-    fonts: configureFonts({ config: fontConfig }),
     colors: {
       ...DefaultTheme.colors,
       primary: theme.colors.primary,
       outline: theme.colors.borderColor,
-      background: theme.colors.default,
+      background: theme.colors.primary,
       tertiary: theme.colors.lightPrimary,
       surface: theme.colors.lightPrimary,
       error: theme.colors.danger,
@@ -46,13 +42,14 @@ export default function App() {
     shouldPing: true,
   };
 
+  const { apps } = store.getState();
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ThemeProvider theme={theme}>
           <NetworkProvider {...networkOptions}>
             <PaperProvider theme={themes}>
-              <Box as={SafeAreaView} flex={1}>
+              <Box as={SafeAreaView} flex={1} bg={apps.isLogin ? 'primary' : 'white'}>
                 <Box as={KeyboardAvoidingView} flex={1}>
                   <Router />
                 </Box>

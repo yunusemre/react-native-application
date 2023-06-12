@@ -6,6 +6,7 @@ import { setLoginStatus } from '@store/features/app-slice';
 import { useAppDispatch } from '@store/hooks';
 import Constants from 'expo-constants';
 import { memo, useCallback } from 'react';
+import { Platform } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 const UiHeader = ({ hasBack = false }) => {
@@ -25,18 +26,26 @@ const UiHeader = ({ hasBack = false }) => {
       style={{
         backgroundColor: theme.colors.primary,
         height: 44,
-        marginTop: statusBarHeight,
+        marginTop: Platform.OS === 'ios' ? 0 : statusBarHeight,
       }}
     >
       {!hasBack && (
         <Appbar.Action
           size={20}
+          style={{ backgroundColor: 'transparent' }}
           color="white"
           icon="menu"
           onPress={() => navigation.toggleDrawer()}
         />
       )}
-      {hasBack && <Appbar.BackAction size={20} color="white" onPress={() => navigation.goBack()} />}
+      {hasBack && (
+        <Appbar.BackAction
+          style={{ margin: 0, backgroundColor: 'transparent' }}
+          size={20}
+          color="white"
+          onPress={() => navigation.goBack()}
+        />
+      )}
       <Appbar.Content
         style={{ margin: 0 }}
         color="white"
@@ -44,7 +53,7 @@ const UiHeader = ({ hasBack = false }) => {
         titleStyle={{ fontSize: 18 }}
       />
       <Appbar.Action
-        style={{ margin: 0 }}
+        style={{ margin: 0, backgroundColor: 'transparent' }}
         icon="bell"
         size={20}
         color="white"

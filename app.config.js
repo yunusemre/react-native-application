@@ -4,7 +4,7 @@ export default () => ({
     slug: 'kolaygelsin-android-app',
     version: '1.0.0',
     orientation: 'portrait',
-    platforms: ['android'],
+    platforms: ['android', 'ios'],
     icon: './assets/ic_launcher.png',
     userInterfaceStyle: 'light',
     splash: {
@@ -49,12 +49,18 @@ export default () => ({
           cameraPermission: 'Allow $(PRODUCT_NAME) to access camera.',
         },
       ],
+      [
+        'expo-camera',
+        {
+          cameraPermission: 'Allow $(PRODUCT_NAME) to access your camera.',
+        },
+      ],
     ],
     extra: {
       eas: {
         projectId: '29621779-a89d-48b1-b745-68a4337142bb',
       },
-      API_URL: 'https://apitest.klyglsn.com/api/request',
+      API_URL: 'https://apibeta.klyglsn.com/api/request',
     },
     owner: 'yunusemretatar',
   },

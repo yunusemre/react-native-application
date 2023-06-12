@@ -8,16 +8,18 @@ import { setLoginStatus } from '@store/features/app-slice';
 import { useAppDispatch } from '@store/hooks';
 import axios from 'axios';
 import Constants from 'expo-constants';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Image, StyleSheet } from 'react-native';
+import { Dimensions, Image, StyleSheet } from 'react-native';
 import { Button, Snackbar } from 'react-native-paper';
 import * as yup from 'yup';
 
 const LoginScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
-  const [visible, setVisible] = React.useState(false);
-  const [isLogin, setIsLogin] = React.useState(false);
+  const { width }: { width: number } = Dimensions.get('screen');
+  const [visible, setVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isLogin, setIsLogin] = useState(false);
   const schema = yup
     .object({
       username: yup.string().required(),
@@ -32,8 +34,8 @@ const LoginScreen = ({ navigation }: any) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      username: 'barbarosozcan',
-      password: '123456',
+      username: 'burakhaylarpmoy',
+      password: 'Asdf4321',
     },
     resolver: yupResolver(schema),
   });
@@ -48,13 +50,15 @@ const LoginScreen = ({ navigation }: any) => {
     };
     axios(config)
       .then(async (response: any) => {
-        dispatch(setLoginStatus(true));
-        await AsyncStorage.setItem('access_token', response.access_token);
-        setIsLogin(false);
-        navigation.navigate('issues');
+        if (response.access_token !== undefined) {
+          dispatch(setLoginStatus(true));
+          await AsyncStorage.setItem('access_token', response.access_token);
+          setIsLogin(false);
+          navigation.navigate('issues');
+        }
       })
       .catch((err) => {
-        console.log(err);
+        setErrorMessage(err.ResultMessage);
         dispatch(setLoginStatus(false));
         setVisible(true);
         setIsLogin(false);
@@ -104,14 +108,18 @@ const LoginScreen = ({ navigation }: any) => {
           mode="contained"
           onPress={handleSubmit(onSubmit)}
         >
-          Gönder
+          Giriş
         </Button>
       </Box>
       <Box mt={20} textAlign="center" as={Text}>
         {Constants.manifest?.version}
       </Box>
-      <Snackbar visible={visible} onDismiss={() => setVisible(false)}>
-        Kullanıcı adı veya şifreniz hatalıdır. Tekrar deneyiniz.
+      <Snackbar
+        wrapperStyle={{ width: width }}
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+      >
+        {errorMessage}
       </Snackbar>
     </Box>
   );

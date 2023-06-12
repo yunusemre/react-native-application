@@ -1,9 +1,10 @@
-import { Box, UiEmpy } from '@components/ui';
+import { Box, Text, UiEmpy } from '@components/ui';
+import theme from '@config/index';
 import { dailyMissionStatusText } from '@utils/daily-mission-status';
 import { globalStyle } from '@utils/global-style';
 import { memo, useEffect, useState } from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
-import { Checkbox, Text } from 'react-native-paper';
+import { Checkbox } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import UiCard from './card';
 
@@ -51,36 +52,27 @@ const Issues = ({
         bg="white"
       >
         <Box flexDirection="row" alignItems="center">
-          <Checkbox
+          <Checkbox.Android
+            disabled={data.length === 0}
             status={checked ? 'checked' : 'unchecked'}
             onPress={() => {
               checkAllItems(checked);
             }}
           />
-          <Text>Tümünü Seç</Text>
+          <Text onPress={() => checkAllItems(checked)} color={data.length === 0 ? 'gray' : 'color'}>
+            Tümünü Seç
+          </Text>
         </Box>
         <Box style={globalStyle.bold} as={Text} variant="labelSmall" mr={6}>
           {dailyMissionStatusText(dailyMissionStatus)}
         </Box>
       </Box>
       <Box height={dimentions - 62}>
-        {loading === false && data?.length === 0 && (
-          <UiEmpy
-            bg="info"
-            mt={8}
-            mb={8}
-            p={8}
-            text={
-              <Box flexDirection="row">
-                <Icon name="alert-circle-outline" size={20} />
-                <Text ml={10}>Gösterilecek bir data yok.</Text>
-              </Box>
-            }
-          />
-        )}
         <ScrollView
           refreshControl={
             <RefreshControl
+              progressBackgroundColor={theme.colors.primary}
+              colors={['white']}
               refreshing={loading}
               onRefresh={async () => {
                 if (isConnected) {
@@ -91,6 +83,22 @@ const Issues = ({
             />
           }
         >
+          {loading === false && data?.length === 0 && (
+            <UiEmpy
+              bg="info"
+              mt={8}
+              mb={8}
+              p={8}
+              text={
+                <Box flexDirection="row" alignItems="center">
+                  <Icon name="alert-circle-outline" size={20} />
+                  <Box as={Text} ml={10} flexDirection="row" alignItems="center">
+                    Gösterilecek bir data yok.
+                  </Box>
+                </Box>
+              }
+            />
+          )}
           {data?.map((response: any) => {
             return response.TaskList?.map((item: any, index: number) => {
               const sumShipmentItemListCount = item.ShipmentList.reduce(

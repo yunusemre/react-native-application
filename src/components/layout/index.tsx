@@ -12,7 +12,7 @@ import axios from 'axios';
 import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
 import { ReactNode, useEffect } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 
 const Layout = ({
@@ -47,9 +47,10 @@ const Layout = ({
     navigation.navigate('login');
   };
   useEffect(() => {
-    const barHeight = Constants.statusBarHeight;
+    const barHeight =
+      Platform.OS === 'android' ? Constants.statusBarHeight * 2 : Constants.statusBarHeight;
     const screenHeightForDimention = height ?? 0;
-    const layoutHeight = screenHeightForDimention - (barHeight * 2 + 96);
+    const layoutHeight = screenHeightForDimention - (barHeight + 96);
     dispatch(setLayoutHeight(layoutHeight));
 
     getUserInfo();
@@ -68,11 +69,12 @@ const Layout = ({
         Logout();
       }
     })();
+    console.log('isLogin', isLogin);
   }, [isLogin]);
 
   return (
     <Box flex={1}>
-      <StatusBar backgroundColor={backgroundColor} />
+      <StatusBar style="dark" translucent backgroundColor={backgroundColor} />
       {isHeader ? <UiHeader hasBack={hasBack} openBarcode={openBarcode} /> : null}
       <Box height={screenHeight}>{children}</Box>
       {isBottom ? <BottomTab /> : null}

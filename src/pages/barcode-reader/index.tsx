@@ -66,11 +66,9 @@ export default function BarcodeScreen({ navigation }: any) {
               iconColor={flashMode === FlashMode.off ? null : theme.colors.warning}
               size={30}
               onPress={() => {
-                if (flashMode === FlashMode.torch) {
-                  setFlashMode(FlashMode.off);
-                } else {
-                  setFlashMode(FlashMode.torch);
-                }
+                flashMode === FlashMode.torch
+                  ? setFlashMode(FlashMode.off)
+                  : setFlashMode(FlashMode.torch);
               }}
             />
           </Camera>
