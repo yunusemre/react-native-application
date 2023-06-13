@@ -14,7 +14,7 @@ import {
   checkAllShipmentItemReadyForDelivery,
   checkAllShipmentItemReadyForDelivery2,
   taskStatusByColor,
-} from './status';
+} from './control-functions';
 
 const UiCard = ({
   showDetail = false,

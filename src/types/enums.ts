@@ -1,9 +1,9 @@
-enum TaskTypeEnum {
+export enum TaskTypeEnum {
   PICKUP,
   DELIVERY,
 }
 
-enum ShipmentItemStatusEnum {
+export enum ShipmentItemStatusEnum {
   UNKNOWN = 0,
   SHIPPING_REQUESTED = 1,
   PICKUP_CANCELLED = 2,
@@ -16,7 +16,7 @@ enum ShipmentItemStatusEnum {
   DAMAGED = 110,
 }
 
-enum DailyMissionStatusEnum {
+export enum DailyMissionStatusEnum {
   START_OF_DAY = 1,
   WAITING_FOR_EXIT_REQUEST_APPROVAL = 2,
   EXIT_REQUEST_APPROVED = 3,
@@ -25,7 +25,7 @@ enum DailyMissionStatusEnum {
   RECONCILED = 6,
 }
 
-enum TaskStatusEnum {
+export enum TaskStatusEnum {
   UNKNOWN = 0,
   ASSIGNED = 1,
   FORWARDED = 2,
@@ -36,7 +36,7 @@ enum TaskStatusEnum {
   WAITING_TO_BE_ASSIGNED = 7,
 }
 
-enum ShipmentLocationStatus {
+export enum ShipmentLocationStatus {
   /// 0 Bilinmeyen
   UNKNOWN = 0,
   /// 1 Müşteride
@@ -57,7 +57,7 @@ enum ShipmentLocationStatus {
   ON_RECIPENT_CUSTOMER = 128,
 }
 
-enum TaskCompletionReasonEnum {
+export enum TaskCompletionReasonEnum {
   DEFAULT = 0,
   SENDER_PROVIDE_DEFICIENTLY = 1, //Müşteri eksik teslim ettiRE
   VEHICLE_CAPACITY_INADEQUATE = 2, // Kurye aracına sığmıyor
@@ -77,12 +77,3 @@ enum TaskCompletionReasonEnum {
   PICKUP_DATE_CHANGED = 16,
   WORKPLACE_CLOSED = 20,
 }
-
-export {
-  TaskTypeEnum,
-  ShipmentItemStatusEnum,
-  DailyMissionStatusEnum,
-  TaskStatusEnum,
-  ShipmentLocationStatus,
-  TaskCompletionReasonEnum
-};
