@@ -11,7 +11,9 @@
     "web": "expo start --web",
     "server": "json-server --host 192.168.2.108 --port 3001 ./server/db.json",
     "build:production": "eas build -p android --profile production",
-    "build:local": "eas build --platform android --profile test --local",
+    "build:test": "eas build -p android --profile test",
+    "build:preprod": "eas build -p android --profile preprod",
+    "build:local": "eas build --platform android --profile production --local",
     "debugger": "react-devtools"
   },
   "dependencies": {

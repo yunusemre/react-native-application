@@ -22,7 +22,6 @@ const Issues = ({
 }: any) => {
   const allItemCheckList = { ...checkList };
   const [checked, setChecked] = useState(false);
-  const [isAllShipmentItemReadyForDelivery, setIsAllShipmentItemReadyForDelivery] = useState(false);
 
   const checkAllItems = (val: boolean) => {
     for (const [key] of Object.entries(allItemCheckList)) allItemCheckList[key] = !val;
@@ -53,13 +52,16 @@ const Issues = ({
       >
         <Box flexDirection="row" alignItems="center">
           <Checkbox.Android
-            disabled={data.length === 0}
+            disabled={data?.length === 0}
             status={checked ? 'checked' : 'unchecked'}
             onPress={() => {
               checkAllItems(checked);
             }}
           />
-          <Text onPress={() => checkAllItems(checked)} color={data.length === 0 ? 'gray' : 'color'}>
+          <Text
+            onPress={() => checkAllItems(checked)}
+            color={data?.length === 0 ? 'gray' : 'color'}
+          >
             Tümünü Seç
           </Text>
         </Box>
@@ -132,27 +134,3 @@ const Issues = ({
 };
 
 export default memo(Issues);
-
-// if (taskTypeEnumInstance == Extensions.TaskType.DELIVERY && taskStatusEnumInstance != Extensions.TaskStatus.COMPLETED &&
-//   (dailyMissionStatusEnumInstance == Extensions.DailyMissionStatus.START_OF_DAY ||
-//   dailyMissionStatusEnumInstance == Extensions.DailyMissionStatus.WAITING_FOR_EXIT_REQUEST_APPROVAL)) {
-// outerloop:
-// for (Shipment shipmentModel : mItem.getShipmentList()) {
-
-//   for (ShipmentItem shipmentItemModel : shipmentModel.getShipmentItemList()) {
-//       Extensions.ShipmentItemStatus shipmentItemStatusEnumInstance = Extensions.ShipmentItemStatus.enumOf(shipmentItemModel.getShipmentItemStatusId());
-//       Extensions.ShipmentLocationStatus shipmentLocationStatusEnumInstance = Extensions.ShipmentLocationStatus.enumOf(shipmentItemModel.getShipmentLocationId());
-//       if (shipmentItemStatusEnumInstance == Extensions.ShipmentItemStatus.LOADED
-//               && shipmentLocationStatusEnumInstance == Extensions.ShipmentLocationStatus.ON_DELIVERY_COURIER
-//               && shipmentItemModel.getCurrentWithholderUserId() == Constants.getSPreferences(context).getUSER_ID()) {
-//           isAllShipmentItemReadyForDelivery = true;
-//       } else {
-//           isAllShipmentItemReadyForDelivery = false;
-//           break outerloop;
-//       }
-
-//   }
-
-// }
-
-// }

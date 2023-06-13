@@ -36,6 +36,9 @@ export default () => ({
         googleMaps: { apiKey: 'AIzaSyBGMPNQUGGqclkGfN7bBHeZJyRKf1ciCMA' },
       },
     },
+    ios: {
+      supportsTablet: false,
+    },
     plugins: [
       [
         'expo-location',
@@ -61,6 +64,18 @@ export default () => ({
         projectId: '29621779-a89d-48b1-b745-68a4337142bb',
       },
       API_URL: 'https://apibeta.klyglsn.com/api/request',
+      test: {
+        version: '1.0',
+      },
+      development: {
+        version: '1.0.1',
+      },
+      preprod: {
+        version: '1.1.1',
+      },
+      production: {
+        version: '1.4.1',
+      },
     },
     owner: 'yunusemretatar',
   },

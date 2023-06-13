@@ -1,11 +1,13 @@
 import axiosInterceptor from '@api/interceptor';
-import Box from '@components/ui/box';
+import { Box, Text } from '@components/ui';
 import theme from '@config/index';
-import BarcodeScreen from '@pages/barcode-reader';
 import HomeScreen from '@pages/home';
 import LoginScreen from '@pages/login';
-import MappingScreen from '@pages/map';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+  createDrawerNavigator,
+} from '@react-navigation/drawer';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { setLocations } from '@store/features/app-slice';
 import { useAppDispatch } from '@store/hooks';
@@ -27,7 +29,7 @@ const navTheme = {
 const Router = () => {
   axiosInterceptor();
   const dispatch = useAppDispatch();
-  
+
   const setLocation = async () => {
     await Location.requestForegroundPermissionsAsync();
     const location: any = await Location.getCurrentPositionAsync({
@@ -74,3 +76,14 @@ const Router = () => {
 };
 
 export default Router;
+
+const CustomDrawerContent = (props: any) => {
+  return (
+    <DrawerContentScrollView {...props}>
+      <Box>
+        <Text>Yunus Emre Tatar</Text>
+      </Box>
+      <DrawerItemList {...props} />
+    </DrawerContentScrollView>
+  );
+};

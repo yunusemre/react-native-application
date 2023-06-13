@@ -49,8 +49,10 @@ const Layout = ({
   useEffect(() => {
     const barHeight =
       Platform.OS === 'android' ? Constants.statusBarHeight * 2 : Constants.statusBarHeight;
+    const bottombar = isBottom ? 52 : 0;
+    const headerHeight = 48;
     const screenHeightForDimention = height ?? 0;
-    const layoutHeight = screenHeightForDimention - (barHeight + 96);
+    const layoutHeight = screenHeightForDimention - (barHeight + bottombar + headerHeight);
     dispatch(setLayoutHeight(layoutHeight));
 
     getUserInfo();
@@ -69,7 +71,6 @@ const Layout = ({
         Logout();
       }
     })();
-    console.log('isLogin', isLogin);
   }, [isLogin]);
 
   return (

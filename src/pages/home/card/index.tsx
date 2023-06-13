@@ -1,25 +1,23 @@
 import Box from '@components/ui/box';
 import theme from '@config/index';
 import { useAppSelector } from '@store/hooks';
-import {
-  DailyMissionStatus,
-  ShipmentItemStatusEnum,
-  ShipmentLocationStatus,
-  TaskCompletionReasonEnum,
-  TaskStatusEnum,
-  TaskTypeEnum,
-} from '@types/enums';
+import { TaskCompletionReasonEnum, TaskStatusEnum, TaskTypeEnum } from '@types/enums';
 import { TRANSLATE } from '@utils/content';
 import { globalStyle } from '@utils/global-style';
-import * as Linking from 'expo-linking';
 import React, { memo, useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Badge, Checkbox, IconButton, Menu, Text } from 'react-native-paper';
+import { Badge, Checkbox, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import CardMenu from './card-menu';
 import { IUICard } from './model';
-import { taskStatusByColor } from './status';
+import {
+  checkAllShipmentItemReadyForDelivery,
+  checkAllShipmentItemReadyForDelivery2,
+  taskStatusByColor,
+} from './status';
 
 const UiCard = ({
+  showDetail = false,
   PartyDto,
   navigation,
   setCheck,
@@ -37,31 +35,23 @@ const UiCard = ({
   const { userInfo } = useAppSelector((state) => state.apps);
   const { Name, AddressText, Latitude, Longitude, IsConfirmed } = PartyDto;
   const [checked, setChecked] = useState(isCheck);
-  const [showMenu, setShowMenu] = useState(false);
 
-  let isAllShipmentItemReadyForDelivery = false;
-  if (
-    TaskType === TaskTypeEnum.DELIVERY &&
-    TaskStatus !== TaskStatusEnum.COMPLETED &&
-    (dailyMissionStatus === DailyMissionStatus.START_OF_DAY ||
-      dailyMissionStatus === DailyMissionStatus.WAITING_FOR_EXIT_REQUEST_APPROVAL)
-  ) {
-    ShipmentList.forEach((shipment: any) => {
-      shipment.ShipmentItemList.forEach((shipment: any) => {
-        let shipmentItemStatusEnumInstance = shipment.ShipmentLocation;
-        const shipmentLocationStatusEnumInstance = shipment.ShipmentItemStatus;
-        if (
-          shipmentItemStatusEnumInstance === ShipmentItemStatusEnum.LOADED &&
-          shipmentLocationStatusEnumInstance === ShipmentLocationStatus.ON_DELIVERY_COURIER &&
-          shipment.CustomerBarcode == userInfo.UserId
-        ) {
-          isAllShipmentItemReadyForDelivery = true;
-        } else {
-          isAllShipmentItemReadyForDelivery = false;
-        }
-      });
-    });
-  }
+  let isAllShipmentItemReadyForDelivery = checkAllShipmentItemReadyForDelivery({
+    TaskStatus: TaskStatus,
+    TaskType: TaskType,
+    dailyMissionStatus: dailyMissionStatus,
+    ShipmentList: ShipmentList,
+    userID: userInfo?.UserId,
+  });
+
+  const isAllShipmentItemReadyForDelivery2 = checkAllShipmentItemReadyForDelivery2({
+    TaskStatus: TaskStatus,
+    TaskType: TaskType,
+    dailyMissionStatus: dailyMissionStatus,
+    ShipmentList: ShipmentList,
+    userID: userInfo?.UserId,
+  });
+
   return (
     <Box
       border={1}
@@ -151,76 +141,57 @@ const UiCard = ({
           </Box>
           <Box width={'8%'} flexDirection="row" justifyContent="space-between">
             {TaskStatusEnum.CANCELLED === TaskStatus ? null : (
-              <Box style={styles.menuDropdown}>
-                <Box
-                  as={Menu}
-                  visible={showMenu}
-                  onDismiss={() => setShowMenu(false)}
-                  anchor={
-                    <IconButton
-                      style={{ backgroundColor: 'transparent' }}
-                      size={18}
-                      icon="dots-horizontal"
-                      onPress={() => setShowMenu(!showMenu)}
-                    />
-                  }
-                >
-                  <Menu.Item title="Zimmete Devam Et" />
-                  <Menu.Item title="Görevi Tamamla" />
-                  <Menu.Item title="Adreste Bulunamadı" />
-                  <Menu.Item title="Görev İptal" />
-                  <Menu.Item title="Teslim Edilemedi" />
-                  <Menu.Item title="Randevu Gir" />
-                  <Menu.Item title="Adres Problemli" />
-                  <Menu.Item title="Müşteriyi Arama" />
-                  <Menu.Item
-                    title="Adrese Git"
-                    onPress={() =>
-                      navigation.navigate('mapping', {
-                        Latitude,
-                        Longitude,
-                      })
-                    }
-                  />
-                  <Menu.Item
-                    title="Navigasyonu Aç"
-                    onPress={() =>
-                      Linking.openURL(`http://maps.google.com/maps?daddr=${Latitude}, ${Longitude}`)
-                    }
-                  />
-                  <Menu.Item title="İş Yeri Kapalı" />
-                </Box>
-              </Box>
+              <CardMenu
+                TaskStatus={TaskStatus}
+                TaskType={TaskType}
+                isAllShipmentItemReadyForDelivery2={isAllShipmentItemReadyForDelivery2}
+                navigation={navigation}
+                Latitude={Latitude}
+                Longitude={Longitude}
+              />
             )}
           </Box>
         </Box>
       </Box>
       <Box flexDirection="row" minHeight={60}>
-        <Box width={'10%'}>
-          <Checkbox.Android
-            status={isCheck ? 'checked' : 'unchecked'}
-            onPress={() => {
-              setChecked(!checked);
-              setCheck({ [TaskId]: !checked });
-            }}
-          />
-        </Box>
-        <Box width={'90%'}>
+        {!showDetail && (
+          <Box width={'10%'}>
+            <Checkbox.Android
+              status={isCheck ? 'checked' : 'unchecked'}
+              onPress={() => {
+                setChecked(!checked);
+                setCheck({ [TaskId]: !checked });
+              }}
+            />
+          </Box>
+        )}
+        <Box width={showDetail ? '100%' : '90%'} pl={showDetail ? 8 : 0}>
           <Badge size={20} style={[styles.orderBagde, globalStyle.bold]}>
             {items.StopOrder}
           </Badge>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.6}
             style={[styles.w90]}
-            onPress={() => navigation.navigate('home-detail', { ...ShipmentList, TaskId })}
+            onPress={() =>
+              !showDetail ? navigation.navigate('home-detail', { ...ShipmentList, TaskId }) : null
+            }
           >
-            <Text style={[globalStyle.bold, styles.w90]}>{Name}</Text>
-            <Text style={styles.w90} variant="labelMedium">
-              {AddressText}
-            </Text>
-            <Text variant="labelSmall">Müşteri Takip No: {customerTrackingId}</Text>
-            <Text variant="labelSmall">Parça Sayısı: {itemCount}</Text>
-            {TaskStatusEnum.CANCELLED === TaskStatus && (
+            {Name ? <Text style={[globalStyle.bold, styles.w90]}>{Name}</Text> : null}
+            {AddressText ? (
+              <Text style={styles.w90} variant="labelMedium">
+                {AddressText}
+              </Text>
+            ) : null}
+            {customerTrackingId ? (
+              <Text variant="labelSmall">Müşteri Takip No: {customerTrackingId}</Text>
+            ) : null}
+            {showDetail && (
+              <Text variant="labelMedium" style={globalStyle.bold}>
+                Task ID: {TaskId}
+              </Text>
+            )}
+            {itemCount ? <Text variant="labelSmall">Parça Sayısı: {itemCount}</Text> : null}
+            {!showDetail && TaskStatusEnum.CANCELLED === TaskStatus && (
               <Text variant="labelSmall" style={[globalStyle.bold, globalStyle.italic]}>
                 İptal nedeni: {TRANSLATE[TaskCompletionReasonEnum[TaskCompletionReason]]}
               </Text>
@@ -253,7 +224,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     zIndex: 12,
   },
-  menuDropdown: { position: 'absolute', bottom: -13, right: -12 },
   w90: { width: '95%' },
 });
 

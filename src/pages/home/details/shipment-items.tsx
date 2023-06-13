@@ -7,7 +7,7 @@ import { Button, Checkbox, Dialog, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { issueCancelList } from './isssues';
 
-const ShipmentItems = ({ data, navigation, dimentions, taskId }: any) => {
+const ShipmentItems = ({ data, navigation, dimentions, taskId, isConfirmAdress }: any) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -97,7 +97,7 @@ const ShipmentItems = ({ data, navigation, dimentions, taskId }: any) => {
                           Onaylı Adres:
                         </Text>
                         <Text variant="bodySmall" style={styles.detailHr}>
-                          -
+                          {isConfirmAdress ? 'Evet' : 'Hayır'}
                         </Text>
                       </Box>
                       <Box flexDirection="row" justifyContent="space-between">
@@ -105,7 +105,7 @@ const ShipmentItems = ({ data, navigation, dimentions, taskId }: any) => {
                           Gönderi Tipi:
                         </Text>
                         <Text variant="bodySmall" style={styles.detailHr}>
-                          {result.ShipmentItemList.length}
+                          {result.PackageType === 1 ? 'Dosya' : 'Paket'}
                         </Text>
                       </Box>
                       <Box flexDirection="row" justifyContent="space-between">
@@ -152,7 +152,7 @@ const ShipmentItems = ({ data, navigation, dimentions, taskId }: any) => {
         <Button onPress={() => setShow(true)} style={{ width: '49%' }} mode="contained">
           Toplam Randevu Gir
         </Button>
-        <Button style={{ width: '50%' }} mode="contained" onPress={() => setVisible(true)}>
+        <Button style={{ width: '50%' }} mode="outlined" onPress={() => setVisible(true)}>
           Gönderi İptal
         </Button>
       </Box>

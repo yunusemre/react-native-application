@@ -10,9 +10,10 @@ export interface PartyDtoModel {
 
 export interface IUICard {
   isCheck: boolean;
+  showDetail: boolean;
   PartyDto: PartyDtoModel;
   TaskStatus?: any;
-  TaskType?: number;
+  TaskType?: number | any;
   navigation: any;
   IsReturn?: number;
   StopOrder?: number;

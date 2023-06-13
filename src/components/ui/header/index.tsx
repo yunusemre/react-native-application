@@ -14,18 +14,11 @@ const UiHeader = ({ hasBack = false }) => {
   const navigation: any = useNavigation();
   const statusBarHeight = Constants.statusBarHeight;
 
-  const onLogout = useCallback(async () => {
-    dispatch(setLoginStatus(false));
-    await AsyncStorage.setItem('access_token', '');
-    persistor.purge();
-    navigation.navigate('login');
-  }, []);
-
   return (
     <Appbar
       style={{
         backgroundColor: theme.colors.primary,
-        height: 44,
+        height: 48,
         marginTop: Platform.OS === 'ios' ? 0 : statusBarHeight,
       }}
     >

@@ -57,7 +57,7 @@ const HomeScreen = ({ navigation }: any) => {
         setTotalCount(total);
         //  Task Item Completed Count
         let totalCompletedCount = 0;
-        result?.forEach((task: any) => {
+        result?.map((task: any) => {
           task.TaskList.forEach((taskItem: any) => {
             checkList[taskItem.TaskId] = false;
             const taskStatusId = taskItem.TaskStatus;
@@ -73,9 +73,8 @@ const HomeScreen = ({ navigation }: any) => {
         if (totalCompletedCount > 0) setCompleteCount(totalCompletedCount);
         if (totalCompletedCount > 0 && total > 0)
           setPercent(Math.ceil((totalCompletedCount / total) * 100));
-        setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .finally(() => setLoading(false));
   };
 
   const isOnline = async () => {

@@ -16,7 +16,7 @@ enum ShipmentItemStatusEnum {
   DAMAGED = 110,
 }
 
-enum DailyMissionStatus {
+enum DailyMissionStatusEnum {
   START_OF_DAY = 1,
   WAITING_FOR_EXIT_REQUEST_APPROVAL = 2,
   EXIT_REQUEST_APPROVED = 3,
@@ -81,7 +81,7 @@ enum TaskCompletionReasonEnum {
 export {
   TaskTypeEnum,
   ShipmentItemStatusEnum,
-  DailyMissionStatus,
+  DailyMissionStatusEnum,
   TaskStatusEnum,
   ShipmentLocationStatus,
   TaskCompletionReasonEnum

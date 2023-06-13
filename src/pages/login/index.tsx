@@ -16,6 +16,7 @@ import * as yup from 'yup';
 
 const LoginScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
+  const version: any = Constants.manifest?.extra[process.env.NODE_ENV].version;
   const { width }: { width: number } = Dimensions.get('screen');
   const [visible, setVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -71,7 +72,6 @@ const LoginScreen = ({ navigation }: any) => {
     });
     return unsubscribe;
   }, [navigation]);
-
   return (
     <Box flex={1} bg="white" justifyContent="center" pr={20} pl={20}>
       <Box width="100%" justifyContent="center" alignItems="center">
@@ -112,7 +112,9 @@ const LoginScreen = ({ navigation }: any) => {
         </Button>
       </Box>
       <Box mt={20} textAlign="center" as={Text}>
-        {Constants.manifest?.version}
+        {process.env.NODE_ENV === 'test' ? 'Test' : ''}
+        {process.env.NODE_ENV === 'development' ? 'Development' : ''}
+        {process.env.NODE_ENV === 'preprod' ? 'Preprod' : ''} - {version}
       </Box>
       <Snackbar
         wrapperStyle={{ width: width }}
