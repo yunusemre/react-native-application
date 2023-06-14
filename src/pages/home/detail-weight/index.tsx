@@ -23,18 +23,22 @@ export const HomeDetailWeights = ({ route }: any) => {
           height={195}
         >
           <Box flexDirection="row" p={3} justifyContent="space-between">
-            <Text style={[globalStyle.w50, { fontSize: 10 }]}>Barcode No:</Text>
-            <Text style={[globalStyle.w50, { fontSize: 10 }]}>
+            <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10 }]}>Barcode No:</Text>
+            <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10 }]}>
               {itemListDetail.CustomerBarcode}
             </Text>
           </Box>
-          <Box bg="primary" flexDirection="row" p={3}>
-            <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10, color: 'white' }]}>
-              Müşteri Beyanı
-            </Text>
-            <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10, color: 'white' }]}>
-              Kurye Ölçümü
-            </Text>
+          <Box flexDirection="row">
+            <Box bg="primary" width={'50%'} p={3}>
+              <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10, color: 'white' }]}>
+                Müşteri Beyanı
+              </Text>
+            </Box>
+            <Box bg="color" width={'50%'} p={3}>
+              <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10, color: 'white' }]}>
+                Kurye Ölçümü
+              </Text>
+            </Box>
           </Box>
           <Box flexDirection="row">
             <Box width={'50%'}>
@@ -111,7 +115,9 @@ export const HomeDetailWeights = ({ route }: any) => {
           <Box flexDirection="row">
             <Box width={'50%'} bg="primary">
               <Box flexDirection="row" p={2}>
-                <Text style={[globalStyle.w50, { fontSize: 10, color: 'white' }]}>Tutar:</Text>
+                <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10, color: 'white' }]}>
+                  Tutar:
+                </Text>
                 <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10, color: 'white' }]}>
                   {itemListDetail.UnitPrice}
                 </Text>
@@ -119,7 +125,9 @@ export const HomeDetailWeights = ({ route }: any) => {
             </Box>
             <Box width={'50%'} flexDirection="row" bg="color">
               <Box flexDirection="row" p={2}>
-                <Text style={[globalStyle.w50, { fontSize: 10, color: 'white' }]}>Tutar:</Text>
+                <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10, color: 'white' }]}>
+                  Tutar:
+                </Text>
                 <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10, color: 'white' }]}>
                   0.0
                 </Text>
