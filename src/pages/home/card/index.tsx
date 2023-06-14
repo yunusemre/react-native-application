@@ -9,14 +9,15 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Badge, Checkbox, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CardMenu from './card-menu';
-import { IUICard } from './model';
 import {
   checkAllShipmentItemReadyForDelivery,
   checkAllShipmentItemReadyForDelivery2,
   taskStatusByColor,
 } from './control-functions';
+import { IUICard } from './model';
 
 const UiCard = ({
+  isDetailPage = false,
   showDetail = false,
   PartyDto,
   navigation,
@@ -36,7 +37,7 @@ const UiCard = ({
   const { Name, AddressText, Latitude, Longitude, IsConfirmed } = PartyDto;
   const [checked, setChecked] = useState(isCheck);
 
-  let isAllShipmentItemReadyForDelivery = checkAllShipmentItemReadyForDelivery({
+  const isAllShipmentItemReadyForDelivery = checkAllShipmentItemReadyForDelivery({
     TaskStatus: TaskStatus,
     TaskType: TaskType,
     dailyMissionStatus: dailyMissionStatus,
@@ -66,8 +67,8 @@ const UiCard = ({
       style={{ overflow: 'hidden' }}
     >
       <Box
-        pt={4}
-        pb={4}
+        pt={6}
+        pb={6}
         pr={8}
         pl={8}
         bg={taskStatusByColor({
@@ -92,13 +93,11 @@ const UiCard = ({
                 ShipmentList.some((ship: any) => ship.Neighbour !== null) ? (
                   <Icon name="alert-circle-outline" size={18} />
                 ) : null}
-
                 {TaskTypeEnum.PICKUP === TaskType &&
                 items.TimePeriodModel !== null &&
                 items.TimePeriodModel.TimePeriodId > 0 ? (
                   <Icon name="bell-off" size={18} />
                 ) : null}
-
                 {!items.IsRingTheBellPermitted ? null : <Icon name="alarm-check" size={18} />}
 
                 {TaskTypeEnum.PICKUP === TaskType &&
@@ -135,15 +134,19 @@ const UiCard = ({
                 as={Text}
                 variant="labelSmall"
               >
-                {TaskType === 1 ? 'Toplama' : 'Yükleme'}
+                {TaskType === 1 ? 'Toplama' : 'Teslimat'}
               </Box>
             </Box>
           </Box>
           <Box width={'8%'} flexDirection="row" justifyContent="space-between">
             {TaskStatusEnum.CANCELLED === TaskStatus ? null : (
               <CardMenu
+                TaskId={TaskId}
+                dailyMissionStatus={dailyMissionStatus}
+                isDetailPage={isDetailPage}
                 TaskStatus={TaskStatus}
                 TaskType={TaskType}
+                isAllShipmentItemReadyForDelivery={isAllShipmentItemReadyForDelivery}
                 isAllShipmentItemReadyForDelivery2={isAllShipmentItemReadyForDelivery2}
                 navigation={navigation}
                 Latitude={Latitude}

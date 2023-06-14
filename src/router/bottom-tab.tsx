@@ -1,15 +1,16 @@
 import { Box } from '@components/ui';
 import theme from '@config/index';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Menu } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Tab = createBottomTabNavigator();
-
-const BottomTab = () => {
+const BottomTab = ({ setOpenEditModal }: any) => {
   const navigation: any = useNavigation();
   const routes: any = useRoute();
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <Box
       flexDirection="row"
@@ -32,15 +33,31 @@ const BottomTab = () => {
           }}
         />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.center} onPress={() => navigation.navigate('barcode')}>
+      <TouchableOpacity style={styles.center} onPress={() => setOpenEditModal()}>
         <Icon size={24} name="square-edit-outline" />
       </TouchableOpacity>
       <TouchableOpacity style={[styles.center]} onPress={() => navigation.navigate('barcode')}>
         <Icon size={36} name="barcode-scan" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.center} onPress={() => navigation.navigate('mapping')}>
-        <Icon size={24} name="playlist-star" />
-      </TouchableOpacity>
+      <Box
+        as={Menu}
+        visible={showMenu}
+        onDismiss={() => setShowMenu(false)}
+        anchor={
+          <Icon
+            style={{ marginTop: 10 }}
+            size={30}
+            name="playlist-star"
+            onPress={() => setShowMenu(!showMenu)}
+          />
+        }
+      >
+        <Menu.Item testID="menu1" disabled title="Görev Yönlendir" />
+        <Menu.Item testID="menu2" disabled title="Görev Reddet" />
+        <Menu.Item testID="menu3" title="Vardiyayı Bitir" />
+        <Menu.Item testID="menu4" title="Çıkış İzni İste" />
+        <Menu.Item testID="menu5" title="Transfer Merkezine Dön" />
+      </Box>
       <TouchableOpacity style={styles.center} onPress={() => navigation.navigate('issues')}>
         <Icon
           size={24}

@@ -1,3 +1,4 @@
+import { BarcodeEdit } from '@components/ui/barcode-edit';
 import Box from '@components/ui/box';
 import UiHeader from '@components/ui/header';
 import UiOffline from '@components/ui/offline-banner';
@@ -11,9 +12,10 @@ import { useAppDispatch, useAppSelector } from '@store/hooks';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Dimensions, Platform } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
+import { Dialog } from 'react-native-paper';
 
 const Layout = ({
   isHeader = false,
@@ -21,6 +23,7 @@ const Layout = ({
   hasBack = false,
   openBarcode,
   backgroundColor = theme.colors.primary,
+  setOpenEditModal,
   children,
 }: {
   isHeader?: boolean;
@@ -29,12 +32,14 @@ const Layout = ({
   backgroundColor?: any;
   children: ReactNode;
   openBarcode?: any;
+  setOpenEditModal?: any;
 }) => {
   const isOnline = useIsConnected();
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const { isLogin, screenHeight } = useAppSelector((state) => state.apps);
   const { height }: { height: number } = Dimensions.get('screen');
+  const [visible, setVisible] = useState(false);
 
   const getToken = async () => {
     return await AsyncStorage.getItem('access_token');
@@ -78,8 +83,13 @@ const Layout = ({
       <StatusBar style="dark" translucent backgroundColor={backgroundColor} />
       {isHeader ? <UiHeader hasBack={hasBack} openBarcode={openBarcode} /> : null}
       <Box height={screenHeight}>{children}</Box>
-      {isBottom ? <BottomTab /> : null}
+      {isBottom ? <BottomTab setOpenEditModal={() => setVisible(!visible)} /> : null}
       {isOnline === null || isOnline === true ? null : <UiOffline />}
+      <Dialog visible={visible} onDismiss={() => setVisible(false)} style={{ borderRadius: 8 }}>
+        <Box alignItems="center">
+          <BarcodeEdit onDismiss={() => setVisible(false)} />
+        </Box>
+      </Dialog>
     </Box>
   );
 };

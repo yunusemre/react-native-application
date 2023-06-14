@@ -48,7 +48,7 @@ const HomeDetails = ({ navigation, checkList, route, setCheck }: any) => {
       <Box ml={8} mr={8} mt={4}>
         <Box mt={4} mb={4} height={102}>
           {taskItem === null || taskItem === undefined ? null : (
-            <UiCard navigation={navigation} {...taskItem} showDetail={true} />
+            <UiCard isDetailPage={true} navigation={navigation} {...taskItem} showDetail={true} />
           )}
         </Box>
         <Box flexDirection="row" height={40} justifyContent="space-between" alignItems="center">

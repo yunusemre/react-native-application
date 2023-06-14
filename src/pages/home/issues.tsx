@@ -95,7 +95,7 @@ const Issues = ({
                 <Box flexDirection="row" alignItems="center">
                   <Icon name="alert-circle-outline" size={20} />
                   <Box as={Text} ml={10} flexDirection="row" alignItems="center">
-                    Gösterilecek bir data yok.
+                    Gösterilecek bir veri bulunamadı.
                   </Box>
                 </Box>
               }

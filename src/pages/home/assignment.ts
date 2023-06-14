@@ -12,7 +12,7 @@ const assignments = [
     value: 3,
   },
   {
-    name: 'Dağıtma',
+    name: 'Teslimat',
     value: 4,
   },
   {

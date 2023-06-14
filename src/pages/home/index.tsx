@@ -20,7 +20,7 @@ const HomeScreen = ({ navigation }: any) => {
   const isConnected = useIsConnected();
   const { width }: { width: number } = Dimensions.get('screen');
   const [loading, setLoading] = useState(false);
-  const [selectedIssue, setSelectedIsseu] = useState();
+  const [selectedIssue, setSelectedIsseu] = useState(null);
   const [search, setSearch] = useState('');
   const [masterData, setMasterData] = useState<any[]>([]);
 
@@ -29,7 +29,6 @@ const HomeScreen = ({ navigation }: any) => {
   const [percent, setPercent] = useState<number>(0);
   const [checkListItem, setCheckListItem] = useState<any>({});
   const [dailyMissionStatus, setDailyMissionStatus] = useState<number>(1);
-
   const checkList: any = {};
 
   const getProducts = async () => {
@@ -46,10 +45,13 @@ const HomeScreen = ({ navigation }: any) => {
       method: 'post',
       data: body,
     };
+    setPercent(0);
+    setTotalCount(0);
+    setCompleteCount(0);
     axios(config)
       .then((response: any) => {
         const result = response?.Payload?.StopList;
-        setDailyMissionStatus(response?.Payload.DailyMissionStatus);
+        setDailyMissionStatus(response?.Payload?.DailyMissionStatus);
         setMasterData(result);
         dispatch(setShipmentsData(result));
 
@@ -58,7 +60,7 @@ const HomeScreen = ({ navigation }: any) => {
         //  Task Item Completed Count
         let totalCompletedCount = 0;
         result?.map((task: any) => {
-          task.TaskList.forEach((taskItem: any) => {
+          task.TaskList.find((taskItem: any) => {
             checkList[taskItem.TaskId] = false;
             const taskStatusId = taskItem.TaskStatus;
             if (
@@ -107,6 +109,20 @@ const HomeScreen = ({ navigation }: any) => {
     }
   };
 
+  const filterWithIssues = (issue: any) => {
+    // if (issue === 1) {
+    //   setMasterData(data);
+    //   return;
+    // }
+    // const filteredData = data.filter((completed: any) => {
+    //   if (completed.TaskStatus === issue) {
+    //     return completed;
+    //   }
+    // });
+    // setMasterData(filteredData);
+    // setSelectedIsseu(issue);
+  };
+
   const layoutHeight = screenHeight - 84;
   return (
     <Layout
@@ -123,15 +139,16 @@ const HomeScreen = ({ navigation }: any) => {
                 style={{ width: width / 2 - 4 }}
                 items={assignments}
                 selectedValue={selectedIssue}
-                onValueChange={(val: any) => setSelectedIsseu(val)}
+                onValueChange={(val: any) => filterWithIssues(val)}
               />
               <Searchbar
                 style={{
                   width: width / 2 - 16,
                   borderRadius: theme.radius.normal,
-                  borderBottomWidth: 0,
+                  borderWidth: 0,
+                  borderColor: 'transparent',
                 }}
-                inputStyle={{ marginTop: -17, borderBottomWidth: 0 }}
+                inputStyle={{ marginTop: -17, borderWidth: 0, borderColor: 'transparent' }}
                 mode="view"
                 placeholder="Search"
                 onChangeText={(val) => searchList(val)}

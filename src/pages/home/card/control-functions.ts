@@ -90,3 +90,21 @@ export const checkAllShipmentItemReadyForDelivery = ({
   }
   return isAllShipmentItemReadyForDelivery;
 };
+
+export const nextActiveTask = ({}) => {};
+
+// for (CourierTaskResponseModel courierTaskResponseModel :  Extensions.getCourierTaskResponseModelList(requireContext())) {
+//   Extensions.TaskStatus taskStatusEnumInstance = Extensions.TaskStatus.enumOf(courierTaskResponseModel.getTaskStatusId());
+//   if (taskStatusEnumInstance == Extensions.TaskStatus.ASSIGNED) {
+//       if(courierTaskResponseModel.getTaskTypeId() == Extensions.TaskType.DELIVERY.value){
+//           if(!isDeliveryTaskCompleted(courierTaskResponseModel)){
+//               Constants.getSPreferences(requireContext()).setNEXT_TASK_ID(courierTaskResponseModel.getTaskId());
+//               break;
+//           }
+//       }
+//       else{
+//           Constants.getSPreferences(requireContext()).setNEXT_TASK_ID(courierTaskResponseModel.getTaskId());
+//           break;
+//       }
+//   }
+// }

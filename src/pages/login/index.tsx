@@ -51,15 +51,14 @@ const LoginScreen = ({ navigation }: any) => {
     };
     axios(config)
       .then(async (response: any) => {
-        if (response.access_token !== undefined) {
-          dispatch(setLoginStatus(true));
-          await AsyncStorage.setItem('access_token', response.access_token);
-          setIsLogin(false);
-          navigation.navigate('issues');
-        }
+        if (response === 'undefined') return;
+        dispatch(setLoginStatus(true));
+        await AsyncStorage.setItem('access_token', response.access_token);
+        setIsLogin(false);
+        navigation.navigate('issues');
       })
-      .catch((err) => {
-        setErrorMessage(err.ResultMessage);
+      .catch((error) => {
+        setErrorMessage(JSON.parse(error.error_description).ResultMessage);
         dispatch(setLoginStatus(false));
         setVisible(true);
         setIsLogin(false);
