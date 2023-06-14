@@ -9,7 +9,7 @@ import UiCard from '../card';
 import { issues } from './isssues';
 import ShipmentItems from './shipment-items';
 
-const HomeDetails = ({ navigation, checkList, route, setCheck }: any) => {
+const HomeDetails = ({ navigation, route, setCheck }: any) => {
   const taskId = route.params.TaskId;
   const { data } = useAppSelector((state) => state.shipments);
   const { screenHeight } = useAppSelector((state) => state.apps);
@@ -17,13 +17,14 @@ const HomeDetails = ({ navigation, checkList, route, setCheck }: any) => {
   const [selectedIssue, setSelectedIsseu] = useState();
   const [masterData, setMasterData] = useState<any>([]);
   const [taskItem, setTaskItem] = useState<any>(null);
+  const [checkListItem, setCheckListItem] = useState<any>({});
 
-  const allItemCheckList = { ...checkList };
+  const allItemCheckList: any = {};
   const [checked, setChecked] = useState(false);
 
   const checkAllItems = (val: boolean) => {
-    for (const [key] of Object.entries(allItemCheckList)) allItemCheckList[key] = !val;
-    setCheck(allItemCheckList);
+    for (const [key] of Object.entries(checkListItem)) checkListItem[key] = !val;
+    setCheckListItem(checkListItem);
     setChecked(!val);
   };
 
@@ -33,20 +34,24 @@ const HomeDetails = ({ navigation, checkList, route, setCheck }: any) => {
   }, [data]);
 
   const findShipmentList = () => {
-    data.forEach((item) =>
+    data.forEach((item) => {
       item.TaskList.find((ship: any) => {
         if (ship.TaskId === taskId) {
           setTaskItem(ship);
           setMasterData(ship.ShipmentList);
+          ship.ShipmentList.forEach(
+            (element: any) => (allItemCheckList[element.ShipmentId] = false)
+          );
+          setCheckListItem(allItemCheckList);
         }
-      })
-    );
+      });
+    });
   };
   const layoutHeight = screenHeight - 196;
   return (
     <Layout isHeader isBottom hasBack={true}>
       <Box ml={8} mr={8} mt={4}>
-        <Box mt={4} mb={4} height={102}>
+        <Box mt={4} mb={8} height={102}>
           {taskItem === null || taskItem === undefined ? null : (
             <UiCard isDetailPage={true} navigation={navigation} {...taskItem} showDetail={true} />
           )}
@@ -87,9 +92,13 @@ const HomeDetails = ({ navigation, checkList, route, setCheck }: any) => {
         </Box>
         {taskItem !== null ? (
           <ShipmentItems
+            checkList={checkListItem}
             isConfirmAdress={taskItem.PartyDto.IsConfirmed}
             taskId={route.params.TaskId}
             dimentions={layoutHeight}
+            setCheck={(items: any) => {
+              setCheckListItem(items);
+            }}
             navigation={navigation}
             data={masterData}
           />

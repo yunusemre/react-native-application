@@ -1,23 +1,36 @@
 import { Box, UiEmpy, UiPicker } from '@components/ui';
 import theme from '@config/index';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Checkbox, Dialog, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { issueCancelList } from './isssues';
 
-const ShipmentItems = ({ data, navigation, dimentions, taskId, isConfirmAdress }: any) => {
+const ShipmentItems = ({
+  data,
+  navigation,
+  dimentions,
+  checkList,
+  taskId,
+  setCheck,
+  isConfirmAdress,
+}: any) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [visible, setVisible] = useState(false);
   const [selectedIssue, setSelectedIsseu] = useState();
+  const [checked, setChecked] = useState(false);
 
   const onChange = (event: any, selectedDate: any) => {
     const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
   };
+
+  useEffect(() => {
+    setChecked(false);
+  }, [data]);
 
   return (
     <Box mb={8} pb={4}>
@@ -37,9 +50,10 @@ const ShipmentItems = ({ data, navigation, dimentions, taskId, isConfirmAdress }
           }
         />
       ) : null}
-      <Box height={dimentions - 70}>
+      <Box height={dimentions - 74}>
         <ScrollView>
           {data.map((result: any) => {
+            // item.ShipmentList[0].ShipmentItemList[0].CustomerTrackingId
             return result?.ShipmentItemList?.map((item: any, indexS: number) => {
               return (
                 <Box
@@ -56,18 +70,24 @@ const ShipmentItems = ({ data, navigation, dimentions, taskId, isConfirmAdress }
                   flexDirection="row"
                 >
                   <Box width={'10%'}>
-                    <Checkbox.Android status="checked" onPress={() => {}} />
+                    <Checkbox.Android
+                      status={checked ? 'checked' : 'unchecked'}
+                      onPress={() => setChecked(!checked)}
+                    />
                   </Box>
                   <Box width={'90%'}>
                     <TouchableOpacity
                       activeOpacity={0.7}
-                      onPress={() =>
-                        navigation.navigate('home-detail-weight', {
-                          taskId: taskId,
-                          shipmentItemId: item.hipmentItemId,
-                        })
-                      }
+                      onPress={() => navigation.navigate('home-detail-weight', item)}
                     >
+                      {/* <Box flexDirection="row" justifyContent="space-between">
+                        <Text variant="bodySmall" style={styles.detailHr}>
+                          Alıcı:
+                        </Text>
+                        <Text variant="bodySmall" style={styles.detailHr}>
+                          {result.RecipientName} {result.RecipientSurname}
+                        </Text>
+                      </Box> */}
                       <Box flexDirection="row" justifyContent="space-between">
                         <Text variant="bodySmall" style={styles.detailHr}>
                           Gönderi Takip No:
@@ -81,7 +101,7 @@ const ShipmentItems = ({ data, navigation, dimentions, taskId, isConfirmAdress }
                           Müşteri Takip No:
                         </Text>
                         <Text variant="bodySmall" style={styles.detailHr}>
-                          {result.CustomerTrackingId}
+                          {item.CustomerTrackingId}
                         </Text>
                       </Box>
                       <Box flexDirection="row" justifyContent="space-between">
@@ -121,7 +141,7 @@ const ShipmentItems = ({ data, navigation, dimentions, taskId, isConfirmAdress }
                           Toplam Desi:
                         </Text>
                         <Text variant="bodySmall" style={styles.detailHr}>
-                          {item.Deci}
+                          {item.Deci.toFixed(1)}
                         </Text>
                       </Box>
                       <Box flexDirection="row" justifyContent="space-between">
