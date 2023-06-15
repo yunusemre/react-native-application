@@ -80,14 +80,6 @@ const ShipmentItems = ({
                       activeOpacity={0.7}
                       onPress={() => navigation.navigate('home-detail-weight', item)}
                     >
-                      {/* <Box flexDirection="row" justifyContent="space-between">
-                        <Text variant="bodySmall" style={styles.detailHr}>
-                          Alıcı:
-                        </Text>
-                        <Text variant="bodySmall" style={styles.detailHr}>
-                          {result.RecipientName} {result.RecipientSurname}
-                        </Text>
-                      </Box> */}
                       <Box flexDirection="row" justifyContent="space-between">
                         <Text variant="bodySmall" style={styles.detailHr}>
                           Gönderi Takip No:
@@ -109,7 +101,7 @@ const ShipmentItems = ({
                           İade Gönderi:
                         </Text>
                         <Text variant="bodySmall" style={styles.detailHr}>
-                          {result.ReturnType === 0 ? 'Hayır' : 'Evet'}
+                          {result.IsReturn ? 'Evet' : 'Hayır'}
                         </Text>
                       </Box>
                       <Box flexDirection="row" justifyContent="space-between">
@@ -161,6 +153,9 @@ const ShipmentItems = ({
                         </Text>
                       </Box>
                     </TouchableOpacity>
+                    <Text onPress={() => {}} style={styles.tabButton}>
+                      İade Gönderi Tamamla
+                    </Text>
                   </Box>
                 </Box>
               );
@@ -169,10 +164,10 @@ const ShipmentItems = ({
         </ScrollView>
       </Box>
       <Box height={40} mt={8} flexDirection="row" justifyContent="space-between">
-        <Button onPress={() => setShow(true)} style={{ width: '49%' }} mode="contained">
+        <Button disabled onPress={() => setShow(true)} style={{ width: '49%' }} mode="contained">
           Toplam Randevu Gir
         </Button>
-        <Button style={{ width: '50%' }} mode="outlined" onPress={() => setVisible(true)}>
+        <Button disabled style={{ width: '50%' }} mode="outlined" onPress={() => setVisible(true)}>
           Gönderi İptal
         </Button>
       </Box>
@@ -217,6 +212,14 @@ const ShipmentItems = ({
 const styles = StyleSheet.create({
   detailHr: {
     marginVertical: 2,
+  },
+  tabButton: {
+    padding: 4,
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.radius.full,
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 12,
   },
 });
 

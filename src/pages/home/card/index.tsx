@@ -30,6 +30,7 @@ const UiCard = ({
   dailyMissionStatus,
   ShipmentList,
   TaskCompletionReason,
+  IsRingTheBellPermitted,
   TaskStatus,
   ...items
 }: IUICard) => {
@@ -89,18 +90,20 @@ const UiCard = ({
             </Box>
             <Box flexDirection="row" justifyContent="flex-end" alignItems="center">
               <Box flexDirection="row" flexWrap="wrap">
-                {ShipmentList.length !== 0 &&
-                ShipmentList.some((ship: any) => ship.Neighbour !== null) ? (
+                {ShipmentList.length != 0 &&
+                ShipmentList.some((ship: any) => ship.Neighbour != null) ? (
                   <Icon name="alert-circle-outline" size={18} />
                 ) : null}
-                {TaskTypeEnum.PICKUP === TaskType &&
+
+                {!IsRingTheBellPermitted ? <Icon name="bell-off" size={18} /> : null}
+
+                {(TaskType === TaskTypeEnum.PICKUP || TaskType === TaskTypeEnum.DELIVERY) &&
                 items.TimePeriodModel !== null &&
                 items.TimePeriodModel.TimePeriodId > 0 ? (
-                  <Icon name="bell-off" size={18} />
+                  <Icon name="alarm-check" size={18} />
                 ) : null}
-                {!items.IsRingTheBellPermitted ? null : <Icon name="alarm-check" size={18} />}
 
-                {TaskTypeEnum.PICKUP === TaskType &&
+                {TaskType == TaskTypeEnum.PICKUP &&
                 ShipmentList.some((ship: any) => ship.IsReturn) ? (
                   <Icon name="basket" size={18} />
                 ) : null}

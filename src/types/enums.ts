@@ -1,6 +1,6 @@
 export enum TaskTypeEnum {
-  PICKUP,
-  DELIVERY,
+  PICKUP = 1,
+  DELIVERY = 2,
 }
 
 export enum ShipmentItemStatusEnum {

@@ -78,7 +78,7 @@ export const HomeDetailWeights = ({ route }: any) => {
             <Box width={'50%'} flexDirection="row">
               <Box flexDirection="row" p={2}>
                 <Text style={[globalStyle.w50, { fontSize: 10 }]}>Yükseklik:</Text>
-                <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10 }]}>12</Text>
+                <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10 }]}>0.0</Text>
               </Box>
             </Box>
           </Box>
@@ -92,7 +92,7 @@ export const HomeDetailWeights = ({ route }: any) => {
             <Box width={'50%'} flexDirection="row">
               <Box flexDirection="row" p={2}>
                 <Text style={[globalStyle.w50, { fontSize: 10 }]}>Desi:</Text>
-                <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10 }]}>12</Text>
+                <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10 }]}>0.0</Text>
               </Box>
             </Box>
           </Box>
@@ -108,7 +108,7 @@ export const HomeDetailWeights = ({ route }: any) => {
             <Box width={'50%'} flexDirection="row">
               <Box flexDirection="row" p={2}>
                 <Text style={[globalStyle.w50, { fontSize: 10 }]}>Kilo:</Text>
-                <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10 }]}>12</Text>
+                <Text style={[globalStyle.w50, globalStyle.bold, { fontSize: 10 }]}>0.0</Text>
               </Box>
             </Box>
           </Box>
@@ -134,11 +134,16 @@ export const HomeDetailWeights = ({ route }: any) => {
               </Box>
             </Box>
           </Box>
-          <Box ml={-8}>
-            <Checkbox.Android
-              status={selected ? 'checked' : 'unchecked'}
-              onPress={() => setSelected(!selected)}
-            />
+          <Box flexDirection="row">
+            <Box ml={-8}>
+              <Checkbox.Android
+                status={selected ? 'checked' : 'unchecked'}
+                onPress={() => setSelected(!selected)}
+              />
+            </Box>
+            <Box>
+              <Button icon="attachment" onPress={() => console.log('bla')} />
+            </Box>
           </Box>
         </Box>
       </Box>

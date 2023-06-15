@@ -32,8 +32,8 @@ export const checkAllShipmentItemReadyForDelivery2 = ({
 }: any) => {
   let isAllShipmentItemReadyForDelivery2: boolean = false;
   if (
-    TaskType === TaskTypeEnum.DELIVERY &&
-    TaskStatus !== TaskStatusEnum.COMPLETED &&
+    TaskType == TaskTypeEnum.DELIVERY &&
+    TaskStatus != TaskStatusEnum.COMPLETED &&
     (dailyMissionStatus == DailyMissionStatusEnum.START_OF_DAY ||
       dailyMissionStatus == DailyMissionStatusEnum.WAITING_FOR_EXIT_REQUEST_APPROVAL)
   ) {
@@ -44,9 +44,9 @@ export const checkAllShipmentItemReadyForDelivery2 = ({
         const shipmentLocationStatusEnumInstance: any =
           ShipmentLocationStatus[itemList.ShipmentLocation];
         if (
-          shipmentItemStatusEnumInstance === ShipmentItemStatusEnum.LOADED &&
-          shipmentLocationStatusEnumInstance === ShipmentLocationStatus.ON_DELIVERY_COURIER &&
-          itemList.CurrentWithholderUserId === userID
+          shipmentItemStatusEnumInstance == ShipmentItemStatusEnum.LOADED &&
+          shipmentLocationStatusEnumInstance == ShipmentLocationStatus.ON_DELIVERY_COURIER &&
+          itemList.CurrentWithholderUserId == userID
         ) {
           isAllShipmentItemReadyForDelivery2 = true;
         } else {
@@ -67,10 +67,10 @@ export const checkAllShipmentItemReadyForDelivery = ({
 }: any) => {
   let isAllShipmentItemReadyForDelivery = false;
   if (
-    TaskType === TaskTypeEnum.DELIVERY &&
-    TaskStatus !== TaskStatusEnum.COMPLETED &&
-    (dailyMissionStatus === DailyMissionStatusEnum.START_OF_DAY ||
-      dailyMissionStatus === DailyMissionStatusEnum.WAITING_FOR_EXIT_REQUEST_APPROVAL)
+    TaskType == TaskTypeEnum.DELIVERY &&
+    TaskStatus != TaskStatusEnum.COMPLETED &&
+    (dailyMissionStatus == DailyMissionStatusEnum.START_OF_DAY ||
+      dailyMissionStatus == DailyMissionStatusEnum.WAITING_FOR_EXIT_REQUEST_APPROVAL)
   ) {
     ShipmentList.forEach((shipment: any) => {
       shipment.ShipmentItemList.forEach((shipment: any) => {
