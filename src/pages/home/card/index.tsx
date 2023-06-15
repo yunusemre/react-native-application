@@ -1,19 +1,19 @@
 import Box from '@components/ui/box';
 import theme from '@config/index';
 import { useAppSelector } from '@store/hooks';
-import { TaskCompletionReasonEnum, TaskStatusEnum, TaskTypeEnum } from '@types/enums';
+import { TaskCompletionReasonEnum, TaskStatusEnum } from '@types/enums';
 import { TRANSLATE } from '@utils/content';
 import { globalStyle } from '@utils/global-style';
 import React, { memo, useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Badge, Checkbox, Text } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CardMenu from './card-menu';
 import {
   checkAllShipmentItemReadyForDelivery,
   checkAllShipmentItemReadyForDelivery2,
   taskStatusByColor,
 } from './control-functions';
+import { IconStatus } from './icon-status';
 import { IUICard } from './model';
 
 const UiCard = ({
@@ -89,45 +89,14 @@ const UiCard = ({
               {TRANSLATE[TaskStatusEnum[TaskStatus]]}
             </Box>
             <Box flexDirection="row" justifyContent="flex-end" alignItems="center">
-              <Box flexDirection="row" flexWrap="wrap">
-                {ShipmentList.length != 0 &&
-                ShipmentList.some((ship: any) => ship.Neighbour != null) ? (
-                  <Icon name="alert-circle-outline" size={18} />
-                ) : null}
-
-                {!IsRingTheBellPermitted ? <Icon name="bell-off" size={18} /> : null}
-
-                {(TaskType === TaskTypeEnum.PICKUP || TaskType === TaskTypeEnum.DELIVERY) &&
-                items.TimePeriodModel !== null &&
-                items.TimePeriodModel.TimePeriodId > 0 ? (
-                  <Icon name="alarm-check" size={18} />
-                ) : null}
-
-                {TaskType == TaskTypeEnum.PICKUP &&
-                ShipmentList.some((ship: any) => ship.IsReturn) ? (
-                  <Icon name="basket" size={18} />
-                ) : null}
-
-                {items.IsPartyAtTheAddress ? <Icon name="home" size={18} /> : null}
-
-                {ShipmentList.some((ship: any) => ship.OnlyDeliverToRecipient) ? (
-                  <Icon name="face-man" size={18} />
-                ) : null}
-
-                {ShipmentList.some((ship: any) => ship.IsCollectionRequired) ? (
-                  <Icon name="cash" size={18} />
-                ) : null}
-
-                {ShipmentList.some((ship: any) => ship.IsDeliveryInsideTimeWindow) ? (
-                  <Icon name="truck-fast-outline" size={18} />
-                ) : null}
-
-                {ShipmentList.some((ship: any) => ship.IsSamedayDelivery) ? (
-                  <Icon name="hours-24" size={18} />
-                ) : null}
-
-                {IsConfirmed ? <Icon name="check-circle-outline" size={18} /> : null}
-              </Box>
+              <IconStatus
+                TaskType={TaskType}
+                ShipmentList={ShipmentList}
+                IsRingTheBellPermitted={IsRingTheBellPermitted}
+                TimePeriodModel={items.TimePeriodModel}
+                IsPartyAtTheAddress={items.IsPartyAtTheAddress}
+                IsConfirmed={IsConfirmed}
+              />
               <Box
                 bg="rgba(255, 255, 255, 0.3)"
                 p={2}

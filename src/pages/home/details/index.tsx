@@ -5,6 +5,7 @@ import { globalStyle } from '@utils/global-style';
 import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { Checkbox } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import UiCard from '../card';
 import { issues } from './isssues';
 import ShipmentItems from './shipment-items';

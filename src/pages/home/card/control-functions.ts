@@ -91,7 +91,26 @@ export const checkAllShipmentItemReadyForDelivery = ({
   return isAllShipmentItemReadyForDelivery;
 };
 
+export const selectedTaskID = () => {};
+
 export const nextActiveTask = ({}) => {};
+
+// const getSelectedTaskInfo = (context:any) => {
+//   for (CourierTaskResponseModel task : getCourierTaskResponseModelList(context)) {
+//       if(task.getTaskId() == Constants.getSPreferences(context).getSELECTED_TASK_ID()){
+//           return task;
+//       }
+//   }
+//   return null;
+// }
+
+// const getCourierTaskResponseModelList = (context:any) => {
+//   const taskList:any[] = [];
+//   if(!Constants.getSPreferences(context).getCOURIER_TASK_LIST().isEmpty()){
+//       taskList = gson.fromJson(Constants.getSPreferences(context).getCOURIER_TASK_LIST(),new TypeToken<List<CourierTaskResponseModel>>(){}.getType());
+//   }
+//   return taskList;
+// }
 
 // for (CourierTaskResponseModel courierTaskResponseModel :  Extensions.getCourierTaskResponseModelList(requireContext())) {
 //   Extensions.TaskStatus taskStatusEnumInstance = Extensions.TaskStatus.enumOf(courierTaskResponseModel.getTaskStatusId());

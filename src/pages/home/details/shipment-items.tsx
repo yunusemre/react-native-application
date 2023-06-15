@@ -53,7 +53,6 @@ const ShipmentItems = ({
       <Box height={dimentions - 74}>
         <ScrollView>
           {data.map((result: any) => {
-            // item.ShipmentList[0].ShipmentItemList[0].CustomerTrackingId
             return result?.ShipmentItemList?.map((item: any, indexS: number) => {
               return (
                 <Box
@@ -76,6 +75,8 @@ const ShipmentItems = ({
                     />
                   </Box>
                   <Box width={'90%'}>
+                    <Icon name="basket" size={18} />
+                    <Icon name="cash" size={18} />
                     <TouchableOpacity
                       activeOpacity={0.7}
                       onPress={() => navigation.navigate('home-detail-weight', item)}
@@ -94,6 +95,14 @@ const ShipmentItems = ({
                         </Text>
                         <Text variant="bodySmall" style={styles.detailHr}>
                           {item.CustomerTrackingId}
+                        </Text>
+                      </Box>
+                      <Box flexDirection="row" justifyContent="space-between">
+                        <Text variant="bodySmall" style={styles.detailHr}>
+                          Müşteri özel kodu:
+                        </Text>
+                        <Text variant="bodySmall" style={styles.detailHr}>
+                          -
                         </Text>
                       </Box>
                       <Box flexDirection="row" justifyContent="space-between">
@@ -142,6 +151,22 @@ const ShipmentItems = ({
                         </Text>
                         <Text variant="bodySmall" style={styles.detailHr}>
                           {item.Weight}
+                        </Text>
+                      </Box>
+                      <Box flexDirection="row" justifyContent="space-between">
+                        <Text variant="bodySmall" style={styles.detailHr}>
+                          Tahsilat yapıldı:
+                        </Text>
+                        <Text variant="bodySmall" style={styles.detailHr}>
+                          -
+                        </Text>
+                      </Box>
+                      <Box flexDirection="row" justifyContent="space-between">
+                        <Text variant="bodySmall" style={styles.detailHr}>
+                          Ö&T:
+                        </Text>
+                        <Text variant="bodySmall" style={styles.detailHr}>
+                          -
                         </Text>
                       </Box>
                       <Box flexDirection="row" justifyContent="space-between">

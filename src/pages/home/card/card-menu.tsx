@@ -34,7 +34,7 @@ const CardMenu = ({
     menu12: true,
   };
 
-  const controlMenuPermissionForItem = () => {
+  const controlMenuPermissionForItemDetail = () => {
     menuStatus.menu9 = false;
     menuStatus.menu11 = false;
     menuStatus.menu12 = false;
@@ -77,12 +77,16 @@ const CardMenu = ({
     }
   };
 
-  const controlMenuPermissionForItemDetail = () => {
+  const controlMenuPermissionForItem = () => {
     menuStatus.menu9 = false;
     menuStatus.menu11 = false;
     menuStatus.menu12 = false;
 
-    if (TaskStatus != TaskStatusEnum.CANCELLED && TaskStatus != TaskStatusEnum.COMPLETED) {
+    if (
+      isSaturday &&
+      TaskStatus != TaskStatusEnum.CANCELLED &&
+      TaskStatus != TaskStatusEnum.COMPLETED
+    ) {
       menuStatus.menu12 = true;
     }
 
@@ -124,9 +128,10 @@ const CardMenu = ({
     }
   };
 
-  controlMenuPermissionForItem();
   if (isDetailPage) {
     controlMenuPermissionForItemDetail();
+  } else {
+    controlMenuPermissionForItem();
   }
 
   return (
