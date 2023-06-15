@@ -75,8 +75,6 @@ const ShipmentItems = ({
                     />
                   </Box>
                   <Box width={'90%'}>
-                    <Icon name="basket" size={18} />
-                    <Icon name="cash" size={18} />
                     <TouchableOpacity
                       activeOpacity={0.7}
                       onPress={() => navigation.navigate('home-detail-weight', item)}

@@ -5,7 +5,6 @@ import { globalStyle } from '@utils/global-style';
 import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import UiCard from '../card';
 import { issues } from './isssues';
 import ShipmentItems from './shipment-items';
@@ -52,7 +51,7 @@ const HomeDetails = ({ navigation, route, setCheck }: any) => {
   return (
     <Layout isHeader isBottom hasBack={true}>
       <Box ml={8} mr={8} mt={4}>
-        <Box mt={4} mb={8} height={102}>
+        <Box mt={4} mb={4} height={102}>
           {taskItem === null || taskItem === undefined ? null : (
             <UiCard isDetailPage={true} navigation={navigation} {...taskItem} showDetail={true} />
           )}
