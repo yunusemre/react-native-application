@@ -19,6 +19,7 @@ module.exports = function (api) {
             '@utils': './src/utils',
             '@pages': './src/pages',
             '@api': './src/api',
+            '@translate': './src/translate',
           },
         },
       ],

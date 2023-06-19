@@ -2,7 +2,7 @@ import Box from '@components/ui/box';
 import theme from '@config/index';
 import { useAppSelector } from '@store/hooks';
 import { TaskCompletionReasonEnum, TaskStatusEnum } from '@types/enums';
-import { TRANSLATE } from '@utils/content';
+import { TRANSLATE } from '@translate/content';
 import { globalStyle } from '@utils/global-style';
 import React, { memo, useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
