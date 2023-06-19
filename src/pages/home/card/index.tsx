@@ -45,7 +45,7 @@ const UiCard = ({
     ShipmentList: ShipmentList,
     userID: userInfo?.UserId,
   });
-
+  console.log('TaskCompletionReason', TaskCompletionReason);
   const isAllShipmentItemReadyForDelivery2 = checkAllShipmentItemReadyForDelivery2({
     TaskStatus: TaskStatus,
     TaskType: TaskType,

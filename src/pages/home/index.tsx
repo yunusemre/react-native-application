@@ -20,7 +20,7 @@ const HomeScreen = ({ navigation }: any) => {
   const isConnected = useIsConnected();
   const { width }: { width: number } = Dimensions.get('screen');
   const [loading, setLoading] = useState(false);
-  const [selectedIssue, setSelectedIsseu] = useState(null);
+  const [selectedIssue, setSelectedIsseu] = useState(1);
   const [search, setSearch] = useState('');
   const [masterData, setMasterData] = useState<any[]>([]);
 
@@ -45,9 +45,7 @@ const HomeScreen = ({ navigation }: any) => {
       method: 'post',
       data: body,
     };
-    setPercent(0);
     setTotalCount(0);
-    setCompleteCount(0);
     axios(config)
       .then((response: any) => {
         const result = response?.Payload?.StopList;
@@ -110,17 +108,75 @@ const HomeScreen = ({ navigation }: any) => {
   };
 
   const filterWithIssues = (issue: any) => {
-    // if (issue === 1) {
-    //   setMasterData(data);
-    //   return;
-    // }
-    // const filteredData = data.filter((completed: any) => {
-    //   if (completed.TaskStatus === issue) {
-    //     return completed;
-    //   }
-    // });
-    // setMasterData(filteredData);
-    // setSelectedIsseu(issue);
+    setSelectedIsseu(issue);
+    const filtered = [...data];
+    if (issue === 1) {
+      setMasterData(data);
+    }
+
+    if (issue === 2) {
+      const arr: any = [];
+      filtered.forEach((item: any) => {
+        const items: any = {};
+        const taskItem: any[] = [];
+        item.TaskList.find((task: any) => {
+          if (task.TaskStatus === TaskStatusEnum.COMPLETED) {
+            taskItem.push(task);
+          }
+        });
+        items.TaskList = taskItem;
+        arr.push(items);
+      });
+      setMasterData(arr);
+    }
+
+    if (issue === 3) {
+      const arr: any = [];
+      filtered.forEach((item: any) => {
+        const items: any = {};
+        const taskItem: any[] = [];
+        item.TaskList.find((task: any) => {
+          if (task.TaskType === 1) {
+            taskItem.push(task);
+          }
+        });
+        items.TaskList = taskItem;
+        arr.push(items);
+      });
+      setMasterData(arr);
+    }
+
+    if (issue === 4) {
+      const arr: any = [];
+      filtered.forEach((item: any) => {
+        const items: any = {};
+        const taskItem: any[] = [];
+        item.TaskList.find((task: any) => {
+          if (task.TaskType === 2) {
+            taskItem.push(task);
+          }
+        });
+        items.TaskList = taskItem;
+        arr.push(items);
+      });
+      setMasterData(arr);
+    }
+
+    if (issue === 5) {
+      const arr: any = [];
+      filtered.forEach((item: any) => {
+        const items: any = {};
+        const taskItem: any[] = [];
+        item.TaskList.find((task: any) => {
+          if (task.TaskType !== TaskStatusEnum.COMPLETED) {
+            taskItem.push(task);
+          }
+        });
+        items.TaskList = taskItem;
+        arr.push(items);
+      });
+      setMasterData(arr);
+    }
   };
 
   const layoutHeight = screenHeight - 84;

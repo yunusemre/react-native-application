@@ -20,6 +20,7 @@ const Issues = ({
   setCheck,
   dailyMissionStatus,
 }: any) => {
+  console.log('loading', loading);
   const allItemCheckList = { ...checkList };
   const [checked, setChecked] = useState(false);
 
@@ -85,7 +86,7 @@ const Issues = ({
             />
           }
         >
-          {loading === false && data?.length === 0 && (
+          {loading === false && data.length === 0 && (
             <UiEmpy
               bg="info"
               mt={8}

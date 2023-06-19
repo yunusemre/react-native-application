@@ -7,6 +7,7 @@ export const TRANSLATE: any = {
   PICKUP_DATE_CHANGED: 'Bu göreve toplama randevusu girildi',
   SENDER_PERSONAL_INFO_CHANGED: 'Gönderici bilgileri değişti',
   WORKPLACE_CLOSED: 'İşyeri kapalı olarak belirtildi',
+  ADDRESS_CHANGED: 'Adres değişikliği',
   UNKNOWN: 'BİLİNMEYEN',
   ASSIGNED: 'ATANDI',
   FORWARDED: 'YÖNLENDİRİLDİ',

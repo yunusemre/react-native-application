@@ -19,7 +19,7 @@ export const taskStatusByColor = ({ status, ...props }: any) => {
     return 'info';
   }
   if (!IsPunctual) {
-    return 'danger';
+    return 'late';
   }
 };
 

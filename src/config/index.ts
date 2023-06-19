@@ -17,6 +17,7 @@ const colors = {
   white: '#ffffff',
   gray: '#4C4C4E',
   canceled: '#b1b3b1',
+  late: '#ea868f',
 };
 
 const radius = {

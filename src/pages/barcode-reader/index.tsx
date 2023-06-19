@@ -36,7 +36,7 @@ export default function BarcodeScreen({ navigation }: any) {
   };
 
   return (
-    <Layout isHeader>
+    <Layout isHeader hasBack>
       <Box>
         {isFocused ? (
           <Camera
