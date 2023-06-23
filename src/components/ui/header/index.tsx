@@ -1,16 +1,11 @@
 import theme from '@config/index';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { persistor } from '@store/configure-store';
-import { setLoginStatus } from '@store/features/app-slice';
-import { useAppDispatch } from '@store/hooks';
 import Constants from 'expo-constants';
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 import { Platform } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 const UiHeader = ({ hasBack = false }) => {
-  const dispatch = useAppDispatch();
   const navigation: any = useNavigation();
   const statusBarHeight = Constants.statusBarHeight;
 
@@ -25,7 +20,7 @@ const UiHeader = ({ hasBack = false }) => {
       {!hasBack && (
         <Appbar.Action
           size={20}
-          style={{ backgroundColor: 'transparent' }}
+          style={{ margin: 0, backgroundColor: 'transparent' }}
           color="white"
           icon="menu"
           onPress={() => navigation.toggleDrawer()}
@@ -52,13 +47,6 @@ const UiHeader = ({ hasBack = false }) => {
         color="white"
         onPress={() => navigation.navigate('notification')}
       />
-      {/* <Appbar.Action
-        icon="map-marker"
-        size={20}
-        color="white"
-        onPress={() => navigation.navigate('mapping')}
-      />
-      <Appbar.Action icon="logout" size={20} color="white" onPress={async () => onLogout()} /> */}
     </Appbar>
   );
 };

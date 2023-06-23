@@ -6,15 +6,11 @@ import { IconButton, Menu } from 'react-native-paper';
 
 const CardMenu = ({
   isDetailPage = false,
-  dailyMissionStatus,
   TaskStatus,
   TaskType,
   isAllShipmentItemReadyForDelivery,
-  isAllShipmentItemReadyForDelivery2,
-  navigation,
   Latitude,
   Longitude,
-  TaskId,
 }: any) => {
   const today = new Date();
   const options: any = { weekday: 'long' };
@@ -34,97 +30,61 @@ const CardMenu = ({
     menu12: true,
   };
 
+  //  MENU ACTIVITY
+  menuStatus.menu9 = false;
+  menuStatus.menu11 = false;
+  menuStatus.menu12 = false;
+
+  if (
+    isSaturday &&
+    TaskStatus != TaskStatusEnum.CANCELLED &&
+    TaskStatus != TaskStatusEnum.COMPLETED
+  ) {
+    menuStatus.menu12 = true;
+  }
+
+  if (TaskStatus == TaskStatusEnum.ASSIGNED) {
+    menuStatus.menu8 = true;
+  }
+
+  if (TaskStatus != TaskStatusEnum.COMPLETED) {
+    menuStatus.menu2 = true;
+    menuStatus.menu3 = true;
+  }
+
+  if (TaskStatus != TaskStatusEnum.COMPLETED && TaskType != TaskTypeEnum.PICKUP) {
+    menuStatus.menu5 = true;
+    menuStatus.menu6 = true;
+  }
+
+  if (TaskType == TaskTypeEnum.DELIVERY) {
+    menuStatus.menu2 = false;
+  }
+
+  if (!isAllShipmentItemReadyForDelivery && TaskType == TaskTypeEnum.DELIVERY) {
+    menuStatus.menu3 = false;
+    menuStatus.menu5 = false;
+    menuStatus.menu6 = false;
+    menuStatus.menu8 = false;
+  }
+
+  // END OF ACTIVITY
+
   const controlMenuPermissionForItemDetail = () => {
-    menuStatus.menu9 = false;
-    menuStatus.menu11 = false;
-    menuStatus.menu12 = false;
-
-    if (
-      isSaturday &&
-      TaskStatus != TaskStatusEnum.CANCELLED &&
-      TaskStatus != TaskStatusEnum.COMPLETED
-    ) {
-      menuStatus.menu12 = true;
-    }
-
-    if (TaskStatus == TaskStatusEnum.ASSIGNED) {
-      menuStatus.menu8 = true;
-    }
-
-    if (TaskStatus != TaskStatusEnum.COMPLETED) {
-      menuStatus.menu2 = true;
-      menuStatus.menu3 = true;
-    }
-
     if (TaskType == TaskTypeEnum.PICKUP) {
       menuStatus.menu3 = false;
-    }
-
-    if (TaskStatus != TaskStatusEnum.COMPLETED && TaskType != TaskTypeEnum.PICKUP) {
-      menuStatus.menu5 = true;
-      menuStatus.menu6 = true;
-    }
-
-    if (TaskType == TaskTypeEnum.DELIVERY) {
-      menuStatus.menu2 = false;
-    }
-
-    if (!isAllShipmentItemReadyForDelivery && TaskType == TaskTypeEnum.DELIVERY) {
-      menuStatus.menu3 = false;
-      menuStatus.menu5 = false;
-      menuStatus.menu6 = false;
-      menuStatus.menu8 = false;
     }
   };
 
   const controlMenuPermissionForItem = () => {
-    menuStatus.menu9 = false;
-    menuStatus.menu11 = false;
-    menuStatus.menu12 = false;
-
-    if (
-      isSaturday &&
-      TaskStatus != TaskStatusEnum.CANCELLED &&
-      TaskStatus != TaskStatusEnum.COMPLETED
-    ) {
-      menuStatus.menu12 = true;
-    }
-
-    if (TaskStatus == TaskStatusEnum.ASSIGNED) {
-      menuStatus.menu8 = true;
-    }
-
-    if (TaskStatus != TaskStatusEnum.COMPLETED) {
-      menuStatus.menu2 = true;
-      menuStatus.menu3 = true;
-    }
-
     if (TaskStatus != TaskStatusEnum.COMPLETED && TaskType == TaskTypeEnum.PICKUP) {
       menuStatus.menu4 = true;
     }
-
-    if (TaskStatus != TaskStatusEnum.COMPLETED && TaskType != TaskTypeEnum.PICKUP) {
-      menuStatus.menu5 = true;
-      menuStatus.menu6 = true;
-    }
-
     if (TaskStatus != TaskStatusEnum.COMPLETED && TaskType == TaskTypeEnum.PICKUP) {
       menuStatus.menu6 = true;
     }
-
     if (TaskType == TaskTypeEnum.PICKUP && TaskStatus != TaskStatusEnum.COMPLETED) {
       menuStatus.menu11 = true;
-    }
-
-    if (TaskType == TaskTypeEnum.DELIVERY) {
-      menuStatus.menu2 = false;
-    }
-
-    if (!isAllShipmentItemReadyForDelivery2 && TaskType == TaskTypeEnum.DELIVERY) {
-      menuStatus.menu3 = false;
-      menuStatus.menu5 = false;
-      menuStatus.menu6 = false;
-      menuStatus.menu8 = false;
     }
   };
 

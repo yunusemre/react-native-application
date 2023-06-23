@@ -13,12 +13,12 @@ const HomeDetails = ({ navigation, route, setCheck }: any) => {
   const taskId = route.params.TaskId;
   const { data } = useAppSelector((state) => state.shipments);
   const { screenHeight } = useAppSelector((state) => state.apps);
-  const { width }: { height: number; width: number } = Dimensions.get('window');
+  const { width }: { width: number } = Dimensions.get('window');
   const [selectedIssue, setSelectedIsseu] = useState();
   const [masterData, setMasterData] = useState<any>([]);
   const [taskItem, setTaskItem] = useState<any>(null);
   const [checkListItem, setCheckListItem] = useState<any>({});
-
+  const [layoutHeight, setLayoutHeight] = useState(screenHeight);
   const allItemCheckList: any = {};
   const [checked, setChecked] = useState(false);
 
@@ -35,7 +35,7 @@ const HomeDetails = ({ navigation, route, setCheck }: any) => {
 
   const findShipmentList = () => {
     data.forEach((item) => {
-      item.TaskList.find((ship: any) => {
+      item.TaskList?.find((ship: any) => {
         if (ship.TaskId === taskId) {
           setTaskItem(ship);
           setMasterData(ship.ShipmentList);
@@ -47,11 +47,14 @@ const HomeDetails = ({ navigation, route, setCheck }: any) => {
       });
     });
   };
-  const layoutHeight = screenHeight - 196;
+  const findDimesions = ({ height }: any) => {
+    if (height === null) return;
+    setLayoutHeight(screenHeight - (height + 90));
+  };
   return (
     <Layout isHeader isBottom hasBack={true}>
       <Box ml={8} mr={8} mt={4}>
-        <Box mt={4} mb={4} height={102}>
+        <Box mt={4} onLayout={(event: any) => findDimesions(event.nativeEvent.layout)}>
           {taskItem === null || taskItem === undefined ? null : (
             <UiCard isDetailPage={true} navigation={navigation} {...taskItem} showDetail={true} />
           )}

@@ -179,7 +179,7 @@ const HomeScreen = ({ navigation }: any) => {
     }
   };
 
-  const layoutHeight = screenHeight - 84;
+  const layoutHeight = screenHeight - 78;
   return (
     <Layout
       isHeader
@@ -188,7 +188,7 @@ const HomeScreen = ({ navigation }: any) => {
       openBarcode={() => navigation.navigate('barcode')}
     >
       <Box ml={8} mr={8} mt={4}>
-        <Box height={80}>
+        <Box height={70}>
           <Box flexDirection="row" height={40} mb={4}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <UiPicker
@@ -212,8 +212,8 @@ const HomeScreen = ({ navigation }: any) => {
               />
             </ScrollView>
           </Box>
-          <Box height={34}>
-            <Box flexDirection="row" justifyContent="space-between" mb={8}>
+          <Box height={30}>
+            <Box flexDirection="row" justifyContent="space-between" mb={2}>
               <Box as={Text} variant="labelMedium">
                 Tamamlanma Oranı: {completeCount}/{totalCount}
               </Box>
@@ -232,9 +232,7 @@ const HomeScreen = ({ navigation }: any) => {
           loading={loading}
           navigation={navigation}
           isOnline={isOnline}
-          setCheck={(items: any) => {
-            setCheckListItem(items);
-          }}
+          setCheck={(items: any) => setCheckListItem(items)}
           getProducts={getProducts}
           isConnected={isConnected}
         />

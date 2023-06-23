@@ -23,41 +23,6 @@ export const taskStatusByColor = ({ status, ...props }: any) => {
   }
 };
 
-export const checkAllShipmentItemReadyForDelivery2 = ({
-  TaskType,
-  TaskStatus,
-  dailyMissionStatus,
-  ShipmentList,
-  userID,
-}: any) => {
-  let isAllShipmentItemReadyForDelivery2: boolean = false;
-  if (
-    TaskType == TaskTypeEnum.DELIVERY &&
-    TaskStatus != TaskStatusEnum.COMPLETED &&
-    (dailyMissionStatus == DailyMissionStatusEnum.START_OF_DAY ||
-      dailyMissionStatus == DailyMissionStatusEnum.WAITING_FOR_EXIT_REQUEST_APPROVAL)
-  ) {
-    ShipmentList.forEach((item: any) => {
-      item.ShipmentItemList.forEach((itemList: any) => {
-        const shipmentItemStatusEnumInstance: any =
-          ShipmentItemStatusEnum[itemList.ShipmentItemStatus];
-        const shipmentLocationStatusEnumInstance: any =
-          ShipmentLocationStatus[itemList.ShipmentLocation];
-        if (
-          shipmentItemStatusEnumInstance == ShipmentItemStatusEnum.LOADED &&
-          shipmentLocationStatusEnumInstance == ShipmentLocationStatus.ON_DELIVERY_COURIER &&
-          itemList.CurrentWithholderUserId == userID
-        ) {
-          isAllShipmentItemReadyForDelivery2 = true;
-        } else {
-          isAllShipmentItemReadyForDelivery2 = false;
-        }
-      });
-    });
-  }
-  return isAllShipmentItemReadyForDelivery2;
-};
-
 export const checkAllShipmentItemReadyForDelivery = ({
   TaskType,
   TaskStatus,
@@ -72,13 +37,11 @@ export const checkAllShipmentItemReadyForDelivery = ({
     (dailyMissionStatus == DailyMissionStatusEnum.START_OF_DAY ||
       dailyMissionStatus == DailyMissionStatusEnum.WAITING_FOR_EXIT_REQUEST_APPROVAL)
   ) {
-    ShipmentList.forEach((shipment: any) => {
-      shipment.ShipmentItemList.forEach((shipment: any) => {
-        let shipmentItemStatusEnumInstance = shipment.ShipmentLocation;
-        const shipmentLocationStatusEnumInstance = shipment.ShipmentItemStatus;
+    for (let shipment of ShipmentList) {
+      shipment.ShipmentItemList.find((shipment: any) => {
         if (
-          shipmentItemStatusEnumInstance === ShipmentItemStatusEnum.LOADED &&
-          shipmentLocationStatusEnumInstance === ShipmentLocationStatus.ON_DELIVERY_COURIER &&
+          shipment.ShipmentLocation === ShipmentItemStatusEnum.LOADED &&
+          shipment.ShipmentItemStatus === ShipmentLocationStatus.ON_DELIVERY_COURIER &&
           shipment.CustomerBarcode == userInfo.UserId
         ) {
           isAllShipmentItemReadyForDelivery = true;
@@ -86,7 +49,7 @@ export const checkAllShipmentItemReadyForDelivery = ({
           isAllShipmentItemReadyForDelivery = false;
         }
       });
-    });
+    }
   }
   return isAllShipmentItemReadyForDelivery;
 };

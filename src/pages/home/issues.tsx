@@ -10,7 +10,7 @@ import UiCard from './card';
 
 const Issues = ({
   dimentions,
-  data,
+  data = [],
   loading,
   navigation,
   isOnline,
@@ -20,7 +20,6 @@ const Issues = ({
   setCheck,
   dailyMissionStatus,
 }: any) => {
-  console.log('loading', loading);
   const allItemCheckList = { ...checkList };
   const [checked, setChecked] = useState(false);
 
@@ -40,7 +39,7 @@ const Issues = ({
         border={1}
         borderColor="borderColor"
         borderRadius={8}
-        mb={8}
+        mb={4}
         mt={4}
         pt={4}
         pb={4}

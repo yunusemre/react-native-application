@@ -6,4 +6,4 @@ import UiPicker from './select';
 import Text from './text';
 import UITextInput from './textInput';
 
-export { Box, UiEmpy, UiHeader, UiMoreButton, UiPicker, Text, UITextInput };
+export { Box, Text, UITextInput, UiEmpy, UiHeader, UiMoreButton, UiPicker };

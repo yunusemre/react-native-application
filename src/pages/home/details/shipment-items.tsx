@@ -23,9 +23,8 @@ const ShipmentItems = ({
   const [checked, setChecked] = useState(false);
 
   const onChange = (event: any, selectedDate: any) => {
-    const currentDate = selectedDate;
     setShow(false);
-    setDate(currentDate);
+    setDate(selectedDate);
   };
 
   useEffect(() => {

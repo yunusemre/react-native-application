@@ -1,18 +1,14 @@
 import Box from '@components/ui/box';
 import theme from '@config/index';
 import { useAppSelector } from '@store/hooks';
-import { TaskCompletionReasonEnum, TaskStatusEnum } from '@types/enums';
 import { TRANSLATE } from '@translate/content';
+import { TaskCompletionReasonEnum, TaskStatusEnum } from '@types/enums';
 import { globalStyle } from '@utils/global-style';
 import React, { memo, useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Badge, Checkbox, Text } from 'react-native-paper';
 import CardMenu from './card-menu';
-import {
-  checkAllShipmentItemReadyForDelivery,
-  checkAllShipmentItemReadyForDelivery2,
-  taskStatusByColor,
-} from './control-functions';
+import { checkAllShipmentItemReadyForDelivery, taskStatusByColor } from './control-functions';
 import { IconStatus } from './icon-status';
 import { IUICard } from './model';
 
@@ -45,14 +41,6 @@ const UiCard = ({
     ShipmentList: ShipmentList,
     userID: userInfo?.UserId,
   });
-  console.log('TaskCompletionReason', TaskCompletionReason);
-  const isAllShipmentItemReadyForDelivery2 = checkAllShipmentItemReadyForDelivery2({
-    TaskStatus: TaskStatus,
-    TaskType: TaskType,
-    dailyMissionStatus: dailyMissionStatus,
-    ShipmentList: ShipmentList,
-    userID: userInfo?.UserId,
-  });
 
   return (
     <Box
@@ -63,7 +51,7 @@ const UiCard = ({
         isAllShipmentItemReadyForDelivery: isAllShipmentItemReadyForDelivery,
       })}
       borderRadius={8}
-      mb={8}
+      mb={4}
       pb={4}
       style={{ overflow: 'hidden' }}
     >
@@ -119,7 +107,6 @@ const UiCard = ({
                 TaskStatus={TaskStatus}
                 TaskType={TaskType}
                 isAllShipmentItemReadyForDelivery={isAllShipmentItemReadyForDelivery}
-                isAllShipmentItemReadyForDelivery2={isAllShipmentItemReadyForDelivery2}
                 navigation={navigation}
                 Latitude={Latitude}
                 Longitude={Longitude}

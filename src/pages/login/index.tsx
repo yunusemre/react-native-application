@@ -61,6 +61,8 @@ const LoginScreen = ({ navigation }: any) => {
         setErrorMessage(JSON.parse(error.error_description).ResultMessage);
         dispatch(setLoginStatus(false));
         setVisible(true);
+      })
+      .finally(() => {
         setIsLogin(false);
       });
   };

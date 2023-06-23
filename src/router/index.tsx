@@ -5,7 +5,6 @@ import LoginScreen from '@pages/login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import { useAppDispatch } from '@store/hooks';
 import * as Location from 'expo-location';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect } from 'react';
@@ -24,8 +23,6 @@ const navTheme = {
 
 const Router = () => {
   axiosInterceptor();
-  const dispatch = useAppDispatch();
-
   const setLocation = async () => {
     await Location.requestForegroundPermissionsAsync();
     const location: any = await Location.getCurrentPositionAsync({
